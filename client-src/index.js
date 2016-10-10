@@ -33,6 +33,7 @@ const onEveryoneReady = participant => {
     if (!seconds) {
       store.dispatch(raceStarted());
       clearInterval(timeInterval);
+      document.getElementsByTagName('textarea')[0].focus();
       return;
     }
     store.dispatch(setTimer(--seconds));

@@ -48,3 +48,15 @@ export const setTimer = time => ({
 export const raceStarted = () => ({
   type: 'RACE_STARTED',
 })
+
+export const correctWord = () => ({
+  type: 'CORRECT_WORD',
+});
+
+export const wrongWord = () => ({
+  type: 'WRONG_WORD',
+});
+
+export const nextWord = () => ({
+  type: 'NEXT_WORD',
+});

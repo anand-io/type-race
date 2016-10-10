@@ -64,9 +64,29 @@ export const timerSeconds = (state = 5, action) => {
   }
 }
 
+export const typingWordIndex = (state = 0, action) => {
+  switch (action.type) {
+    case 'NEXT_WORD':
+      return state + 1;
+    default:
+      return state
+  }
+}
+
+export const wrongWord = (state = false, action) => {
+  switch (action.type) {
+    case 'WRONG_WORD':
+      return true;
+    case 'CORRECT_WORD':
+      return false;
+    default:
+      return state
+  }
+}
+
 const typeRacerApp = combineReducers({
   participants,
-  paragraph, raceStarted, timerSeconds,
+  paragraph, raceStarted, timerSeconds, typingWordIndex,
   everyoneReady, gameStarted, lastGameWMP, iamReady,
 });
 
