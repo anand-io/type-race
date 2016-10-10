@@ -55,9 +55,18 @@ export const raceStarted = (state = false, action) => {
   }
 }
 
+export const timerSeconds = (state = 5, action) => {
+  switch (action.type) {
+    case 'SET_TIME':
+      return action.time;
+    default:
+      return state
+  }
+}
+
 const typeRacerApp = combineReducers({
   participants,
-  paragraph, raceStarted,
+  paragraph, raceStarted, timerSeconds,
   everyoneReady, gameStarted, lastGameWMP, iamReady,
 });
 

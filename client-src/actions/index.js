@@ -39,3 +39,12 @@ export const everyoneReady = id => ({
   type: 'EVERYONE_READY',
   id,
 })
+
+export const setTimer = time => ({
+  type: 'SET_TIME',
+  time,
+})
+
+export const raceStarted = () => ({
+  type: 'RACE_STARTED',
+})

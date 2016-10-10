@@ -1,22 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-let TypingArea = () => (
-  <textarea></textarea>
-)
+let TypingArea = ({ raceStarted }) =>{
+  const textProps = {};
+  if(!raceStarted) textProps.disabled = true;
+  return (
+    <textarea {...textProps}></textarea>
+  );
+}
 
 const mapStateToProps = (state) => ({
-  participants: state.participants,
-})
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => {
-    dispatch()
-  }
+  raceStarted: state.raceStarted,
 })
 
 TypingArea = connect(
-  mapDispatchToProps,
+  mapStateToProps,
 )(TypingArea)
 
 export default TypingArea;
