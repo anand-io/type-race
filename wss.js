@@ -45,9 +45,23 @@ function WebSocketServer(server) {
       });
       if (isEveryoneReady) {
         spark.room(room).send('everyoneReady');
+        client.set(`${room}_started`, new Date().getTime());
       }
     });
 
+    spark.on('wordCount', (room, noOfCharacters) => {
+      const data = { participantId: spark.query.myId };
+      data.count = noOfCharacters;
+      const countTime = new Date().getTime();
+      client.getAsync(`${room}_started`)
+      .then((startedTime) => {
+        if (!startedTime) throw Error(`no startedTime for room ${room}`);
+        const timeTakenInMin = ((countTime - (Number(startedTime) + 6000)) / 1000) / 60;
+        const wpm = (noOfCharacters / 5) / timeTakenInMin;
+        const data = { id: spark.query.myId, wpm };
+        spark.room(room).send('participantWordCount', data);
+      });
+    });
   });
 }
 

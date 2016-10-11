@@ -15,6 +15,11 @@ export const getReady = room => dispatch => {
   dispatch(iamReady());
 }
 
+export const increaseWordCount = noOfCharacters => dispatch => {
+  wss.calculateCharacterCount(noOfCharacters);
+  dispatch(nextWord());
+}
+
 export const gameStarted = paragraph => ({
   type: 'GAME_STARTED',
   paragraph
@@ -59,4 +64,10 @@ export const wrongWord = () => ({
 
 export const nextWord = () => ({
   type: 'NEXT_WORD',
+});
+
+export const participantWPM = ({id, wpm}) => ({
+  type: 'PARTICIPANT_WPM',
+  id,
+  wpm,
 });

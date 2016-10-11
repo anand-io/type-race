@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { correctWord, nextWord, wrongWord } from '../actions/index.js';
+import { correctWord, increaseWordCount, wrongWord } from '../actions/index.js';
 
 class TypingArea extends Component {
   constructor(props) {
@@ -14,7 +14,9 @@ class TypingArea extends Component {
       if (words[typingWordIndex].includes(this.node.value.trim())) {
         dispatch(correctWord());
         if (event.keyCode === 32 && words[typingWordIndex] === this.node.value.trim()){
-          dispatch(nextWord());
+          const noOfCharacters = paragraph.indexOf(words[typingWordIndex]) +
+          words[typingWordIndex].length + 1;
+          dispatch(increaseWordCount(noOfCharacters));
           this.node.value = "";
         }
       } else {

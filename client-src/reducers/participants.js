@@ -4,6 +4,7 @@ const participant = (state = {}, action) => {
       return {
         id: action.id,
         name: action.name,
+        wpm: 0,
       }
     case 'PARTICIPANT_READY':
       if (state.id !== action.id) {
@@ -11,6 +12,13 @@ const participant = (state = {}, action) => {
       }
       return Object.assign({}, state, {
         ready: true
+      });
+    case 'PARTICIPANT_WPM':
+      if (state.id !== action.id) {
+        return state
+      }
+      return Object.assign({}, state, {
+        wpm: action.wpm,
       });
     default:
       return state
@@ -25,6 +33,10 @@ const participants = (state = [], action) => {
         participant(undefined, action),
       ]
     case 'PARTICIPANT_READY':
+      return state.map(p =>
+        participant(p, action)
+      )
+    case 'PARTICIPANT_WPM':
       return state.map(p =>
         participant(p, action)
       )

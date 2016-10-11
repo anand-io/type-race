@@ -6,7 +6,8 @@ import thunk from 'redux-thunk'
 import App from './components/App.jsx'
 import reducer from './reducers'
 import wss from './services/WebSocketService';
-import { addParticipant, participantReady, everyoneReady, setTimer, raceStarted } from './actions';
+import { addParticipant, participantReady, everyoneReady, setTimer, raceStarted,
+  participantWPM } from './actions';
 
 const middleware = [ thunk ]
 
@@ -40,4 +41,6 @@ const onEveryoneReady = participant => {
   }, 1000);
 };
 
-wss.init(onParticpantJoined, onParticipantReady, onEveryoneReady);
+const onParticipantCount = participant => store.dispatch(participantWPM(participant));
+
+wss.init(onParticpantJoined, onParticipantReady, onEveryoneReady, onParticipantCount);
