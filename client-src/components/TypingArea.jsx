@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { correctWord, increaseWordCount, wrongWord } from '../actions/index.js';
+import { correctWord, increaseWordCount, wrongWord, finishedTheRace } from '../actions/index.js';
 
 class TypingArea extends Component {
   constructor(props) {
@@ -9,16 +9,23 @@ class TypingArea extends Component {
   }
   componentDidMount() {
     this.node.addEventListener("keyup", (event) => {
+      const nodeValue = this.node.value;
       const { paragraph, typingWordIndex, dispatch } = this.props;
       const words = paragraph.split(' ');
-      if (words[typingWordIndex].includes(this.node.value.trim())) {
-        dispatch(correctWord());
-        if (event.keyCode === 32 && words[typingWordIndex] === this.node.value.trim()){
-          const noOfCharacters = paragraph.indexOf(words[typingWordIndex]) +
-          words[typingWordIndex].length + 1;
-          dispatch(increaseWordCount(noOfCharacters));
+      if (words[typingWordIndex].includes(nodeValue.trim())) {
+        if (event.keyCode === 32 && words[typingWordIndex] === nodeValue.trim()) {
           this.node.value = "";
+          if (typingWordIndex === words.length - 1) {
+            dispatch(finishedTheRace(paragraph.length));
+            return;
+          }
+          let noOfCharacters = 0;
+          for (let i = 0; i <= typingWordIndex ; i ++) {
+            noOfCharacters += words[i].length + 1;
+          }
+          dispatch(increaseWordCount(noOfCharacters));
         }
+        dispatch(correctWord());
       } else {
         dispatch(wrongWord());
       }

@@ -58,7 +58,7 @@ function WebSocketServer(server) {
         if (!startedTime) throw Error(`no startedTime for room ${room}`);
         const timeTakenInMin = ((countTime - (Number(startedTime) + 6000)) / 1000) / 60;
         const wpm = (noOfCharacters / 5) / timeTakenInMin;
-        const data = { id: spark.query.myId, wpm };
+        const data = { id: spark.query.myId, wpm, noOfCharacters };
         spark.room(room).send('participantWordCount', data);
       });
     });

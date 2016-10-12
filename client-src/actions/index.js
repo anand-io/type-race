@@ -20,8 +20,18 @@ export const increaseWordCount = noOfCharacters => dispatch => {
   dispatch(nextWord());
 }
 
+export const finishedTheRace = noOfCharacters => dispatch => {
+  wss.calculateCharacterCount(noOfCharacters);
+  dispatch(gameEnded());
+}
+
 export const gameStarted = paragraph => ({
   type: 'GAME_STARTED',
+  paragraph
+})
+
+export const gameEnded = paragraph => ({
+  type: 'GAME_ENDED',
   paragraph
 })
 
@@ -66,8 +76,8 @@ export const nextWord = () => ({
   type: 'NEXT_WORD',
 });
 
-export const participantWPM = ({id, wpm}) => ({
+export const participantWPM = ({id, wpm, noOfCharacters}) => ({
   type: 'PARTICIPANT_WPM',
   id,
-  wpm,
+  wpm, noOfCharacters,
 });
