@@ -5,7 +5,7 @@ function getStyle(typingWordIndex, index) {
   if (index === typingWordIndex)
     return {
       color: 'cornflowerblue',
-      fontSize: '30px',
+      fontSize: '25px',
       textDecoration: 'underline'
     }
   else
@@ -13,13 +13,13 @@ function getStyle(typingWordIndex, index) {
 }
 
 let Paragraph = ({ paragraph, show, typingWordIndex }) => (
-  <div style={{ display: show ? 'block' : 'none' }}>
-    {Array.isArray(paragraph) ?
-      paragraph.map((word, index) =>
+  <div style={{ display: show ? 'block' : 'none', width:'300px' }}>
+    {Array.isArray(paragraph.words) ?
+      paragraph.words.map((word, index) =>
         <span
         key={index}
         style={getStyle(typingWordIndex, index)} >
-          {index == paragraph.legth - 1 ? word : `${word} `}
+          {index == paragraph.length - 1 ? word : `${word} `}
         </span>) : ''}
   </div>
 )

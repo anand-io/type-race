@@ -3,7 +3,7 @@ import wss from '../services/WebSocketService';
 let nextTodoId = 0
 export const joinRoom = room => dispatch => {
   wss.joinRoom(room, (paragraph, participants) => {
-    dispatch(gameStarted(paragraph.split(' ')));
+    dispatch(gameStarted(paragraph));
     participants.forEach(p => {
       dispatch(addParticipant(p));
     });

@@ -11,13 +11,13 @@ class TypingArea extends Component {
     this.node.addEventListener("keyup", (event) => {
       const nodeValue = this.node.value;
       const { paragraph, typingWordIndex, dispatch } = this.props;
-      const words = paragraph;
+      const words = paragraph.words;
       console.log(`typingWordIndex : ${typingWordIndex}`)
       if (words[typingWordIndex].includes(nodeValue.trim())) {
         if (event.keyCode === 32 && words[typingWordIndex] === nodeValue.trim()) {
           this.node.value = "";
           if (typingWordIndex === words.length - 1) {
-            dispatch(finishedTheRace(paragraph.length));
+            dispatch(finishedTheRace(paragraph.raw.length));
             return;
           }
           let noOfCharacters = 0;
