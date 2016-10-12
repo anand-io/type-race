@@ -4,6 +4,10 @@ let nextTodoId = 0
 export const joinRace = room => dispatch => {
   dispatch(joinedRace());
   wss.joinRace(room, (paragraph, participants) => {
+    if (!paragraph && !participants) {
+      dispatch(raceInProgress(paragraph));
+      return;
+    }
     dispatch(raceData(paragraph));
     participants.forEach(p => {
       dispatch(addParticipant(p));
@@ -40,9 +44,9 @@ export const setTimer = time => ({
   time,
 });
 
-// export const stopTimer = id => ({
-//   type: 'STOP_TIMER',
-// });
+export const raceInProgress = time => ({
+  type: 'RACE_IN_PROGRESS',
+});
 
 export const raceStarted = () => ({
   type: 'RACE_STARTED',

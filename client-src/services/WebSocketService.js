@@ -3,11 +3,10 @@ const myId = document.getElementById('data').getAttribute('myid');
 function WebSocketService() {}
 
 // Add some event emmiter.
-WebSocketService.prototype.init = function init(onParticipantJoined, onParticipantReady,
-onStartCounter, onParticipantCount) {
+WebSocketService.prototype.init = function init(onParticipantJoined, onStartCounter,
+  onParticipantCount) {
   this.primus = Primus.connect(`http://localhost:3000/?myId=${myId}`);
   this.onParticipantJoined = onParticipantJoined;
-  this.onParticipantReady = onParticipantReady;
   this.onStartCounter = onStartCounter;
   this.onParticipantCount = onParticipantCount;
   this.addListeners();
@@ -48,7 +47,11 @@ WebSocketService.prototype.updateWMP = function updateWMP(noOfCharacters) {
   this.primus.send('updateWMP', noOfCharacters);
 }
 
-WebSocketService.prototype.finishedRace = function updateWMP(noOfCharacters) {
+WebSocketService.prototype.raceStarted = function raceStarted(noOfCharacters) {
+  this.primus.send('raceStarted');
+}
+
+WebSocketService.prototype.finishedRace = function finishedRace(noOfCharacters) {
   this.primus.send('finishedRace');
 }
 

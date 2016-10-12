@@ -15,27 +15,35 @@ function WebSocketServer(server) {
 
     spark.on('joinRace', function (raceId, callback) {
       if (spark.joinedRace) return;
-      spark.join(raceId, function () {
-        spark.joinedRace = raceId;
-        client.saddAsync(`${raceId}_racers`, spark.query.myId);
-        client.getAsync(`${raceId}_para`)
-        .then(para => {
-          if(!para) client.set(`${raceId}_para`, paragraphs['0']);
-          const paragraph = para || paragraphs['0'];
+      client.getAsync(`${raceId}_isStated`)
+      .then((isStated) => {
+        if (isStated) {
+          callback()
+          return;
+        }
+        spark.join(raceId, function () {
+          spark.joinedRace = raceId;
+          client.saddAsync(`${raceId}_racers`, spark.query.myId);
+          client.getAsync(`${raceId}_para`)
+          .then(para => {
+            if(!para) client.set(`${raceId}_para`, paragraphs['0']);
+            const paragraph = para || paragraphs['0'];
 
-          const sparks = spark.room(raceId).clients();
-          const participants = sparks.map(id => {
-            const s = primus.spark(id);
-            return s.query.myId
+            const sparks = spark.room(raceId).clients();
+            const participants = sparks.map(id => {
+              const s = primus.spark(id);
+              return s.query.myId
+            });
+            callback(paragraph, participants);
+            if (sparks.length > 1) {
+              spark.room(raceId).send('startCounter');
+              client.set(`${raceId}_statedAt`, new Date().getTime());
+            }
           });
-          callback(paragraph, participants);
-          if (sparks.length > 1) {
-            spark.room(raceId).send('startCounter');
-            client.set(`${raceId}_statedAt`, new Date().getTime());
-          }
+          spark.room(raceId).except(spark.id).send('participantJoined', spark.query.myId);
         });
-        spark.room(raceId).except(spark.id).send('participantJoined', spark.query.myId);
       });
+
     });
 
     spark.on('updateWMP', (noOfCharacters) => {

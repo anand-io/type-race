@@ -35,7 +35,6 @@ const sendCharaterInInterval = () => {
 
 const onParticpantJoined = participant => store.dispatch(addParticipant(participant));
 
-const onParticipantReady = participant => store.dispatch(participantReady(participant));
 
 const onStartCounter = () => {
   store.dispatch(startTimer());
@@ -45,6 +44,7 @@ const onStartCounter = () => {
       store.dispatch(raceStarted());
       clearInterval(timeInterval);
       document.getElementsByTagName('textarea')[0].focus();
+      wss.raceStarted();
       sendCharaterInInterval();
       return;
     }
@@ -54,4 +54,4 @@ const onStartCounter = () => {
 
 const onParticipantCount = participant => store.dispatch(participantWPM(participant));
 
-wss.init(onParticpantJoined, onParticipantReady, onStartCounter, onParticipantCount);
+wss.init(onParticpantJoined, onStartCounter, onParticipantCount);
