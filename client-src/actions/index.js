@@ -1,68 +1,65 @@
 import wss from '../services/WebSocketService';
 
 let nextTodoId = 0
-export const joinRoom = room => dispatch => {
-  wss.joinRoom(room, (paragraph, participants) => {
-    dispatch(gameStarted(paragraph));
+export const joinRace = room => dispatch => {
+  dispatch(joinedRace());
+  wss.joinRace(room, (paragraph, participants) => {
+    dispatch(raceData(paragraph));
     participants.forEach(p => {
       dispatch(addParticipant(p));
     });
   });
 }
 
-export const getReady = room => dispatch => {
-  wss.sendReadySignal(room);
-  dispatch(iamReady());
+export const finishRace = noOfCharactersTyped => dispatch => {
+  wss.finishedRace();
+  wss.updateWMP(noOfCharactersTyped);
+  dispatch(finishedRace(noOfCharactersTyped));
 }
 
-export const increaseWordCount = noOfCharacters => dispatch => {
-  wss.calculateCharacterCount(noOfCharacters);
-  dispatch(nextWord());
-}
+export const joinedRace = () => ({
+  type: 'JOINED_RACE'
+});
 
-export const finishedTheRace = noOfCharacters => dispatch => {
-  wss.calculateCharacterCount(noOfCharacters);
-  dispatch(gameEnded());
-}
-
-export const gameStarted = paragraph => ({
-  type: 'GAME_STARTED',
+export const raceData = paragraph => ({
+  type: 'RACE_DATA',
   paragraph
-})
-
-export const gameEnded = paragraph => ({
-  type: 'GAME_ENDED',
-  paragraph
-})
+});
 
 export const addParticipant = id => ({
   type: 'ADD_PARTICIPANT',
   id
-})
+});
 
-export const iamReady = id => ({
-  type: 'IAM_READY',
-  id,
-})
-
-export const participantReady = id => ({
-  type: 'PARTICIPANT_READY',
-  id,
-})
-
-export const everyoneReady = id => ({
-  type: 'EVERYONE_READY',
-  id,
-})
+export const startTimer = id => ({
+  type: 'START_TIMER',
+});
 
 export const setTimer = time => ({
   type: 'SET_TIME',
   time,
-})
+});
+
+// export const stopTimer = id => ({
+//   type: 'STOP_TIMER',
+// });
 
 export const raceStarted = () => ({
   type: 'RACE_STARTED',
-})
+});
+
+export const finishedRace = noOfCharactersTyped => ({
+  type: 'FINISHED_RACE',
+  noOfCharactersTyped,
+});
+
+export const raceOver = () => ({
+  type: 'RACE_OVER',
+});
+
+export const lastRaceData = () => ({
+  type: 'LAST_RACE_DATA',
+});
 
 export const correctWord = () => ({
   type: 'CORRECT_WORD',
@@ -72,8 +69,9 @@ export const wrongWord = () => ({
   type: 'WRONG_WORD',
 });
 
-export const nextWord = () => ({
+export const nextWord = noOfCharactersTyped => ({
   type: 'NEXT_WORD',
+  noOfCharactersTyped,
 });
 
 export const participantWPM = ({id, wpm, noOfCharacters}) => ({

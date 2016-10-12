@@ -2,42 +2,22 @@ import { combineReducers } from 'redux';
 import participants from './participants';
 import paragraph from './paragraph';
 
-export const everyoneReady = (state = false, action) => {
+export const joinedRace = (state = false, action) => {
   switch (action.type) {
-    case 'EVERYONE_READY':
+    case 'JOINED_RACE':
       return true;
-    case 'GAME_ENDED':
+    case 'LEFT_RACE':
       return false;
     default:
       return state
   }
 }
 
-export const gameStarted = (state = false, action) => {
+export const timerOn = (state = false, action) => {
   switch (action.type) {
-    case 'GAME_STARTED':
+    case 'START_TIMER':
       return true;
-    case 'GAME_ENDED':
-      return false;
-    default:
-      return state
-  }
-}
-
-export const lastGameWMP = (state = 0, action) => {
-  switch (action.type) {
-    case 'NEW_WPM':
-      return action.wpm;
-    default:
-      return state
-  }
-}
-
-export const iamReady = (state = false, action) => {
-  switch (action.type) {
-    case 'IAM_READY':
-      return true;
-    case 'GAME_ENDED':
+    case 'RACE_STARTED':
       return false;
     default:
       return state
@@ -48,8 +28,32 @@ export const raceStarted = (state = false, action) => {
   switch (action.type) {
     case 'RACE_STARTED':
       return true;
-    case 'GAME_ENDED':
+    case 'RACE_OVER':
       return false;
+    default:
+      return state
+  }
+}
+
+export const finishedRace = (state = false, action) => {
+  switch (action.type) {
+    case 'FINISHED_RACE':
+      return true;
+    case 'RACE_OVER':
+      return false;
+    default:
+      return state
+  }
+}
+
+export const lastRaceData = (state = {}, action) => {
+  switch (action.type) {
+    case 'LAST_RACE_DATA':
+      return {
+        wmp: action.wpm,
+        place: action.place,
+        raceId: action.raceId,
+      };
     default:
       return state
   }
@@ -59,6 +63,17 @@ export const timerSeconds = (state = 5, action) => {
   switch (action.type) {
     case 'SET_TIME':
       return action.time;
+    default:
+      return state
+  }
+}
+
+export const noOfCharactersTyped = (state = 0, action) => {
+  switch (action.type) {
+    case 'NEXT_WORD':
+      return action.noOfCharactersTyped;
+    case 'FINISHED_RACE':
+      return action.noOfCharactersTyped;
     default:
       return state
   }
@@ -85,9 +100,9 @@ export const wrongWord = (state = false, action) => {
 }
 
 const typeRacerApp = combineReducers({
-  participants,
-  paragraph, raceStarted, timerSeconds, typingWordIndex,
-  everyoneReady, gameStarted, lastGameWMP, iamReady,
+  participants, lastRaceData,
+  paragraph, raceStarted, finishedRace, timerOn,
+  joinedRace, timerSeconds, typingWordIndex, noOfCharactersTyped,
 });
 
 export default typeRacerApp;

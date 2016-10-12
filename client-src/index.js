@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 import App from './components/App.jsx'
 import reducer from './reducers'
 import wss from './services/WebSocketService';
-import { addParticipant, participantReady, everyoneReady, setTimer, raceStarted,
+import { addParticipant, setTimer, raceStarted, startTimer,
   participantWPM } from './actions';
 
 const middleware = [ thunk ]
@@ -23,18 +23,29 @@ render(
   document.getElementById('root')
 )
 
+const sendCharaterInInterval = () => {
+  setTimeout(() => {
+    const state = store.getState();
+    if (state.joinedRace && !state.finishedRace){
+      wss.updateWMP(state.noOfCharactersTyped);
+      sendCharaterInInterval();
+    }
+  }, 1000);
+}
+
 const onParticpantJoined = participant => store.dispatch(addParticipant(participant));
 
 const onParticipantReady = participant => store.dispatch(participantReady(participant));
 
-const onEveryoneReady = participant => {
-  store.dispatch(everyoneReady());
+const onStartCounter = () => {
+  store.dispatch(startTimer());
   const timeInterval = setInterval(() => {
     let seconds = store.getState().timerSeconds;
     if (!seconds) {
       store.dispatch(raceStarted());
       clearInterval(timeInterval);
       document.getElementsByTagName('textarea')[0].focus();
+      sendCharaterInInterval();
       return;
     }
     store.dispatch(setTimer(--seconds));
@@ -43,4 +54,4 @@ const onEveryoneReady = participant => {
 
 const onParticipantCount = participant => store.dispatch(participantWPM(participant));
 
-wss.init(onParticpantJoined, onParticipantReady, onEveryoneReady, onParticipantCount);
+wss.init(onParticpantJoined, onParticipantReady, onStartCounter, onParticipantCount);

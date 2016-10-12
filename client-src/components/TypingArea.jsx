@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { correctWord, increaseWordCount, wrongWord, finishedTheRace } from '../actions/index.js';
+import { correctWord, nextWord, wrongWord, finishRace } from '../actions/index.js';
 
 class TypingArea extends Component {
   constructor(props) {
@@ -17,15 +17,13 @@ class TypingArea extends Component {
         if (event.keyCode === 32 && words[typingWordIndex] === nodeValue.trim()) {
           if (splitedValue[1]) this.node.value = splitedValue[1];
           else this.node.value = '';
-          if (typingWordIndex === words.length - 1) {
-            dispatch(finishedTheRace(paragraph.length));
-            return;
-          }
-          let noOfCharacters = 0;
+          let noOfCharactersTyped = 0;
           for (let i = 0; i <= typingWordIndex ; i ++) {
-            noOfCharacters += words[i].length + 1;
+            noOfCharactersTyped += words[i].length + 1;
           }
-          dispatch(increaseWordCount(noOfCharacters));
+          dispatch(nextWord(noOfCharactersTyped));
+        } else if (words.length === typingWordIndex + 1 && nodeValue === words[typingWordIndex]) {
+          dispatch(finishRace(paragraph.length));
         }
         dispatch(correctWord());
       } else {
@@ -34,16 +32,21 @@ class TypingArea extends Component {
     });
   }
   render() {
-    const { raceStarted } = this.props;
+    const { raceStarted, show } = this.props;
     const textProps = {};
     if(!raceStarted) textProps.disabled = true;
     return (
-      <textarea ref={node => { this.node = node; }} {...textProps}></textarea>
+      <textarea
+        ref={node => { this.node = node; }}
+        {...textProps}
+        style={{ display: show ? 'block' : 'none' }}
+      />
     );
   }
 }
 
 const mapStateToProps = (state) => ({
+  show: (state.timerOn || state.raceStarted) && !state.finishedRace,
   raceStarted: state.raceStarted,
   paragraph: state.paragraph,
   typingWordIndex: state.typingWordIndex,

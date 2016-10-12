@@ -7,7 +7,7 @@ let Paragraph = ({ paragraph, show }) => (
 
 const mapStateToProps = (state) => ({
   paragraph: state.paragraph,
-  show: state.everyoneReady,
+  show: (state.timerOn || state.raceStarted) && !state.finishedRace,
 })
 
 Paragraph = connect(

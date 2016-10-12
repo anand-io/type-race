@@ -4,11 +4,11 @@ function WebSocketService() {}
 
 // Add some event emmiter.
 WebSocketService.prototype.init = function init(onParticipantJoined, onParticipantReady,
-onEveryoneReady, onParticipantCount) {
+onStartCounter, onParticipantCount) {
   this.primus = Primus.connect(`http://localhost:3000/?myId=${myId}`);
   this.onParticipantJoined = onParticipantJoined;
   this.onParticipantReady = onParticipantReady;
-  this.onEveryoneReady = onEveryoneReady;
+  this.onStartCounter = onStartCounter;
   this.onParticipantCount = onParticipantCount;
   this.addListeners();
 };
@@ -24,8 +24,8 @@ WebSocketService.prototype.addListeners = function addListeners(pri) {
       this.onParticipantReady(participant);
     });
 
-    this.primus.on('everyoneReady', () => {
-      this.onEveryoneReady();
+    this.primus.on('startCounter', () => {
+      this.onStartCounter();
     });
 
     this.primus.on('participantWordCount', data => {
@@ -36,16 +36,20 @@ WebSocketService.prototype.addListeners = function addListeners(pri) {
   });
 };
 
-WebSocketService.prototype.joinRoom = function joinRoom(room, callback) {
-  this.primus.send('joinRoom', room, callback);
+WebSocketService.prototype.joinRace = function joinRoom(room, callback) {
+  this.primus.send('joinRace', room, callback);
 }
 
 WebSocketService.prototype.sendReadySignal = function sendReadySignal(room) {
   this.primus.send('ready', room);
 }
 
-WebSocketService.prototype.calculateCharacterCount = function increaseWordCount(noOfCharacters) {
-  this.primus.send('wordCount', location.pathname.replace('/', ''), noOfCharacters);
+WebSocketService.prototype.updateWMP = function updateWMP(noOfCharacters) {
+  this.primus.send('updateWMP', noOfCharacters);
+}
+
+WebSocketService.prototype.finishedRace = function updateWMP(noOfCharacters) {
+  this.primus.send('finishedRace');
 }
 
 const instance = new WebSocketService();

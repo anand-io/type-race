@@ -10,7 +10,7 @@ let Timer = ({ show, seconds }) => (
 )
 
 const mapStateToProps = (state) => ({
-  show: state.everyoneReady && !state.raceStarted,
+  show: state.timerOn,
   seconds: state.timerSeconds,
 })
 

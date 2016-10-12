@@ -13,55 +13,72 @@ function WebSocketServer(server) {
   primus.on('connection', function connection(spark) {
     // client.set(spark.query.myId, spark.id);
 
-    spark.on('joinRoom', function (room, callback) {
-      spark.join(room, function () {
-        client.getAsync(`${room}_para`)
+    spark.on('joinRace', function (raceId, callback) {
+      if (spark.joinedRace) return;
+      spark.join(raceId, function () {
+        spark.joinedRace = raceId;
+        client.saddAsync(`${raceId}_racers`, spark.query.myId);
+        client.getAsync(`${raceId}_para`)
         .then(para => {
-          if(!para) client.set(`${room}_para`, paragraphs['0']);
+          if(!para) client.set(`${raceId}_para`, paragraphs['0']);
           const paragraph = para || paragraphs['0'];
 
-          const sparks = spark.room(room).clients();
+          const sparks = spark.room(raceId).clients();
           const participants = sparks.map(id => {
             const s = primus.spark(id);
             return s.query.myId
           });
           callback(paragraph, participants);
+          if (sparks.length > 1) {
+            spark.room(raceId).send('startCounter');
+            client.set(`${raceId}_statedAt`, new Date().getTime());
+          }
         });
-        // spark.write('you joined room ' + room);
-
-        spark.room(room).except(spark.id).send('participantJoined', spark.query.myId);
+        spark.room(raceId).except(spark.id).send('participantJoined', spark.query.myId);
       });
     });
 
-    spark.on('ready', function (room, callback) {
-      spark.isReady = true;
-      spark.room(room).send('participantReady', spark.query.myId);
-      const sparks = spark.room(room).clients();
-      if (!sparks || sparks.length === 1) return;
-      let isEveryoneReady = true;
-      sparks.forEach(id => {
-        const s = primus.spark(id);
-        if (!s.isReady) isEveryoneReady = false;
-      });
-      if (isEveryoneReady) {
-        spark.room(room).send('everyoneReady');
-        client.set(`${room}_started`, new Date().getTime());
-      }
-    });
-
-    spark.on('wordCount', (room, noOfCharacters) => {
-      const data = { participantId: spark.query.myId };
-      data.count = noOfCharacters;
+    spark.on('updateWMP', (noOfCharacters) => {
+      const raceId = spark.joinedRace;
       const countTime = new Date().getTime();
-      client.getAsync(`${room}_started`)
+      client.getAsync(`${raceId}_statedAt`)
       .then((startedTime) => {
-        if (!startedTime) throw Error(`no startedTime for room ${room}`);
+        if (!startedTime) throw Error(`no startedTime for race ${raceId}`);
         const timeTakenInMin = ((countTime - (Number(startedTime) + 6000)) / 1000) / 60;
         const wpm = (noOfCharacters / 5) / timeTakenInMin;
         const data = { id: spark.query.myId, wpm, noOfCharacters };
-        spark.room(room).send('participantWordCount', data);
+        spark.room(raceId).send('participantWordCount', data);
       });
     });
+
+    spark.on('raceStarted', () => {
+      const raceId = spark.joinedRace;
+      client.set(`${raceId}_isStated`, true);
+    });
+
+    spark.on('finishedRace', () => {
+      const raceId = spark.joinedRace;
+      client.sremAsync(`${raceId}_racers`, spark.query.myId)
+      .then(() => {
+        client.smembersAsync(`${raceId}_racers`)
+        .then((racers) => {
+          if (racers.length === 0) {
+            client.del(`${raceId}_isStated`);
+            const sparks = spark.room(raceId).clients();
+            sparks.forEach(s => {
+              s.leave(raceId, () => {
+                s.send('leftRace', raceId);
+              });
+            });
+          }
+        });
+      });
+    });
+
+    // spark.on('raceStarted', (room) => {
+    //   client.set(`${room}_raceStated`, 'true');
+    // });
+
   });
 }
 

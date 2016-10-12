@@ -1,6 +1,6 @@
 export default (state = '', action) => {
   switch (action.type) {
-    case 'GAME_STARTED':
+    case 'RACE_DATA':
       return action.paragraph;
     default:
       return state

@@ -1,18 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getReady } from '../actions';
 
 let Ready = ({ dispatch, show }) => (
-  <a
+  <p
     style={{ display: show ? 'block' : 'none' }}
-    onClick={() => {
-      dispatch(getReady(location.pathname.replace('/', '')));
-    }}
-  >Ready</a>
+  >Waiting for others to join.</p>
 );
 
 const mapStateToProps = (state) => ({
-  show: !state.iamReady && state.gameStarted,
+  show: (!state.timerOn && state.joinedRace && !state.raceStarted) ,
 })
 
 Ready = connect(mapStateToProps)(Ready);
