@@ -9,12 +9,14 @@ class TypingArea extends Component {
   }
   componentDidMount() {
     this.node.addEventListener("keyup", (event) => {
-      const nodeValue = this.node.value;
+      const splitedValue = this.node.value.split(' ');
+      const nodeValue = splitedValue[0];
       const { paragraph, typingWordIndex, dispatch } = this.props;
       const words = paragraph.split(' ');
       if (words[typingWordIndex].includes(nodeValue.trim())) {
         if (event.keyCode === 32 && words[typingWordIndex] === nodeValue.trim()) {
-          this.node.value = "";
+          if (splitedValue[1]) this.node.value = splitedValue[1];
+          else this.node.value = '';
           if (typingWordIndex === words.length - 1) {
             dispatch(finishedTheRace(paragraph.length));
             return;
