@@ -99,9 +99,20 @@ export const wrongWord = (state = false, action) => {
   }
 }
 
+export const raceAlreadyStarted = (state = false, action) => {
+  switch (action.type) {
+    case 'RACE_ALREADY_STARTED':
+      return true;
+    case 'LEFT_RACE':
+      return false;
+    default:
+      return state
+  }
+}
+
 const typeRacerApp = combineReducers({
   participants, lastRaceData,
-  paragraph, raceStarted, finishedRace, timerOn,
+  paragraph, raceStarted, finishedRace, timerOn, raceAlreadyStarted,
   joinedRace, timerSeconds, typingWordIndex, noOfCharactersTyped,
 });
 

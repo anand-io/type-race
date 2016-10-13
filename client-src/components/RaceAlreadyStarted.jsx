@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 let Waiting = ({ dispatch, show }) => (
   <p
     style={{ display: show ? 'block' : 'none' }}
-  >Waiting for others to join.</p>
+  >Race already started! Try again later.</p>
 );
 
 const mapStateToProps = (state) => ({
-  show: (!state.timerOn && state.joinedRace && !state.raceStarted && !state.raceAlreadyStarted),
+  show: state.raceAlreadyStarted,
 })
 
 Waiting = connect(mapStateToProps)(Waiting);

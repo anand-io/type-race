@@ -5,7 +5,8 @@ export const joinRace = room => dispatch => {
   dispatch(joinedRace());
   wss.joinRace(room, (paragraph, participants) => {
     if (!paragraph && !participants) {
-      dispatch(raceInProgress(paragraph));
+      dispatch(raceAlreadyStarted(paragraph));
+      setTimeout(() => leftRace(), 2000);
       return;
     }
     dispatch(raceData(paragraph));
@@ -25,6 +26,10 @@ export const joinedRace = () => ({
   type: 'JOINED_RACE'
 });
 
+export const leftRace = () => ({
+  type: 'LEFT_RACE'
+});
+
 export const raceData = paragraph => ({
   type: 'RACE_DATA',
   paragraph
@@ -42,10 +47,6 @@ export const startTimer = id => ({
 export const setTimer = time => ({
   type: 'SET_TIME',
   time,
-});
-
-export const raceInProgress = time => ({
-  type: 'RACE_IN_PROGRESS',
 });
 
 export const raceStarted = () => ({
@@ -82,4 +83,8 @@ export const participantWPM = ({id, wpm, noOfCharacters}) => ({
   type: 'PARTICIPANT_WPM',
   id,
   wpm, noOfCharacters,
+});
+
+export const raceAlreadyStarted = time => ({
+  type: 'RACE_ALREADY_STARTED',
 });
