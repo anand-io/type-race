@@ -2,10 +2,9 @@
  * Got this style from.
  * http://codepen.io/geoffgraham/pen/FyBJk
  */
- 
+
 body {
   font-family: "Helvetica Neue", arial, sans-serif;
-  padding: 2em;
 }
 
 h1 {
@@ -15,6 +14,10 @@ h1 {
 
 h3 {
   font-size: 2em;
+}
+
+p {
+  text-align: center;
 }
 
 progress, progress[role] {
@@ -27,10 +30,15 @@ progress, progress[role] {
   width: 100%;
 }
 
+.game-timer {
+  text-align: center;
+  font-size: 22px;
+}
+
 .skill-list {
   list-style: none;
   margin: 0;
-  padding: 1em;
+  padding: 0em;
 }
 
 .skill {
@@ -38,12 +46,12 @@ progress, progress[role] {
   margin-bottom: 1em;
   position: relative;
 }
-.skill h3 {
+.skill h4 {
   color: #fff;
-  left: 1em;
+  left: 10px;
   line-height: 1;
   position: absolute;
-  top: -30px;
+  top: -12px;
   height: inherit;
 }
 .skill ::-webkit-progress-value {

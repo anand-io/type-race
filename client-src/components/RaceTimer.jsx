@@ -8,6 +8,7 @@ let RaceTimer = ({ show, seconds }) => {
   const min = parseInt(seconds / 60, 10) % 60;
   return (
     <div
+      className='game-timer'
       style={{ display: show ? 'block' : 'none' }}
     >
       {`${pad(min)}:${pad(seconds % 60)}`}
@@ -16,7 +17,7 @@ let RaceTimer = ({ show, seconds }) => {
 }
 
 const mapStateToProps = (state) => ({
-  show: state.raceStarted && !state.finishRace,
+  show: (state.raceStarted || state.startTimerOn) && !state.finishRace,
   seconds: state.gameTimerSeconds,
 })
 

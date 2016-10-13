@@ -59,8 +59,8 @@ const onStartCounter = () => {
 
 const startRaceTimer = () => {
   const timeInterval = setInterval(() => {
-    if (store.getState().finishedRace) {
-      store.dispatch(setGameTimer(120));
+    if (!store.getState().joinedRace) {
+      // store.dispatch(setGameTimer(120));
       clearInterval(timeInterval);
       return;
     }

@@ -13,7 +13,7 @@ let Participants = ({ participants, paragraph, finishedRace, myId }) => (
           className="skill"
           key={participant.id}
         >
-          <h3>{`${participantId}: ${Math.ceil(participant.wpm)} WPM`}</h3>
+          <h4>{`${participantId}: ${Math.ceil(participant.wpm)} WPM`}</h4>
           <progress className="skill-1" max="100" value={percentageCompleted}>
             <strong>{`Skill Level: ${percentageCompleted}%`}</strong>
           </progress>
