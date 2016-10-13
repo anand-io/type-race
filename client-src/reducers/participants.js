@@ -24,7 +24,7 @@ const participant = (state = {}, action) => {
         wpm: action.wpm,
         noOfCharacters: action.noOfCharacters,
         isFinished: action.isFinished,
-        place: action.place,
+        position: action.position,
       });
     default:
       return state
@@ -37,15 +37,17 @@ const participants = (state = [], action) => {
       return [
         ...state,
         participant(undefined, action),
-      ]
+      ];
     case 'PARTICIPANT_READY':
       return state.map(p =>
         participant(p, action)
-      )
+      );
     case 'PARTICIPANT_WPM':
       return state.map(p =>
         participant(p, action)
-      )
+      );
+    case 'RACE_OVER':
+      return [];
     default:
       return state
   }

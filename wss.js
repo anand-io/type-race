@@ -59,13 +59,13 @@ function WebSocketServer(server) {
         const timeTakenInMin = ((countTime - (Number(startedTime) + 6000)) / 1000) / 60;
         const wpm = (noOfCharacters / 5) / timeTakenInMin;
         const sparks = spark.room(raceId).clients();
-        let place = 1;
+        let position = 1;
         sparks.forEach(id => {
           const s = primus.spark(id);
           if (s.id === spark.id) return;
-          if (s.noOfCharacters > noOfCharacters || s.isFinished) place++;
+          if (s.noOfCharacters > noOfCharacters || s.isFinished) position++;
         });
-        const data = { id: spark.query.myId, wpm, noOfCharacters, isFinished, place };
+        const data = { id: spark.query.myId, wpm, noOfCharacters, isFinished, position };
         spark.room(raceId).send('participantWordCount', data);
       });
 

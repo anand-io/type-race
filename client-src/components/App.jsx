@@ -7,6 +7,7 @@ import StartTimer from './StartTimer.jsx';
 import RaceTimer from './RaceTimer.jsx';
 import Waiting from './Waiting.jsx';
 import RaceAlreadyStarted from './RaceAlreadyStarted.jsx';
+import RaceResults from './RaceResults.jsx'
 
 let App = () => (
   <div>
@@ -17,6 +18,7 @@ let App = () => (
     <Paragraph />
     <StartTimer />
     <TypingArea />
+    <RaceResults />
     <JoinButton />
   </div>
 )

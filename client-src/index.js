@@ -7,7 +7,9 @@ import App from './components/App.jsx'
 import reducer from './reducers'
 import wss from './services/WebSocketService';
 import { addParticipant, setStartTimer, raceStarted, startTimer,
-  participantWPM, raceOver, setGameTimer } from './actions';
+  participantUpdate, raceOver, setGameTimer, setMyInfo} from './actions';
+
+const myId = document.getElementById('data').getAttribute('myid');
 
 const middleware = [ thunk ]
 
@@ -22,6 +24,8 @@ render(
   </Provider>,
   document.getElementById('root')
 )
+
+store.dispatch(setMyInfo({ id: myId }));
 
 const sendCharaterInInterval = () => {
   setTimeout(() => {
@@ -70,6 +74,6 @@ const startRaceTimer = () => {
 
 const onRaceOver = () => store.dispatch(raceOver());
 
-const onParticipantCount = participant => store.dispatch(participantWPM(participant));
+const onParticipantUpdate = participant => store.dispatch(participantUpdate(participant));
 
-wss.init(onParticpantJoined, onStartCounter, onParticipantCount, onRaceOver);
+wss.init(onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver);

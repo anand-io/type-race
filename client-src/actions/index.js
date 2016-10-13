@@ -17,10 +17,22 @@ export const joinRace = room => dispatch => {
 }
 
 export const finishRace = noOfCharactersTyped => dispatch => {
-  // wss.finishedRace();
   wss.updateWMP(noOfCharactersTyped, true);
   dispatch(finishedRace(noOfCharactersTyped));
+  dispatch(showRaceResult());
 }
+
+export const participantUpdate = participant => dispatch => {
+  dispatch(participantWPM(participant));
+  if (participant.isFinished) {
+    dispatch(addRaceResult({ participant }));
+  }
+}
+
+export const setMyInfo = myInfo => ({
+  type: 'MY_INFO',
+  myInfo,
+});
 
 export const joinedRace = () => ({
   type: 'JOINED_RACE'
@@ -63,12 +75,22 @@ export const finishedRace = noOfCharactersTyped => ({
   noOfCharactersTyped,
 });
 
+export const addRaceResult = result => ({
+  type: 'ADD_RACE_RESULT',
+  position: result.participant.position,
+  participant: result.participant,
+});
+
 export const raceOver = () => ({
   type: 'RACE_OVER',
 });
 
-export const lastRaceData = () => ({
-  type: 'LAST_RACE_DATA',
+export const showRaceResult = () => ({
+  type: 'SHOW_RACE_RESULT',
+});
+
+export const hideRaceResult = () => ({
+  type: 'HIDE_RACE_RESULT',
 });
 
 export const correctWord = () => ({
