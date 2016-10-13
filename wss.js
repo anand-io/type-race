@@ -83,9 +83,18 @@ function WebSocketServer(server) {
       });
     });
 
-    // spark.on('raceStarted', (room) => {
-    //   client.set(`${room}_raceStated`, 'true');
-    // });
+    spark.on('end', () => {
+      const raceId = spark.joinedRace;
+      client.sremAsync(`${raceId}_racers`, spark.query.myId)
+      .then(() => {
+        client.smembersAsync(`${raceId}_racers`)
+        .then((racers) => {
+          if (racers.length === 0) {
+            client.del(`${raceId}_isStated`);
+          }
+        });
+      });
+    });
 
   });
 }
