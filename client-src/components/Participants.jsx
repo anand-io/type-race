@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 let Participants = ({ participants, paragraph }) => (
   <ul className="skill-list">
     {participants.map(participant => {
-      const percentageCompleted = (participant.noOfCharacters / paragraph.length) * 100;
+      const percentageCompleted = (participant.noOfCharacters / paragraph.raw.length) * 100;
       return (
         <li className="skill" key={participant.id}>
           <h3>{`${participant.id}: ${Math.ceil(participant.wpm)} WPM`}</h3>
