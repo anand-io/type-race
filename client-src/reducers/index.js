@@ -85,9 +85,9 @@ export const wrongWord = (state = false, action) => {
 }
 
 const typeRacerApp = combineReducers({
-  participants,
-  paragraph, raceStarted, timerSeconds, typingWordIndex,
-  everyoneReady, gameStarted, lastGameWMP, iamReady,
+  participants, paragraph, raceStarted,
+  timerSeconds, typingWordIndex, everyoneReady,
+  gameStarted, lastGameWMP, iamReady, wrongWord
 });
 
 export default typeRacerApp;
