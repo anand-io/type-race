@@ -7,7 +7,7 @@ import App from './components/App.jsx'
 import reducer from './reducers'
 import wss from './services/WebSocketService';
 import { addParticipant, setStartTimer, raceStarted, startTimer,
-  participantUpdate, raceOver, setGameTimer, setMyInfo} from './actions';
+  participantUpdate, raceOver, setGameTimer, setMyInfo, finishRace} from './actions';
 
 const myId = document.getElementById('data').getAttribute('myid');
 
@@ -68,6 +68,7 @@ const startRaceTimer = () => {
     store.dispatch(setGameTimer(--seconds));
     if (seconds === 0) {
       clearInterval(timeInterval);
+      store.dispatch(finishRace(store.getState().noOfCharactersTyped));
     }
   }, 1000);
 };
