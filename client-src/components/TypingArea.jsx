@@ -37,6 +37,7 @@ class TypingArea extends Component {
           dispatch(nextWord(noOfCharactersTyped));
         } else if (words.length === typingWordIndex + 1 && nodeValue === words[typingWordIndex]) {
           dispatch(finishRace(paragraph.raw.length));
+          this.node.value = '';
         } else if(event.keyCode === 32 && words[typingWordIndex] !== nodeValue.trim()) {
           dispatch(wrongWord());
         }

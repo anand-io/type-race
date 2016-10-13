@@ -61,13 +61,13 @@ const startRaceTimer = () => {
   const timeInterval = setInterval(() => {
     if (store.getState().finishedRace) {
       store.dispatch(setGameTimer(120));
-      clearInterval(startRaceTimer);
+      clearInterval(timeInterval);
       return;
     }
     let seconds = store.getState().gameTimerSeconds;
     store.dispatch(setGameTimer(--seconds));
     if (seconds === 0) {
-      clearInterval(startRaceTimer);
+      clearInterval(timeInterval);
     }
   }, 1000);
 };

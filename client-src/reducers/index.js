@@ -83,7 +83,7 @@ export const showRaceResult = (state = false, action) => {
   switch (action.type) {
     case 'SHOW_RACE_RESULT':
       return true;
-    case 'HIDE_RACE_RESULT':
+    case 'JOINED_RACE':
       return false;
     default:
       return state
@@ -94,6 +94,8 @@ export const startTimerSeconds = (state = 5, action) => {
   switch (action.type) {
     case 'SET_START_TIMER':
       return action.time;
+    case 'RACE_OVER':
+      return 5;
     default:
       return state
   }
@@ -103,6 +105,8 @@ export const gameTimerSeconds = (state = 120, action) => {
   switch (action.type) {
     case 'SET_GAME_TIMER':
       return action.time;
+    case 'RACE_OVER':
+      return 120;
     default:
       return state
   }
@@ -114,6 +118,8 @@ export const noOfCharactersTyped = (state = 0, action) => {
       return action.noOfCharactersTyped;
     case 'FINISHED_RACE':
       return action.noOfCharactersTyped;
+    case 'RACE_OVER':
+      return 0;
     default:
       return state
   }
@@ -123,6 +129,8 @@ export const typingWordIndex = (state = 0, action) => {
   switch (action.type) {
     case 'NEXT_WORD':
       return state + 1;
+    case 'RACE_OVER':
+      return 0;
     default:
       return state
   }

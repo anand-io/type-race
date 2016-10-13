@@ -36,6 +36,7 @@ function WebSocketServer(server) {
               return s.query.myId
             });
             callback(paragraph, participants);
+            console.log(sparks);
             if (sparks.length > 1) {
               spark.room(raceId).send('startCounter');
               client.set(`${raceId}_statedAt`, new Date().getTime());
@@ -79,6 +80,8 @@ function WebSocketServer(server) {
             const sparks = spark.room(raceId).clients();
             sparks.forEach(id => {
               const s = primus.spark(id);
+              s.joinedRace = null;
+              s.noOfCharacters = 0;
               s.leave(raceId, () => {
                 s.send('raceOver', raceId);
               });
