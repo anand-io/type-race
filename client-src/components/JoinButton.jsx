@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { joinRace } from '../actions';
 
 let Start = ({ dispatch, show, showRaceResult }) => (
-  <a
+  <div
+    className='btn btn_primary'
     style={{ display: show ? 'block' : 'none' }}
     onClick={() => {
       dispatch(joinRace(location.pathname.replace('/', '')));
     }}
-  >{showRaceResult ? "Race Again" : "Join Race"}</a>
+  >{showRaceResult ? "Race Again" : "Join Race"}</div>
 );
 
 const mapStateToProps = (state) => ({

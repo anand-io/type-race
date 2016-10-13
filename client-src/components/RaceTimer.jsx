@@ -17,7 +17,7 @@ let RaceTimer = ({ show, seconds }) => {
 }
 
 const mapStateToProps = (state) => ({
-  show: (state.raceStarted || state.startTimerOn) && !state.finishRace,
+  show: state.joinedRace && !state.finishRace,
   seconds: state.gameTimerSeconds,
 })
 

@@ -11,7 +11,10 @@ const getStyle = (typingWordIndex, index, wrongWord) => {
 }
 
 let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord }) => (
-  <div style={{ display: show ? 'block' : 'none', width:'300px' }}>
+  <div
+    className='paragraph'
+    style={{ display: show ? 'block' : 'none', width:'300px' }}
+  >
     {Array.isArray(paragraph.words) ?
       paragraph.words.map((word, index) =>
         <span

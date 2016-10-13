@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { correctWord, nextWord, wrongWord, finishRace } from '../actions/index.js';
 
 const textAreaStyle = (wrongWord, show) => {
-  if (!wrongWord) return { fontSize: '25px', display: show ? 'block' : 'none', }
+  if (!wrongWord) return { display: show ? 'block' : 'none' };
   return {
-    fontSize: '25px',
     color: 'RED',
     display: show ? 'block' : 'none',
   }
@@ -52,6 +51,7 @@ class TypingArea extends Component {
     if(!raceStarted) textProps.disabled = true;
     return (
       <input
+        className='input_default input_big'
         placeholder="type here"
         style={textAreaStyle(wrongWord, show)}
         ref={node => { this.node = node; }}
