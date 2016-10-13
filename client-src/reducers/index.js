@@ -13,7 +13,7 @@ export const joinedRace = (state = false, action) => {
   }
 }
 
-export const myInfo = (state = null, action) => {
+export const myInfo = (state = {}, action) => {
   switch (action.type) {
     case 'MY_INFO':
       return action.myInfo;
@@ -74,6 +74,8 @@ export const raceResults = (state = [], action) => {
         ...state,
         raceResult(undefined, action),
       ]
+    case 'JOINED_RACE':
+      return [];
     default:
       return state
   }

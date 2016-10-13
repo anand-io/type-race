@@ -1,12 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-let RaceResults = ({ raceResults, show }) => (
+let RaceResults = ({ raceResults, show, myId }) => (
   <ul style={{ display: show ? 'block' : 'none' }}>
     {raceResults.map(result => {
+      const participant = result.participant.id === myId ?
+      'You' : result.participant.id.split('-')[0];
       return (
         <li key={result.position}>
-          {`${result.position} place - ${result.participant.id.split('-')[0]}`}
+          {`${result.position} place -
+          ${participant} -
+          ${Math.ceil(result.participant.wpm)} WMP`}
         </li>
       );
     })}
@@ -16,6 +20,7 @@ let RaceResults = ({ raceResults, show }) => (
 const mapStateToProps = (state) => ({
   raceResults: state.raceResults,
   show: state.showRaceResult,
+  myId: state.myInfo.id,
 });
 
 RaceResults = connect(
