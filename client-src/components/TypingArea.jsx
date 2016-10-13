@@ -22,7 +22,6 @@ class TypingArea extends Component {
       const nodeValue = splitedValue[0];
       const { paragraph, typingWordIndex, dispatch } = this.props;
       const words = paragraph.words;
-      console.log(`typingWordIndex : ${typingWordIndex}`)
       // if (words[typingWordIndex].substring(0, nodeValue.trim().length) !== nodeValue.trim()) {
       //   dispatch(wrongWord());
       // }

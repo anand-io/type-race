@@ -7,7 +7,7 @@ let Participants = ({ participants, paragraph }) => (
       const percentageCompleted = (participant.noOfCharacters / paragraph.raw.length) * 100;
       return (
         <li className="skill" key={participant.id}>
-          <h3>{`${participant.id}: ${Math.ceil(participant.wpm)} WPM`}</h3>
+          <h3>{`${participant.id}: ${Math.ceil(participant.wpm)} WPM ${participant.place}`}</h3>
           <progress className="skill-1" max="100" value={percentageCompleted}>
             <strong>{`Skill Level: ${percentageCompleted}%`}</strong>
           </progress>

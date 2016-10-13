@@ -17,8 +17,8 @@ export const joinRace = room => dispatch => {
 }
 
 export const finishRace = noOfCharactersTyped => dispatch => {
-  wss.finishedRace();
-  wss.updateWMP(noOfCharactersTyped);
+  // wss.finishedRace();
+  wss.updateWMP(noOfCharactersTyped, true);
   dispatch(finishedRace(noOfCharactersTyped));
 }
 
@@ -79,10 +79,12 @@ export const nextWord = noOfCharactersTyped => ({
   noOfCharactersTyped,
 });
 
-export const participantWPM = ({id, wpm, noOfCharacters}) => ({
+export const participantWPM = ({id, wpm, noOfCharacters, place, isFinished}) => ({
   type: 'PARTICIPANT_WPM',
   id,
   wpm, noOfCharacters,
+  place,
+  isFinished,
 });
 
 export const raceAlreadyStarted = time => ({

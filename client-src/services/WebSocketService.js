@@ -4,8 +4,8 @@ function WebSocketService() {}
 
 // Add some event emmiter.
 WebSocketService.prototype.init = function init(onParticipantJoined, onStartCounter,
-  onParticipantCount) {
-  this.primus = Primus.connect(`http://localhost:3000/?myId=${myId}`);
+  onParticipantCount, onRaceOver) {
+  this.primus = Primus.connect(`https://3daec388.ngrok.io/?myId=${myId}`);
   this.onParticipantJoined = onParticipantJoined;
   this.onStartCounter = onStartCounter;
   this.onParticipantCount = onParticipantCount;
@@ -32,6 +32,11 @@ WebSocketService.prototype.addListeners = function addListeners(pri) {
       console.log(data);
     });
 
+    this.primus.on('raceOver', data => {
+      console.log('raceOver');
+      this.onRaceOver(data);
+    });
+
   });
 };
 
@@ -43,8 +48,8 @@ WebSocketService.prototype.sendReadySignal = function sendReadySignal(room) {
   this.primus.send('ready', room);
 }
 
-WebSocketService.prototype.updateWMP = function updateWMP(noOfCharacters) {
-  this.primus.send('updateWMP', noOfCharacters);
+WebSocketService.prototype.updateWMP = function updateWMP(noOfCharacters, isFinished) {
+  this.primus.send('updateWMP', noOfCharacters, isFinished);
 }
 
 WebSocketService.prototype.raceStarted = function raceStarted(noOfCharacters) {

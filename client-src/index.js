@@ -7,7 +7,7 @@ import App from './components/App.jsx'
 import reducer from './reducers'
 import wss from './services/WebSocketService';
 import { addParticipant, setTimer, raceStarted, startTimer,
-  participantWPM } from './actions';
+  participantWPM, raceOver } from './actions';
 
 const middleware = [ thunk ]
 
@@ -51,6 +51,8 @@ const onStartCounter = () => {
     store.dispatch(setTimer(--seconds));
   }, 1000);
 };
+
+const onRaceOver = () => store.dispatch(raceOver());
 
 const onParticipantCount = participant => store.dispatch(participantWPM(participant));
 

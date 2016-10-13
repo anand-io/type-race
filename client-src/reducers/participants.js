@@ -6,6 +6,8 @@ const participant = (state = {}, action) => {
         name: action.name,
         wpm: 0,
         noOfCharacters: 0,
+        finishRace: false,
+        place: 0,
       }
     case 'PARTICIPANT_READY':
       if (state.id !== action.id) {
@@ -21,6 +23,8 @@ const participant = (state = {}, action) => {
       return Object.assign({}, state, {
         wpm: action.wpm,
         noOfCharacters: action.noOfCharacters,
+        isFinished: action.isFinished,
+        place: action.place,
       });
     default:
       return state

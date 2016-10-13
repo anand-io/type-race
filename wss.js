@@ -24,6 +24,7 @@ function WebSocketServer(server) {
         spark.join(raceId, function () {
           spark.joinedRace = raceId;
           client.saddAsync(`${raceId}_racers`, spark.query.myId);
+          console.log(spark.query.myId);
           client.getAsync(`${raceId}_para`)
           .then(para => {
             if(!para) client.set(`${raceId}_para`, paragraphs['0']);
@@ -40,32 +41,35 @@ function WebSocketServer(server) {
               client.set(`${raceId}_statedAt`, new Date().getTime());
             }
           });
+          console.log(spark.room(raceId).clients());
           spark.room(raceId).except(spark.id).send('participantJoined', spark.query.myId);
         });
       });
 
     });
 
-    spark.on('updateWMP', (noOfCharacters) => {
+    spark.on('updateWMP', (noOfCharacters, isFinished) => {
       const raceId = spark.joinedRace;
       const countTime = new Date().getTime();
+      spark.noOfCharacters = noOfCharacters;
+      spark.isFinished = isFinished;
       client.getAsync(`${raceId}_statedAt`)
       .then((startedTime) => {
         if (!startedTime) throw Error(`no startedTime for race ${raceId}`);
         const timeTakenInMin = ((countTime - (Number(startedTime) + 6000)) / 1000) / 60;
         const wpm = (noOfCharacters / 5) / timeTakenInMin;
-        const data = { id: spark.query.myId, wpm, noOfCharacters };
+        const sparks = spark.room(raceId).clients();
+        let place = 1;
+        sparks.forEach(id => {
+          const s = primus.spark(id);
+          if (s.id === spark.id) return;
+          if (s.noOfCharacters > noOfCharacters || s.isFinished) place++;
+        });
+        const data = { id: spark.query.myId, wpm, noOfCharacters, isFinished, place };
         spark.room(raceId).send('participantWordCount', data);
       });
-    });
 
-    spark.on('raceStarted', () => {
-      const raceId = spark.joinedRace;
-      client.set(`${raceId}_isStated`, true);
-    });
-
-    spark.on('finishedRace', () => {
-      const raceId = spark.joinedRace;
+      if (!isFinished) return;
       client.sremAsync(`${raceId}_racers`, spark.query.myId)
       .then(() => {
         client.smembersAsync(`${raceId}_racers`)
@@ -73,15 +77,23 @@ function WebSocketServer(server) {
           if (racers.length === 0) {
             client.del(`${raceId}_isStated`);
             const sparks = spark.room(raceId).clients();
-            sparks.forEach(s => {
+            sparks.forEach(id => {
+              const s = primus.spark(id);
               s.leave(raceId, () => {
-                s.send('leftRace', raceId);
+                s.send('raceOver', raceId);
               });
             });
           }
         });
       });
+
     });
+
+    spark.on('raceStarted', () => {
+      const raceId = spark.joinedRace;
+      client.set(`${raceId}_isStated`, true);
+    });
+
 
     spark.on('end', () => {
       const raceId = spark.joinedRace;
