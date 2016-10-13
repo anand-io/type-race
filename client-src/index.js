@@ -6,8 +6,8 @@ import thunk from 'redux-thunk'
 import App from './components/App.jsx'
 import reducer from './reducers'
 import wss from './services/WebSocketService';
-import { addParticipant, setTimer, raceStarted, startTimer,
-  participantWPM, raceOver } from './actions';
+import { addParticipant, setStartTimer, raceStarted, startTimer,
+  participantWPM, raceOver, setGameTimer } from './actions';
 
 const middleware = [ thunk ]
 
@@ -39,16 +39,32 @@ const onParticpantJoined = participant => store.dispatch(addParticipant(particip
 const onStartCounter = () => {
   store.dispatch(startTimer());
   const timeInterval = setInterval(() => {
-    let seconds = store.getState().timerSeconds;
+    let seconds = store.getState().startTimerSeconds;
     if (!seconds) {
       store.dispatch(raceStarted());
       clearInterval(timeInterval);
       document.getElementsByTagName('input')[0].focus();
+      startRaceTimer();
       wss.raceStarted();
       sendCharaterInInterval();
       return;
     }
-    store.dispatch(setTimer(--seconds));
+    store.dispatch(setStartTimer(--seconds));
+  }, 1000);
+};
+
+const startRaceTimer = () => {
+  const timeInterval = setInterval(() => {
+    if (store.getState().finishedRace) {
+      store.dispatch(setGameTimer(120));
+      clearInterval(startRaceTimer);
+      return;
+    }
+    let seconds = store.getState().gameTimerSeconds;
+    store.dispatch(setGameTimer(--seconds));
+    if (seconds === 0) {
+      clearInterval(startRaceTimer);
+    }
   }, 1000);
 };
 
@@ -56,4 +72,4 @@ const onRaceOver = () => store.dispatch(raceOver());
 
 const onParticipantCount = participant => store.dispatch(participantWPM(participant));
 
-wss.init(onParticpantJoined, onStartCounter, onParticipantCount);
+wss.init(onParticpantJoined, onStartCounter, onParticipantCount, onRaceOver);

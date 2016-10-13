@@ -6,7 +6,7 @@ export const joinRace = room => dispatch => {
   wss.joinRace(room, (paragraph, participants) => {
     if (!paragraph && !participants) {
       dispatch(raceAlreadyStarted(paragraph));
-      setTimeout(() => leftRace(), 2000);
+      setTimeout(() => raceOver(), 2000);
       return;
     }
     dispatch(raceData(paragraph));
@@ -44,8 +44,13 @@ export const startTimer = id => ({
   type: 'START_TIMER',
 });
 
-export const setTimer = time => ({
-  type: 'SET_TIME',
+export const setStartTimer = time => ({
+  type: 'SET_START_TIMER',
+  time,
+});
+
+export const setGameTimer = time => ({
+  type: 'SET_GAME_TIMER',
   time,
 });
 

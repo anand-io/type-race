@@ -61,7 +61,7 @@ class TypingArea extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  show: (state.timerOn || state.raceStarted) && !state.finishedRace,
+  show: (state.startTimerOn || state.raceStarted) && !state.finishedRace,
   raceStarted: state.raceStarted,
   paragraph: state.paragraph,
   typingWordIndex: state.typingWordIndex,

@@ -5,10 +5,11 @@ function WebSocketService() {}
 // Add some event emmiter.
 WebSocketService.prototype.init = function init(onParticipantJoined, onStartCounter,
   onParticipantCount, onRaceOver) {
-  this.primus = Primus.connect(`https://3daec388.ngrok.io/?myId=${myId}`);
+  this.primus = Primus.connect(`http://localhost:3000/?myId=${myId}`);
   this.onParticipantJoined = onParticipantJoined;
   this.onStartCounter = onStartCounter;
   this.onParticipantCount = onParticipantCount;
+  this.onRaceOver = onRaceOver;
   this.addListeners();
 };
 

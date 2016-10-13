@@ -6,14 +6,14 @@ export const joinedRace = (state = false, action) => {
   switch (action.type) {
     case 'JOINED_RACE':
       return true;
-    case 'LEFT_RACE':
+    case 'RACE_OVER':
       return false;
     default:
       return state
   }
 }
 
-export const timerOn = (state = false, action) => {
+export const startTimerOn = (state = false, action) => {
   switch (action.type) {
     case 'START_TIMER':
       return true;
@@ -59,9 +59,18 @@ export const lastRaceData = (state = {}, action) => {
   }
 }
 
-export const timerSeconds = (state = 5, action) => {
+export const startTimerSeconds = (state = 5, action) => {
   switch (action.type) {
-    case 'SET_TIME':
+    case 'SET_START_TIMER':
+      return action.time;
+    default:
+      return state
+  }
+}
+
+export const gameTimerSeconds = (state = 120, action) => {
+  switch (action.type) {
+    case 'SET_GAME_TIMER':
       return action.time;
     default:
       return state
@@ -103,7 +112,7 @@ export const raceAlreadyStarted = (state = false, action) => {
   switch (action.type) {
     case 'RACE_ALREADY_STARTED':
       return true;
-    case 'LEFT_RACE':
+    case 'RACE_OVER':
       return false;
     default:
       return state
@@ -111,9 +120,9 @@ export const raceAlreadyStarted = (state = false, action) => {
 }
 
 const typeRacerApp = combineReducers({
-  participants, lastRaceData, wrongWord,
-  paragraph, raceStarted, finishedRace, timerOn, raceAlreadyStarted,
-  joinedRace, timerSeconds, typingWordIndex, noOfCharactersTyped,
+  participants, lastRaceData, wrongWord, gameTimerSeconds,
+  paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted,
+  joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped,
 });
 
 export default typeRacerApp;
