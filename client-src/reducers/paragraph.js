@@ -1,7 +1,10 @@
-export default (state = '', action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case 'RACE_DATA':
-      return action.paragraph;
+      return  {
+        raw: action.paragraph,
+        words: action.paragraph.split(' '),
+      }
     default:
       return state
   }

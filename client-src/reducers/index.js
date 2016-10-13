@@ -111,7 +111,7 @@ export const raceAlreadyStarted = (state = false, action) => {
 }
 
 const typeRacerApp = combineReducers({
-  participants, lastRaceData,
+  participants, lastRaceData, wrongWord,
   paragraph, raceStarted, finishedRace, timerOn, raceAlreadyStarted,
   joinedRace, timerSeconds, typingWordIndex, noOfCharactersTyped,
 });

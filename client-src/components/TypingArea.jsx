@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { correctWord, nextWord, wrongWord, finishRace } from '../actions/index.js';
 
+const textAreaStyle = (wrongWord, show) => {
+  if (!wrongWord) return { fontSize: '25px', display: show ? 'block' : 'none', }
+  return {
+    fontSize: '25px',
+    color: 'RED',
+    display: show ? 'block' : 'none',
+  }
+}
+
 class TypingArea extends Component {
   constructor(props) {
     super(props);
@@ -12,8 +21,13 @@ class TypingArea extends Component {
       const splitedValue = this.node.value.split(' ');
       const nodeValue = splitedValue[0];
       const { paragraph, typingWordIndex, dispatch } = this.props;
-      const words = paragraph.split(' ');
+      const words = paragraph.words;
+      console.log(`typingWordIndex : ${typingWordIndex}`)
+      // if (words[typingWordIndex].substring(0, nodeValue.trim().length) !== nodeValue.trim()) {
+      //   dispatch(wrongWord());
+      // }
       if (words[typingWordIndex].includes(nodeValue.trim())) {
+        dispatch(correctWord());
         if (event.keyCode === 32 && words[typingWordIndex] === nodeValue.trim()) {
           if (splitedValue[1]) this.node.value = splitedValue[1];
           else this.node.value = '';
@@ -23,23 +37,25 @@ class TypingArea extends Component {
           }
           dispatch(nextWord(noOfCharactersTyped));
         } else if (words.length === typingWordIndex + 1 && nodeValue === words[typingWordIndex]) {
-          dispatch(finishRace(paragraph.length));
+          dispatch(finishRace(paragraph.raw.length));
+        } else if(event.keyCode === 32 && words[typingWordIndex] !== nodeValue.trim()) {
+          dispatch(wrongWord());
         }
-        dispatch(correctWord());
       } else {
         dispatch(wrongWord());
       }
     });
   }
   render() {
-    const { raceStarted, show } = this.props;
+    const { raceStarted, show, wrongWord } = this.props;
     const textProps = {};
     if(!raceStarted) textProps.disabled = true;
     return (
-      <textarea
+      <input
+        placeholder="type here"
+        style={textAreaStyle(wrongWord, show)}
         ref={node => { this.node = node; }}
         {...textProps}
-        style={{ display: show ? 'block' : 'none' }}
       />
     );
   }
@@ -50,6 +66,7 @@ const mapStateToProps = (state) => ({
   raceStarted: state.raceStarted,
   paragraph: state.paragraph,
   typingWordIndex: state.typingWordIndex,
+  wrongWord: state.wrongWord,
 })
 
 TypingArea = connect(

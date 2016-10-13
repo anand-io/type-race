@@ -43,7 +43,7 @@ const onStartCounter = () => {
     if (!seconds) {
       store.dispatch(raceStarted());
       clearInterval(timeInterval);
-      document.getElementsByTagName('textarea')[0].focus();
+      document.getElementsByTagName('input')[0].focus();
       wss.raceStarted();
       sendCharaterInInterval();
       return;
