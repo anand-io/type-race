@@ -6,7 +6,7 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 const debug = process.env.NODE_ENV !== 'production';
 const dir = dest => path.resolve(__dirname, dest);
 
-const plugins = [new WebpackNotifierPlugin({ alwaysNotify: true })];
+const plugins = [];
 if (!debug) {
   plugins.push(
     new webpack.DefinePlugin({
@@ -18,6 +18,8 @@ if (!debug) {
       mangle: true, sourcemap: false, comments: false,
     })
   );
+} else {
+  plugins.push(new WebpackNotifierPlugin({ alwaysNotify: true }));
 }
 
 module.exports = {
