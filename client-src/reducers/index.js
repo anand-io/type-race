@@ -30,6 +30,8 @@ export const startTimerOn = (state = false, action) => {
       return false;
     case 'RACE_OVER':
       return false;
+    case 'FINISHED_RACE':
+      return false;
     default:
       return state
   }
@@ -94,7 +96,7 @@ export const showRaceResult = (state = false, action) => {
   }
 }
 
-export const startTimerSeconds = (state =6, action) => {
+export const startTimerSeconds = (state = 6, action) => {
   switch (action.type) {
     case 'SET_START_TIMER':
       return action.time;

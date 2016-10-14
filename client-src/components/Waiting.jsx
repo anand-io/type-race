@@ -12,7 +12,8 @@ let Waiting = ({ dispatch, show }) => (
 );
 
 const mapStateToProps = (state) => ({
-  show: (!state.startTimerOn && state.joinedRace && !state.raceStarted && !state.raceAlreadyStarted),
+  show: (!state.startTimerOn && state.joinedRace && state.finishRace
+    && !state.raceStarted && !state.raceAlreadyStarted),
 })
 
 Waiting = connect(mapStateToProps)(Waiting);
