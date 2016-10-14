@@ -16,8 +16,8 @@ export const joinRace = room => dispatch => {
   });
 }
 
-export const finishRace = noOfCharactersTyped => dispatch => {
-  wss.updateWMP(noOfCharactersTyped, true);
+export const finishRace = (noOfCharactersTyped, disqualified) => dispatch => {
+  wss.updateWMP(noOfCharactersTyped, true, disqualified);
   dispatch(finishedRace(noOfCharactersTyped));
   dispatch(showRaceResult());
 }

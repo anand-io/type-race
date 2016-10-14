@@ -49,11 +49,12 @@ function WebSocketServer(server) {
 
     });
 
-    spark.on('updateWMP', (noOfCharacters, isFinished) => {
+    spark.on('updateWMP', (noOfCharacters, isFinished, disqualified) => {
       const raceId = spark.joinedRace;
       const countTime = new Date().getTime();
       spark.noOfCharacters = noOfCharacters;
       spark.isFinished = isFinished;
+      spark.disqualified = disqualified;
       client.getAsync(`${raceId}_statedAt`)
       .then((startedTime) => {
         if (!startedTime) throw Error(`no startedTime for race ${raceId}`);
@@ -63,10 +64,12 @@ function WebSocketServer(server) {
         let position = 1;
         sparks.forEach(id => {
           const s = primus.spark(id);
+          if (spark.disqualified) position = 0;
           if (s.id === spark.id) return;
-          if (s.noOfCharacters > noOfCharacters || s.isFinished) position++;
+          if (s.noOfCharacters > noOfCharacters || (s.isFinished && ! s.disqualified)) position++;
         });
-        const data = { id: spark.query.myId, wpm, noOfCharacters, isFinished, position };
+        const data = { id: spark.query.myId, wpm, noOfCharacters, isFinished, position,
+          disqualified };
         spark.room(raceId).send('participantWordCount', data);
       });
 
@@ -81,6 +84,8 @@ function WebSocketServer(server) {
             sparks.forEach(id => {
               const s = primus.spark(id);
               s.joinedRace = null;
+              s.isFinished = false;
+              s.disqualified = false;
               s.noOfCharacters = 0;
               s.leave(raceId, () => {
                 s.send('raceOver', raceId);
