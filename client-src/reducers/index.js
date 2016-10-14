@@ -28,6 +28,8 @@ export const startTimerOn = (state = false, action) => {
       return true;
     case 'RACE_STARTED':
       return false;
+    case 'RACE_OVER':
+      return false;
     default:
       return state
   }

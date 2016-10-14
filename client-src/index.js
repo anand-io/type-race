@@ -49,6 +49,10 @@ const onStartCounter = () => {
   }
   store.dispatch(startTimer());
   startTimerInterval = setInterval(() => {
+    if (!store.getState().startTimerOn) {
+      clearInterval(startTimerInterval);
+      return;
+    }
     let seconds = store.getState().startTimerSeconds;
     if (!--seconds) {
       store.dispatch(raceStarted());

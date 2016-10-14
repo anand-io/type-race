@@ -64,7 +64,10 @@ function WebSocketServer(server) {
         let position = 1;
         sparks.forEach(id => {
           const s = primus.spark(id);
-          if (spark.disqualified) position = 0;
+          if (spark.disqualified) {
+            position = 0;
+            return;
+          }
           if (s.id === spark.id) return;
           if (s.noOfCharacters > noOfCharacters || (s.isFinished && ! s.disqualified)) position++;
         });
