@@ -83,6 +83,9 @@ function WebSocketServer(server) {
         .then((racers) => {
           if (racers.length === 0) {
             client.del(`${raceId}_isStated`);
+            client.del(`${raceId}_para`);
+            client.del(`${raceId}_statedAt`);
+            client.del(`${raceId}_racers`);
             const sparks = spark.room(raceId).clients();
             sparks.forEach(id => {
               const s = primus.spark(id);
