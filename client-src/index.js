@@ -39,21 +39,27 @@ const sendCharaterInInterval = () => {
 
 const onParticpantJoined = participant => store.dispatch(addParticipant(participant));
 
+let startTimerInterval = null;
+
 
 const onStartCounter = () => {
+  if (store.getState().startTimerOn) {
+    clearInterval(startTimerInterval);
+    store.dispatch(setStartTimer(6));
+  }
   store.dispatch(startTimer());
-  const timeInterval = setInterval(() => {
+  startTimerInterval = setInterval(() => {
     let seconds = store.getState().startTimerSeconds;
-    if (!seconds) {
+    if (!--seconds) {
       store.dispatch(raceStarted());
-      clearInterval(timeInterval);
+      clearInterval(startTimerInterval);
       document.getElementsByTagName('input')[0].focus();
       startRaceTimer();
       wss.raceStarted();
       sendCharaterInInterval();
       return;
     }
-    store.dispatch(setStartTimer(--seconds));
+    store.dispatch(setStartTimer(seconds));
   }, 1000);
 };
 
@@ -68,7 +74,7 @@ const startRaceTimer = () => {
     store.dispatch(setGameTimer(--seconds));
     if (seconds === 0) {
       clearInterval(timeInterval);
-      store.dispatch(finishRace(store.getState().noOfCharactersTyped));
+      store.dispatch(finishRace(store.getState().noOfCharactersTyped, true));
     }
   }, 1000);
 };

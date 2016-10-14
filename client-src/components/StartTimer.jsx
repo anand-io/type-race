@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 let StartTimer = ({ show, seconds }) => (
   <div
+    className='start-timer'
     style={{ display: show ? 'block' : 'none' }}
   >
     {`00:0${seconds}`}

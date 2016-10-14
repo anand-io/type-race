@@ -7,8 +7,8 @@ let RaceResults = ({ raceResults, show, myId }) => (
       const participant = result.participant.id === myId ?
       'You' : result.participant.id.split('-')[0];
       return (
-        <li key={result.position}>
-          {`${result.position} place -
+        <li key={result.participant.id}>
+          {`${result.position ? `${result.position} place` : 'Disqualified'}  -
           ${participant} -
           ${Math.ceil(result.participant.wpm)} WMP`}
         </li>

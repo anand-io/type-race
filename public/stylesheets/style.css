@@ -31,8 +31,7 @@ progress, progress[role] {
 }
 
 .game-timer {
-  text-align: center;
-  font-size: 22px;
+  font-size: 30px;
 }
 
 .skill-list {
@@ -137,4 +136,36 @@ progress, progress[role] {
 
 .paragraph {
   text-align: center;
+}
+
+.start-timer {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 40px;
+  text-align: center;
+  font-size: 36px;
+  background-color: rgba(131, 196, 71, 0.75);
+}
+
+.waiting-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: rgba(112, 137, 171, 0.69);
+}
+
+.leave-race {
+  min-width: 40px;
+  margin: auto;
+  width: 43px;
+  position: fixed;
+  right: 8px;
+  top: 9px;
+  padding: 6px 10px;
+  background-color: #DE2626;
+  border: 1px solid #B72020;
 }

@@ -30,11 +30,9 @@ WebSocketService.prototype.addListeners = function addListeners(pri) {
 
     this.primus.on('participantWordCount', data => {
       this.onParticipantCount(data);
-      console.log(data);
     });
 
     this.primus.on('raceOver', data => {
-      console.log('raceOver');
       this.onRaceOver(data);
     });
 
@@ -49,8 +47,8 @@ WebSocketService.prototype.sendReadySignal = function sendReadySignal(room) {
   this.primus.send('ready', room);
 }
 
-WebSocketService.prototype.updateWMP = function updateWMP(noOfCharacters, isFinished) {
-  this.primus.send('updateWMP', noOfCharacters, isFinished);
+WebSocketService.prototype.updateWMP = function updateWMP(noOfCharacters, isFinished, disqualified) {
+  this.primus.send('updateWMP', noOfCharacters, isFinished, disqualified);
 }
 
 WebSocketService.prototype.raceStarted = function raceStarted(noOfCharacters) {

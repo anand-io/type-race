@@ -92,12 +92,12 @@ export const showRaceResult = (state = false, action) => {
   }
 }
 
-export const startTimerSeconds = (state = 5, action) => {
+export const startTimerSeconds = (state =6, action) => {
   switch (action.type) {
     case 'SET_START_TIMER':
       return action.time;
     case 'RACE_OVER':
-      return 5;
+      return 6;
     default:
       return state
   }
