@@ -60,7 +60,7 @@ function WebSocketServer(server) {
         const timeTakenInMin = ((countTime - (Number(startedTime) + 6000)) / 1000) / 60;
         const wpm = (noOfCharacters / 5) / timeTakenInMin;
         const sparks = spark.room(raceId).clients();
-        let position = 1;
+        var position = 1;
         sparks.forEach(id => {
           const s = primus.spark(id);
           if (spark.disqualified) {
