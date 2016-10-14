@@ -123,3 +123,26 @@ export const participantWPM = ({id, wpm, noOfCharacters, place, isFinished}) => 
 export const raceAlreadyStarted = time => ({
   type: 'RACE_ALREADY_STARTED',
 });
+
+export const appRegistered = user => ({
+  type: 'APP_REGISTERED',
+  user,
+});
+
+export const appContextChange = (user, context) => ({
+  type: 'APP_REGISTERED',
+  user,
+  context,
+});
+
+export const appActivated = (user, context) => ({
+  type: 'APP_ACTIVATED',
+  user,
+  context,
+});
+
+export const appDeactivated = (user, context) => ({
+  type: 'APP_DEACTIVATED',
+  user,
+  context,
+});
