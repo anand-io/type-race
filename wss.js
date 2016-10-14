@@ -1,3 +1,4 @@
+'use strict';
 const Primus = require('primus')
 const Emitter = require('primus-emitter');
 const Rooms = require('primus-rooms');
@@ -60,7 +61,7 @@ function WebSocketServer(server) {
         const timeTakenInMin = ((countTime - (Number(startedTime) + 6000)) / 1000) / 60;
         const wpm = (noOfCharacters / 5) / timeTakenInMin;
         const sparks = spark.room(raceId).clients();
-        var position = 1;
+        let position = 1;
         sparks.forEach(id => {
           const s = primus.spark(id);
           if (spark.disqualified) {
