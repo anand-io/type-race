@@ -30,11 +30,9 @@ WebSocketService.prototype.addListeners = function addListeners(pri) {
 
     this.primus.on('participantWordCount', data => {
       this.onParticipantCount(data);
-      console.log(data);
     });
 
     this.primus.on('raceOver', data => {
-      console.log('raceOver');
       this.onRaceOver(data);
     });
 
