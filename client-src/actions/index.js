@@ -44,8 +44,9 @@ export const joinedRace = () => ({
   type: 'JOINED_RACE'
 });
 
-export const isPractice = () => ({
-  type: 'IS_PRACTICE'
+export const isPractice = isPractice => ({
+  type: 'IS_PRACTICE',
+  isPractice,
 });
 
 export const leftRace = () => ({

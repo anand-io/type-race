@@ -167,7 +167,7 @@ export const raceAlreadyStarted = (state = false, action) => {
 export const isPractice = (state = false, action) => {
   switch (action.type) {
     case 'IS_PRACTICE':
-      return true;
+      return action.isPractice;
     default:
       return state;
   }
