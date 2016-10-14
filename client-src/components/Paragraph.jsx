@@ -5,15 +5,14 @@ const getStyle = (typingWordIndex, index, wrongWord) => {
   if (index !== typingWordIndex) return {}
   return {
     color: wrongWord ? 'RED' : 'cornflowerblue',
-    fontSize: '25px',
-    textDecoration: 'underline'
+    fontSize: '20px',
   }
 }
 
 let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord }) => (
   <div
     className='paragraph'
-    style={{ display: show ? 'block' : 'none', width:'300px' }}
+    style={{ display: show ? 'block' : 'none' }}
   >
     {Array.isArray(paragraph.words) ?
       paragraph.words.map((word, index) =>

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 let Participants = ({ participants, paragraph, finishedRace, myId }) => (
-  <ul className="skill-list">
+  <ul className="challenge-user">
     {participants.map(participant => {
       const percentageCompleted = (participant.noOfCharacters / paragraph.raw.length) * 100;
       const participantId = participant.id === myId ?
@@ -13,10 +13,11 @@ let Participants = ({ participants, paragraph, finishedRace, myId }) => (
           className="skill"
           key={participant.id}
         >
-          <h4>{`${participantId}: ${Math.ceil(participant.wpm)} WPM`}</h4>
-          <progress className="skill-1" max="100" value={percentageCompleted}>
-            <strong>{`Skill Level: ${percentageCompleted}%`}</strong>
-          </progress>
+          <div
+            className="overlay"
+            style={{ width: `${percentageCompleted}%`}}
+          />
+          <span>{`${participantId}: ${Math.ceil(participant.wpm)} WPM`}</span>
         </li>
       );
     })}

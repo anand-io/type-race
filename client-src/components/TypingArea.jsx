@@ -50,7 +50,7 @@ class TypingArea extends Component {
     const textProps = {};
     if(!raceStarted) textProps.disabled = true;
     return (
-      <input
+      <textarea
         className='input_default input_big'
         placeholder="type here"
         style={textAreaStyle(wrongWord, show)}
@@ -62,7 +62,7 @@ class TypingArea extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  show: (state.startTimerOn || state.raceStarted) && !state.finishedRace,
+  show: state.joinedRace && !state.finishedRace,
   raceStarted: state.raceStarted,
   paragraph: state.paragraph,
   typingWordIndex: state.typingWordIndex,

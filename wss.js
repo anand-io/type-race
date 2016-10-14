@@ -2,7 +2,8 @@
 const Primus = require('primus')
 const Emitter = require('primus-emitter');
 const Rooms = require('primus-rooms');
-const client = require('redis').createClient("redis://user:typepassword@redis-16046.c10.us-east-1-2.ec2.cloud.redislabs.com:16046");
+const client = require('redis').createClient();
+// const client = require('redis').createClient("redis://user:typepassword@redis-16046.c10.us-east-1-2.ec2.cloud.redislabs.com:16046");
 require('bluebird').promisifyAll(require("redis"));
 const paragraphs = require('./paragraphs.json');
 
