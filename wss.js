@@ -13,7 +13,7 @@ function WebSocketServer(server) {
   primus.on('connection', function connection(spark) {
     // client.set(spark.query.myId, spark.id);
 
-    spark.on('joinRace', function (raceId, callback) {
+    spark.on('joinRace', function (raceId, isPractice, callback) {
       if (spark.joinedRace) return;
       client.getAsync(`${raceId}_isStated`)
       .then((isStated) => {
@@ -36,8 +36,7 @@ function WebSocketServer(server) {
               return s.query.myId
             });
             callback(paragraph, participants);
-            console.log(sparks);
-            if (sparks.length > 1 || raceId.includes('Practice-')) {
+            if (sparks.length > 1 || isPractice) {
               spark.room(raceId).send('startCounter');
               client.set(`${raceId}_statedAt`, new Date().getTime());
             }

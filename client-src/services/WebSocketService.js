@@ -39,8 +39,8 @@ WebSocketService.prototype.addListeners = function addListeners(pri) {
   });
 };
 
-WebSocketService.prototype.joinRace = function joinRoom(room, callback) {
-  this.primus.send('joinRace', room, callback);
+WebSocketService.prototype.joinRace = function joinRoom(room, isPractice, callback) {
+  this.primus.send('joinRace', room, isPractice, callback);
 }
 
 WebSocketService.prototype.sendReadySignal = function sendReadySignal(room) {
