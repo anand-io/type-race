@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart": "NODE_ENV=production webpack --progress",
     "start": "node ./bin/www",
     "dev": "webpack --colors --watch --progress & node ./bin/www",
     "build": "NODE_ENV=production webpack --progress",
