@@ -10,7 +10,7 @@ function WebSocketServer(server) {
   const primus = new Primus(server, { transformer: 'websockets' });
   primus.plugin('emitter', Emitter);
   primus.plugin('rooms', Rooms);
-  primus.save(__dirname +'/public/javascripts/builds/primus.js');
+  primus.save(__dirname +'/public/javascripts/primus.js');
   primus.on('connection', function connection(spark) {
     // client.set(spark.query.myId, spark.id);
 
