@@ -160,11 +160,20 @@ export const raceAlreadyStarted = (state = false, action) => {
   }
 }
 
+export const isPractice = (state = false, action) => {
+  switch (action.type) {
+    case 'IS_PRACTICE':
+      return true;
+    default:
+      return state;
+  }
+}
+
 const typeRacerApp = combineReducers({
   participants, wrongWord, gameTimerSeconds, myInfo,
   paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted,
   joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped,
-  raceResults, showRaceResult,
+  raceResults, showRaceResult, isPractice,
 });
 
 export default typeRacerApp;
