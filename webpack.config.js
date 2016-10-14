@@ -1,11 +1,12 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 const path = require('path');
 const webpack = require('webpack');
+const WebpackNotifierPlugin = require('webpack-notifier');
 
 const debug = process.env.NODE_ENV !== 'production';
 const dir = dest => path.resolve(__dirname, dest);
 
-const plugins = [];
+const plugins = [new WebpackNotifierPlugin({ alwaysNotify: true })];
 if (!debug) {
   plugins.push(
     new webpack.DefinePlugin({
@@ -17,9 +18,6 @@ if (!debug) {
       mangle: true, sourcemap: false, comments: false,
     })
   );
-} else {
-  const WebpackNotifierPlugin = require('webpack-notifier');
-  plugins.push(new WebpackNotifierPlugin({ alwaysNotify: true }));
 }
 
 module.exports = {
