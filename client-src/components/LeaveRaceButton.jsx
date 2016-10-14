@@ -13,7 +13,7 @@ let LeaveRace = ({ dispatch, show, noOfCharactersTyped }) => (
 );
 
 const mapStateToProps = (state) => ({
-  show: (state.raceStarted && !state.finishRace),
+  show: (state.joinedRace && !state.finishRace),
   noOfCharactersTyped: state.noOfCharactersTyped,
 })
 
