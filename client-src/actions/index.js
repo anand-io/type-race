@@ -3,6 +3,12 @@ import wss from '../services/WebSocketService';
 let nextTodoId = 0
 export const joinRace = room => dispatch => {
   dispatch(joinedRace());
+  if (room.includes('Practice-')) {
+    dispatch(isPractice(true));
+  }
+  else  {
+    dispatch(isPractice(false));
+  }
   wss.joinRace(room, (paragraph, participants) => {
     if (!paragraph && !participants) {
       dispatch(raceAlreadyStarted(paragraph));
@@ -36,6 +42,10 @@ export const setMyInfo = myInfo => ({
 
 export const joinedRace = () => ({
   type: 'JOINED_RACE'
+});
+
+export const isPractice = () => ({
+  type: 'IS_PRACTICE'
 });
 
 export const leftRace = () => ({

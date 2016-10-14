@@ -37,7 +37,7 @@ function WebSocketServer(server) {
             });
             callback(paragraph, participants);
             console.log(sparks);
-            if (sparks.length > 1) {
+            if (sparks.length > 1 || raceId.includes('Practice-')) {
               spark.room(raceId).send('startCounter');
               client.set(`${raceId}_statedAt`, new Date().getTime());
             }
