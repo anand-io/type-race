@@ -241,6 +241,11 @@ hr{
 
 /* Leadersboard page */
 
+.leadersboard-user{
+	overflow: auto;
+	height: 350px;
+}
+
 .leadersboard-user li{
 	background-color: #F9FAFC;
 	height: 50px;
