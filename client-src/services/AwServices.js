@@ -7,22 +7,22 @@ AwServices.prototype.init =
 
   AwApp.on('registered', ({user}) => {
     console.error(`registered : ${JSON.stringify(data)}`);
-    AppRegistered(user);
+    appRegistered(user);
   });
 
   AwApp.on('activated', ({user, context}) => {
     console.error(`activated : ${JSON.stringify(data)}`);
-    AppContextChange(user, context);
+    appContextChange(user, context);
   })
 
   AwApp.on('context-change', ({user, context}) => {
     console.error(`context-change : ${JSON.stringify(data)}`);
-    AppActivated(user, context);
+    appActivated(user, context);
   });
 
   AwApp.on('deactivated', data => {
     console.error(`deactivated : ${JSON.stringify(data)}`);
-    AppDeactivated();
+    appDeactivated();
   });
 }
 
