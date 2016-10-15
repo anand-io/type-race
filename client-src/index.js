@@ -6,11 +6,46 @@ import thunk from 'redux-thunk'
 import App from './components/App.jsx'
 import reducer from './reducers'
 import wss from './services/WebSocketService';
-import { addParticipant, setStartTimer, raceStarted, startTimer,
-  participantUpdate, raceOver, setGameTimer, setMyInfo, finishRace} from './actions';
+import awServices from './services/AwServices';
+import {
+  addParticipant, setStartTimer, raceStarted, startTimer, participantUpdate,
+  raceOver, setGameTimer, setMyInfo, finishRace, appRegistered, appContextChange,
+  appActivated, appDeactivated,
+} from './actions';
+
+function addPrefixToLogs() {
+  const logMethods = ['log', 'info', 'error', 'warn', 'debug'];
+  logMethods.forEach(logMethod => {
+    const backupMethod = console[logMethod];
+    console[logMethod] = (...args) => {
+      args.unshift('TypRace:: ');
+      backupMethod.apply(console, args);
+    };
+  });
+}
+
+addPrefixToLogs();
 
 const data = document.getElementById('data');
 const myId = data.getAttribute('myid');
+
+// var AwApp = AAFClient.init();
+//
+// AwApp.on('registered', ({user}) => {
+//   console.error(`registered : ${JSON.stringify(data)}`);
+// });
+//
+// AwApp.on('activated', ({user, context}) => {
+//   console.error(`activated : ${JSON.stringify(data)}`);
+// })
+//
+// AwApp.on('context-change', ({user, context}) => {
+//   console.error(`context-change : ${JSON.stringify(data)}`);
+// });
+//
+// AwApp.on('deactivated', data => {
+//   console.error(`deactivated : ${JSON.stringify(data)}`);
+// });
 
 const middleware = [ thunk ]
 
@@ -89,3 +124,13 @@ const onRaceOver = () => store.dispatch(raceOver());
 const onParticipantUpdate = participant => store.dispatch(participantUpdate(participant));
 
 wss.init(onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver);
+
+const onAppRegistered = user => store.dispatch(appRegistered(user));
+
+const onAppContextChange = (user, context) => store.dispatch(appContextChange(user, context));
+
+const onAppActivated = (user, context) => store.dispatch(appActivated(user, context));
+
+const onAppDeactivated = () => store.dispatch(appDeactivated(user, context));
+
+awServices.init(onAppRegistered, onAppContextChange, onAppActivated, onAppDeactivated);
