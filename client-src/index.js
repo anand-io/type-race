@@ -7,8 +7,11 @@ import App from './components/App.jsx'
 import reducer from './reducers'
 import wss from './services/WebSocketService';
 import awServices from './services/AwServices';
-import { addParticipant, setStartTimer, raceStarted, startTimer,
-  participantUpdate, raceOver, setGameTimer, setMyInfo, finishRace} from './actions';
+import {
+  addParticipant, setStartTimer, raceStarted, startTimer, participantUpdate,
+  raceOver, setGameTimer, setMyInfo, finishRace, appRegistered, appContextChange,
+  appActivated, appDeactivated,
+} from './actions';
 
 function addPrefixToLogs() {
   const logMethods = ['log', 'info', 'error', 'warn', 'debug'];
@@ -122,12 +125,12 @@ const onParticipantUpdate = participant => store.dispatch(participantUpdate(part
 
 wss.init(onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver);
 
-const onAppRegistered = user => store.dispatch();
+const onAppRegistered = user => store.dispatch(appRegistered(user));
 
-const onAppContextChange = (user, context) => store.dispatch();
+const onAppContextChange = (user, context) => store.dispatch(appContextChange(user, context));
 
-const onAppActivated = (user, context) => store.dispatch();
+const onAppActivated = (user, context) => store.dispatch(appActivated(user, context));
 
-const onAppDeactivated = () => store.dispatch();
+const onAppDeactivated = () => store.dispatch(appDeactivated(user, context));
 
 awServices.init(onAppRegistered, onAppContextChange, onAppActivated, onAppDeactivated);

@@ -1,4 +1,4 @@
-export AppEvents(state = {}, action) => {
+export const awAppState = (state = {}, action) => {
   switch (action.type) {
     case 'APP_REGISTERED':
       return  {
@@ -15,7 +15,7 @@ export AppEvents(state = {}, action) => {
         context: action.context,
       }
     case 'APP_DEACTIVATED':
-      retun {
+      return {
         user: action.user,
         context: action.context,
       }
@@ -24,7 +24,7 @@ export AppEvents(state = {}, action) => {
   }
 }
 
-export ActivationEvent(state = false, action) => {
+export const awAppActivated = (state = false, action) => {
   switch (action.type) {
     case 'APP_ACTIVATED':
       return true;
