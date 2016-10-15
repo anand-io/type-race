@@ -9,31 +9,34 @@ const getStyle = (typingWordIndex, index, wrongWord) => {
   }
 }
 
-let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord, placeholder }) => (
-  <div
-    className='paragraph'
-    style={{ display: show ? 'block' : 'none' }}
-  >
-    {
-      !placeholder && paragraph.words ?
-      paragraph.words.map((word, index) =>
-        <span
-        key={index}
-        style={getStyle(typingWordIndex, index, wrongWord)} >
-          {index == paragraph.length - 1 ? word : `${word} `}
-        </span>)
-        :
-      <div className="temp_item">
-          <div className="temp_line" />
-          <div className="temp_line" />
-          <div className="temp_line" />
-          <div className="temp_line" />
-          <div className="temp_line" />
-          <div className="temp_line" />
-      </div>
-    }
-  </div>
-)
+let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord, placeholder, participantsHeight }) => {
+  const height = 430 - 120 - participantsHeight;
+  return (
+    <div
+      className='paragraph'
+      style={{ display: show ? 'block' : 'none', height }}
+    >
+      {
+        !placeholder && paragraph.words ?
+        paragraph.words.map((word, index) =>
+          <span
+          key={index}
+          style={getStyle(typingWordIndex, index, wrongWord)} >
+            {index == paragraph.length - 1 ? word : `${word} `}
+          </span>)
+          :
+        <div className="temp_item">
+            <div className="temp_line" />
+            <div className="temp_line" />
+            <div className="temp_line" />
+            <div className="temp_line" />
+            <div className="temp_line" />
+            <div className="temp_line" />
+        </div>
+      }
+    </div>
+  );
+}
 
 const mapStateToProps = (state) => ({
   paragraph: state.paragraph,
@@ -41,6 +44,7 @@ const mapStateToProps = (state) => ({
   typingWordIndex: state.typingWordIndex,
   wrongWord: state.wrongWord,
   placeholder: state.participants.length === 1 && !state.isPractice,
+  participantsHeight: state.participantsHeight,
 })
 
 Paragraph = connect(

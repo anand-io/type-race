@@ -194,8 +194,17 @@ export const leaders = (state = [], action) => {
   }
 };
 
+export const participantsHeight = (state = 0, action) => {
+  switch (action.type) {
+    case 'PARTICIPANTS_HEIGHT':
+      return action.height;
+    default:
+      return state;
+  }
+};
+
 const typeRacerApp = combineReducers({
-  participants, wrongWord, gameTimerSeconds, myInfo, leaders,
+  participants, wrongWord, gameTimerSeconds, myInfo, leaders, participantsHeight,
   paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted,
   joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped,
   raceResults, showRaceResult, isPractice, showLeaderBoard, awAppState, awAppActivated,
