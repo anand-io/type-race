@@ -5,7 +5,7 @@ const getStyle = (typingWordIndex, index, wrongWord) => {
   if (index !== typingWordIndex) return {}
   return {
     color: wrongWord ? 'RED' : 'cornflowerblue',
-    fontSize: '20px',
+    fontSize: '19px',
   }
 }
 
