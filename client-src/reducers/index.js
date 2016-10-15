@@ -180,6 +180,8 @@ export const showLeaderBoard = (state = false, action) => {
   switch (action.type) {
     case 'SHOW_LEADER_BOARD':
       return true;
+    case 'HIDE_LEADER_BOARD':
+      return false;
     default:
       return state;
   }
