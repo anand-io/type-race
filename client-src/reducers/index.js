@@ -92,6 +92,8 @@ export const showRaceResult = (state = false, action) => {
       return true;
     case 'JOINED_RACE':
       return false;
+    case 'HIDE_RACE_RESULT':
+      return false;
     default:
       return state
   }

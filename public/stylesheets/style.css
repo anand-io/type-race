@@ -169,6 +169,10 @@ hr{
     left: 15px;
 }
 
+.arrow-left {
+	cursor: pointer;
+}
+
 .challenge-head h5, .warmup-head h5, .leadersboard-page h5{
 	font-size: 15px;
 	font-weight: normal;
@@ -342,7 +346,8 @@ a.home-btn{
 	background-color: #83C447;
 	border-radius: 3px;
 	left: 50%;
-    transform: translateX(-50%);
+  transform: translateX(-50%);
+	cursor: pointer;
 }
 
 .home-btn img{

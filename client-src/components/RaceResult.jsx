@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { hideRaceResult } from '../actions';
 
 let RaceResult = (props) => {
   const { dispatch, show, raceResults, myId } = props;
@@ -23,7 +24,10 @@ let RaceResult = (props) => {
           );
         })}
 			</ul>
-			<a className="home-btn">
+			<a
+        className="home-btn"
+        onClick={() => dispatch(hideRaceResult())}
+      >
         <img src="/images/home-btn.png" />
       </a>
 		</span>

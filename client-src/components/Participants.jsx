@@ -35,7 +35,7 @@ let Participants = ({ participants, paragraph, finishedRace, myId,  isPractice, 
 }
 
 const mapStateToProps = (state) => ({
-  show: (state.joinedRace && !state.showRaceResult),
+  show: state.joinedRace || (state.showRaceResult && state.participants.length > 0),
   participants: state.participants,
   paragraph: state.paragraph,
   finishedRace: state.finishedRace,

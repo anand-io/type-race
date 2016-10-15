@@ -61,9 +61,11 @@ WebSocketServer.prototype.init = function init(server){
       spark.disqualified = disqualified;
       client.getAsync(`${raceId}_statedAt`)
       .then((startedTime) => {
-        if (!startedTime) throw Error(`no startedTime for race ${raceId}`);
-        const timeTakenInMin = ((countTime - (Number(startedTime) + 6000)) / 1000) / 60;
-        const wpm = (noOfCharacters / 5) / timeTakenInMin;
+        let wpm = 0;
+        if (startedTime) {
+          const timeTakenInMin = ((countTime - (Number(startedTime) + 6000)) / 1000) / 60;
+          wpm = (noOfCharacters / 5) / timeTakenInMin;
+        }
         const sparks = spark.room(raceId).clients();
         let position = 1;
         sparks.forEach(id => {
