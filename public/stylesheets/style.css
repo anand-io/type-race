@@ -100,6 +100,7 @@ hr{
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
+    box-sizing: border-box;
 }
 
 .home-page .challenge{
@@ -147,47 +148,36 @@ hr{
 	position: relative;
 }
 
-.challenge-head, .warmup-head, .leadersboard-head, .completed-page h2{
+.challenge-head, .warmup-head, .leadersboard-head{
 	height: 30px;
 	box-sizing: border-box;
 	padding: 6px 15px;
 	box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.06), 0px 1px 4px 0px rgba(0,0,0,0.06);
+	position: relative;
 }
 
-.challenge-head li, .warmup-head li, .leadersboard-head li{
-	display: inline-block;
-	margin-right: 85px;
+.warmup-head i, .challenge-head i, .leadersboard-head i{
+	background: url(/images/arrow-left.png) no-repeat;
+	width: 7px;
+    height: 11px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
 }
 
-.challenge-head li:first-child, .challenge-head li:nth-child(2){
-	margin-right: 81px;
-}
-
-.challenge-head li:first-child i, .warmup-head li:first-child i, .leadersboard-page li:first-child i{
-	font-size: 18px;
-	cursor: pointer;
-}
-
-.challenge-head li:nth-child(2), .warmup-head li:nth-child(2), .leadersboard-page li:nth-child(2){
+.challenge-head h5, .warmup-head h5, .leadersboard-page h5{
 	font-size: 15px;
 	font-weight: normal;
+	text-align: center;
 }
 
-.challenge-head li:nth-child(3), .warmup-head li:nth-child(3){
+.challenge-head span, .warmup-head span{
 	font-size: 17px;
 	font-weight: 500;
 	color: #DE2626;
-	margin-right: 0;
-	float: right;
-}
-
-.challenge-head li:nth-child(2){
-	/*margin-right: 81px;*/
-}
-
-.challenge-head li img{
-	width: 7px;
-	height: 12px;
+	position: absolute;
+	right: 15px;
+    top: 5px;
 }
 
 .challenge-user, .warmup-user{
@@ -293,12 +283,6 @@ hr{
 	height: 380px;
 }
 
-.completed-page h2{
-	font-size: 15px;
-	font-weight: normal;
-	text-align: center;
-}
-
 .completed-user{
 	padding: 25px 56px 0 56px;
 }
@@ -312,9 +296,8 @@ hr{
 .completed-user li:nth-child(3) .award, .completed-user li:nth-child(4) .award{
 	color: #DE2626;
 }
-
-.completed-page figure{
-
+.completed-user li:nth-child(even){
+	float: right;
 }
 
 .completed-page figure img{

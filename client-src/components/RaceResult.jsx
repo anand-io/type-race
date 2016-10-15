@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 let RaceResult = (props) => {
   const { dispatch, show, raceResults, myId } = props;
   return (
-    <section className="completed-page" style={{ display: show ? 'block' : 'none' }}>
+    <span style={{ display: show ? 'block' : 'none' }}>
 			<ul className="completed-user">
         {raceResults.map(result => {
           const participant = result.participant.id === myId ?
@@ -12,7 +12,7 @@ let RaceResult = (props) => {
           return (
             <li key={result.participant.id}>
     					<figure>
-    						<img src="asset/images/user-icon.jpeg" alt="user-pic"/>
+    						<img src="/images/user-icon.jpeg" alt="user-pic"/>
     						<figcaption>
     							<span className="name">{result.participant.name}</span>
     							<span className="award">{`${result.position ? `${result.position} place` : 'Disqualified'}`}</span>
@@ -23,8 +23,10 @@ let RaceResult = (props) => {
           );
         })}
 			</ul>
-			<a href="" className="home-btn"><i className="fa fa-home" aria-hidden="true"></i></a>
-		</section>
+			<a className="home-btn">
+        <img src="/images/home-btn.png" />
+      </a>
+		</span>
   );
 }
 

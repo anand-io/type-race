@@ -20,7 +20,6 @@ let Participants = ({ participants, paragraph, finishedRace, myId,  isPractice, 
         return (
           <li
             style={{ display: finishedRace && participant.isFinished ? 'none' : 'block' }}
-            className="skill"
             key={participant.id}
           >
             <div

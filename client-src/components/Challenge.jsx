@@ -10,14 +10,14 @@ let Challenge = (props) => {
   const { dispatch, show } = props;
   return (
     <section
-      className="challenge-page"
+      className="challenge-page completed-page"
       style={{ display: show ? 'block' : 'none' }}
     >
-      <ul className="challenge-head">
-        <li><i className="fa fa-angle-left" aria-hidden="true"></i></li>
-        <li>Challenge</li>
+      <div className="challenge-head">
+        <i className="arrow-left"></i>
+        <h5>Challenge</h5>
         <RaceTimer />
-      </ul>
+      </div>
       <Participants />
       <Paragraph />
       <TypingArea />
