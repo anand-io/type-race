@@ -16,7 +16,7 @@ let Home = ({ dispatch, show }) => (
     >
       Challenge
     </button>
-    <a href="" className="stage-btn"><img src="asset/images/stage-btn.png" alt="stage-btn"/></a>
+    <a href="" className="stage-btn"><img src="/images/stage-btn.png" alt="stage-btn"/></a>
   </section>
 );
 

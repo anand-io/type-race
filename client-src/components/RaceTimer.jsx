@@ -7,12 +7,9 @@ let RaceTimer = ({ show, seconds }) => {
   }
   const min = parseInt(seconds / 60, 10) % 60;
   return (
-    <div
-      className='game-timer'
-      style={{ display: show ? 'block' : 'none' }}
-    >
+    <li>
       {`${pad(min)}:${pad(seconds % 60)}`}
-    </div>
+    </li>
   );
 }
 
