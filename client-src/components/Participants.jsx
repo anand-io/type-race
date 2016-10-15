@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-let Participants = ({ participants, paragraph, finishedRace, myId }) => {
+let Participants = ({ participants, paragraph, finishedRace, myId,  isPractice}) => {
   const rParticipants = [...participants];
-  if (rParticipants.length === 1) {
+  if (rParticipants.length === 1 && !isPractice) {
     rParticipants.push({ waiting: true, id: 'Waiting for others to join...'});
   }
   return (
@@ -40,6 +40,7 @@ const mapStateToProps = (state) => ({
   paragraph: state.paragraph,
   finishedRace: state.finishedRace,
   myId: state.myInfo.id,
+  isPractice: state.isPractice,
 })
 
 Participants = connect(
