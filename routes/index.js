@@ -8,8 +8,12 @@ router.get('/', function(req, res, next) {
   res.redirect(shortid.generate());
 });
 
+router.get('/AWAPI', function(req, res, next) {
+  res.render('index', { id: uuid.v4() });
+});
+
 router.get('/:roomId', function(req, res, next) {
-  res.render('index', { title: req.params.roomId, id: uuid.v4() });
+  res.render('index', {  name: req.query.name, id: uuid.v4() });
 });
 
 module.exports = router;

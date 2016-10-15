@@ -173,11 +173,29 @@ export const isPractice = (state = false, action) => {
   }
 }
 
+export const showLeaderBoard = (state = false, action) => {
+  switch (action.type) {
+    case 'SHOW_LEADER_BOARD':
+      return true;
+    default:
+      return state;
+  }
+};
+
+export const leaders = (state = [], action) => {
+  switch (action.type) {
+    case 'LEADERS':
+      return action.leaders;
+    default:
+      return state;
+  }
+};
+
 const typeRacerApp = combineReducers({
-  participants, wrongWord, gameTimerSeconds, myInfo,
+  participants, wrongWord, gameTimerSeconds, myInfo, leaders,
   paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted,
   joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped,
-  raceResults, showRaceResult, isPractice,
+  raceResults, showRaceResult, isPractice, showLeaderBoard,
 });
 
 export default typeRacerApp;

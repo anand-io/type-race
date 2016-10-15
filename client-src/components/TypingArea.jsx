@@ -52,7 +52,7 @@ class TypingArea extends Component {
     return (
       <input
         className='input_default input_big'
-        placeholder="type here"
+        placeholder="Type here"
         style={textAreaStyle(wrongWord, show)}
         ref={node => { this.node = node; }}
         {...textProps}
@@ -62,7 +62,7 @@ class TypingArea extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  show: (state.startTimerOn || state.raceStarted) && !state.finishedRace,
+  show: state.joinedRace && !state.finishedRace,
   raceStarted: state.raceStarted,
   paragraph: state.paragraph,
   typingWordIndex: state.typingWordIndex,

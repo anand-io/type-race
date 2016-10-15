@@ -1,171 +1,354 @@
-/*
- * Got this style from.
- * http://codepen.io/geoffgraham/pen/FyBJk
- */
-
-body {
-  font-family: "Helvetica Neue", arial, sans-serif;
+*{
+	margin: 0;
+	padding: 0;
 }
 
-h1 {
-  font-size: 2em;
-  font-weight: 800;
+ul{
+	list-style: none;
 }
 
-h3 {
-  font-size: 2em;
+body{
+	font-family: 'effra', sans-serif;
 }
 
-p {
-  text-align: center;
+@font-face {
+    font-family: 'effrabold';
+    src: url('bold-webfont.woff2') format('woff2'),
+         url('bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-progress, progress[role] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: none;
-  background-size: auto;
-  height: inherit;;
-  width: 100%;
+@font-face {
+    font-family: 'effraitalic';
+    src: url('italic-webfont.woff2') format('woff2'),
+         url('italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-.game-timer {
-  font-size: 30px;
+@font-face {
+    font-family: 'effraregular';
+    src: url('regular-webfont.woff2') format('woff2'),
+         url('regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-.skill-list {
-  list-style: none;
-  margin: 0;
-  padding: 0em;
+@font-face {
+    font-family: 'effrabold';
+    src: url('bold-webfont.woff2') format('woff2'),
+         url('bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-.skill {
-  height: 35px;
-  margin-bottom: 1em;
-  position: relative;
+.wrapper{
+	width: 300px;
+	height: 430px;
+	margin: 200px auto;
+	border: 1px solid #D8D8D8;
 }
-.skill h4 {
-  color: #fff;
-  left: 10px;
-  line-height: 1;
-  position: absolute;
-  top: -12px;
-  height: inherit;
-}
-.skill ::-webkit-progress-value {
-  -webkit-animation: bar-fill 2s;
-  width: 0px;
+.header{
+	background-color: #2BACEF;
+	width: 300px;
+	height: 50px;
+	box-sizing: border-box;
+	position: relative;
 }
 
-.skill-1::-webkit-progress-value {
-  background: #ff9e2c;
+.header .logo img{
+	width: 91px;
+	height: 14px;
+	padding: 19px;
 }
 
-.skill-1::-moz-progress-bar {
-  background: #ff9e2c;
+.header .profile-pic img{
+	width: 35px;
+	height: 35px;
+	float: right;
+	padding: 7px 15px 7px 0;
 }
 
-.skill-2::-webkit-progress-value {
-  background: #4ecdc4;
+/* home page */
+.home-page{
+	text-align: center;
+	position: relative;
+	height: 380px;
+	overflow: auto;
 }
 
-.skill-2::-moz-progress-bar {
-  background: #4ecdc4;
+.home-page button{
+	width: 120px;
+	height: 40px;
+	background-color: #83C447;
+	border-radius: 3px;
+	border: none;
+	font-size: 16px;
+	font-weight: 500;
+	color: #fff;
+	cursor: pointer;
+	outline: none;
+	display: block;
+	left: 50%;
+	transform: translateX(-50%);
+	position: relative;
 }
 
-.skill-3::-webkit-progress-value {
-  background: #ff6b6b;
+hr{
+	position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    box-sizing: border-box;
 }
 
-.skill-3::-moz-progress-bar {
-  background: #ff6b6b;
+.home-page .challenge{
+	background-color: #2BACEF;
+	margin: 80px 0 0 0;
 }
 
-@-webkit-keyframes bar-fill {
-  0% {
-    width: 0;
-  }
-}
-@keyframes bar-fill {
-  0% {
-    width: 0;
-  }
+.home-page .warmup{
+	margin: 110px 0 40px 0;
 }
 
-.btn {
-  margin: 20px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 3px;
-  color: #fff;
-  text-shadow: 0 0 2px #72ab3e;
-  font-weight: 500;
-  padding: 8px 10px;
-  outline: 0;
-  min-width: 66px;
+.home-page .challenge:hover{
+	background-color: #198CC8;
 }
 
-.btn_primary {
-  background-color: #83C447;
-  border: 1px solid #72AB3E;
+.home-page .warmup:hover{
+	background-color: #679F48;
 }
 
-.input_label {
-  font-size: 12px;
-  color: #7f8796;
-  text-transform: uppercase;
-  display: block;
-  margin: 0 0 5px;
+.home-page span{
+	position: absolute;
+    bottom: 176px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px;
+    background: #fff;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-.input_default {
-  background-color: #fff;
-  border: 1px solid #d8dce1;
-  box-shadow: inset 0 1px 3px 0 rgba(0,0,0,.05);
-  padding: 0 0 0 15px;
-  outline: 0;
-  border-radius: 3px;
-  width: 268px;
-  font-size: 30px;
+.home-page .stage-btn{
+	cursor: pointer;
+	position: absolute;
+	bottom: 0;
+	right: 5px;
 }
 
-.input_big {
-  height: 40px;
+.home-page .stage-btn img{
+	width: 34px;
+	height: 15px;
 }
 
-.paragraph {
-  text-align: center;
+/* challenge page */
+.challenge-page, .warmup-page, .leadersboard-page{
+	height: 380px;
+	position: relative;
 }
 
-.start-timer {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  height: 40px;
-  text-align: center;
-  font-size: 36px;
-  background-color: rgba(131, 196, 71, 0.75);
+.challenge-head, .warmup-head, .leadersboard-head{
+	height: 30px;
+	box-sizing: border-box;
+	padding: 6px 15px;
+	box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.06), 0px 1px 4px 0px rgba(0,0,0,0.06);
+	position: relative;
 }
 
-.waiting-overlay {
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  background-color: rgba(112, 137, 171, 0.69);
+.warmup-head i, .challenge-head i, .leadersboard-head i{
+	background: url(/images/arrow-left.png) no-repeat;
+	width: 7px;
+    height: 11px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
 }
 
-.leave-race {
-  min-width: 40px;
-  margin: auto;
-  width: 43px;
-  position: fixed;
-  right: 8px;
-  top: 9px;
-  padding: 6px 10px;
-  background-color: #DE2626;
-  border: 1px solid #B72020;
+.challenge-head h5, .warmup-head h5, .leadersboard-page h5{
+	font-size: 15px;
+	font-weight: normal;
+	text-align: center;
+}
+
+.challenge-head span, .warmup-head span{
+	font-size: 17px;
+	font-weight: 500;
+	color: #DE2626;
+	position: absolute;
+	right: 15px;
+    top: 5px;
+}
+
+.challenge-user, .warmup-user{
+	padding: 15px 15px 20px 15px;
+}
+
+.challenge-user li, .warmup-user li{
+	width: 270px;
+	height: 25px;
+	background-color: #7F8796;
+	color: #fff;
+	margin-bottom: 5px;
+	font-size: 16px;
+	padding: 3px 0 0 10px;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.challenge-user .overlay, .warmup-user .overlay{
+ 	position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #FF7100;
+    width: 38%;
+}
+
+.challenge-user span, .warmup-user span{
+ 	position: relative;
+}
+
+.challenge-page .paragraph, .warmup-page .paragraph{
+	font-size: 17px;
+	color: #7F8796;
+	text-align: justify;
+	padding: 0 15px 32px;
+	height: 100px;
+	overflow: auto;
+}
+
+.challenge-page input, .warmup-page input{
+	width: 300px;
+    height: 40px;
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 0 5px 0 15px;
+    outline: 0;
+    border: 0;
+    box-shadow: inset 0px 1px 0px 0px rgba(227,230,234,0.50);
+    position: absolute;
+    bottom: 0;
+}
+
+/* Leadersboard page */
+
+.leadersboard-user li{
+	background-color: #F9FAFC;
+	height: 50px;
+	padding: 8px 15px 0 15px;
+	margin-top: 8px;
+	box-sizing: border-box;
+}
+
+.leadersboard-user li .number{
+	color: #5C912C;
+	font-size: 16px;
+	font-weight: 500;
+	float: left;
+	margin-top: 8px;
+}
+
+.leadersboard-user li figure{
+	float: left;
+	margin: 0 10px;
+}
+
+.leadersboard-user li figure img{
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+}
+
+.leadersboard-user li .name{
+	color: #3A4753;
+	font-size: 14px;
+	font-weight: 500;
+	margin-top: 8px;
+	display: inline-block;
+}
+
+.leadersboard-user li .speed{
+	color: #7F8796;
+	font-size: 12px;
+	font-weight: normal;
+	float: right;
+	margin-top: 12px;
+}
+
+/* Completed */
+
+.completed-page{
+	position: relative;
+	height: 380px;
+}
+
+.completed-user{
+	padding: 25px 56px 0 56px;
+}
+
+.completed-user li{
+	float: left;
+	margin-bottom: 33px;
+	text-align: center;
+}
+
+.completed-user li:nth-child(3) .award, .completed-user li:nth-child(4) .award{
+	color: #DE2626;
+}
+.completed-user li:nth-child(even){
+	float: right;
+}
+
+.completed-page figure img{
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+}
+
+.completed-user li span{
+	display: block;
+}
+
+.completed-user li span.name{
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.completed-user li span.award{
+	font-size: 14px;
+	font-weight: normal;
+	color: #83C447;
+}
+
+.completed-user li span.speed{
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.completed-user li:nth-child(odd){
+	margin-right: 60px;
+}
+
+a.home-btn{
+	position: absolute;
+	bottom: 10px;
+	width: 40px;
+	height: 40px;
+	background-color: #83C447;
+	border-radius: 3px;
+	left: 50%;
+    transform: translateX(-50%);
+}
+
+.home-btn img{
+	width: 23px;
+	height: 18px;
+	display: inline-block;
+	margin: 10px 0 0 8px;
+}
+
+.home-btn:hover{
+	background-color: #6AA335;
 }

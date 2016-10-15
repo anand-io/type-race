@@ -5,7 +5,7 @@
  */
 
 var wss = require('../wss');
-var app = require('../app');
+var app = require('../application');
 var debug = require('debug')('type-racer:server');
 var http = require('http');
 
@@ -26,7 +26,7 @@ var server = http.createServer(app);
 /**
  * Initialized WebSocket
  */
-wss(server);
+wss.init(server);
 
 /**
  * Listen on provided port, on all network interfaces.

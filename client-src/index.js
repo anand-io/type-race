@@ -23,7 +23,8 @@ function addPrefixToLogs() {
 
 addPrefixToLogs();
 
-const myId = document.getElementById('data').getAttribute('myid');
+const data = document.getElementById('data');
+const myId = data.getAttribute('myid');
 
 // var AwApp = AAFClient.init();
 //
