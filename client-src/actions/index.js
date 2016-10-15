@@ -30,9 +30,12 @@ export const participantUpdate = participant => dispatch => {
   }
 }
 
-export const showLeaderBoard = participant => dispatch => {
-  wss.getLeaders(leaders => console.log(leaders));
-}
+export const leaderBoard = participant => dispatch => {
+  wss.getLeaders(leaders => {
+    dispatch(storeLeaders(leaders));
+    dispatch(showLeaderBoard());
+  });
+};
 
 export const setMyInfo = myInfo => ({
   type: 'MY_INFO',
@@ -127,4 +130,14 @@ export const participantWPM = ({id, wpm, noOfCharacters, place, isFinished}) => 
 
 export const raceAlreadyStarted = time => ({
   type: 'RACE_ALREADY_STARTED',
+});
+
+export const showLeaderBoard = leaders => ({
+  type: 'SHOW_LEADER_BOARD',
+  leaders,
+});
+
+export const storeLeaders = leaders => ({
+  type: 'LEADERS',
+  leaders,
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { joinRace, showLeaderBoard } from '../actions';
+import { joinRace, leaderBoard } from '../actions';
 
 let Home = ({ dispatch, show, myId }) => (
   <section
@@ -21,7 +21,7 @@ let Home = ({ dispatch, show, myId }) => (
     </button>
     <a
       className="stage-btn"
-      onClick={() => dispatch(showLeaderBoard())}
+      onClick={() => dispatch(leaderBoard())}
     >
       <img src="/images/stage-btn.png" alt="stage-btn"/>
     </a>
@@ -29,7 +29,7 @@ let Home = ({ dispatch, show, myId }) => (
 );
 
 const mapStateToProps = (state) => ({
-  show: (!state.joinedRace && !state.showRaceResult),
+  show: (!state.joinedRace && !state.showRaceResult && !state.showLeaderBoard),
   isPractice: state.isPractice,
   myId: state.myInfo.id,
 });

@@ -132,6 +132,7 @@ hr{
 }
 
 .home-page .stage-btn{
+	cursor: pointer;
 	position: absolute;
 	bottom: 0;
 	right: 5px;

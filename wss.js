@@ -80,7 +80,7 @@ WebSocketServer.prototype.init = function init(server){
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {
-          leaderBoadServices.addWPM(spark.query.myId, wpm, spark.query.myName);
+          leaderBoadServices.addWPM(spark.query.myId, wpm, spark.query.name);
         }
       });
 

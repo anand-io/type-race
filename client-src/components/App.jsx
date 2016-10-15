@@ -3,6 +3,7 @@ import React from 'react';
 import Header from './Header.jsx';
 import Home from './Home.jsx';
 import Challenge from './Challenge.jsx';
+import LeaderBoard from './LeaderBoard.jsx';
 
 // import Paragraph from './Paragraph.jsx';
 // import TypingArea from './TypingArea.jsx';
@@ -21,6 +22,7 @@ let App = () => (
     <Header />
     <Home />
     <Challenge />
+    <LeaderBoard />
   </div>
 )
 
