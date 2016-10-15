@@ -1,7 +1,7 @@
+.git/
 node_modules
 dump.rdb
 npm-debug.log
-public/javascripts/builds/index.js
 public/javascripts/primus.js
 
 # Elastic Beanstalk Files
