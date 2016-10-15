@@ -156,7 +156,11 @@ hr{
 
 .challenge-head li, .warmup-head li, .leadersboard-head li{
 	display: inline-block;
-	margin-right: 79px;
+	margin-right: 85px;
+}
+
+.challenge-head li:first-child, .challenge-head li:nth-child(2){
+	margin-right: 81px;
 }
 
 .challenge-head li:first-child i, .warmup-head li:first-child i, .leadersboard-page li:first-child i{
@@ -174,6 +178,16 @@ hr{
 	font-weight: 500;
 	color: #DE2626;
 	margin-right: 0;
+	float: right;
+}
+
+.challenge-head li:nth-child(2){
+	/*margin-right: 81px;*/
+}
+
+.challenge-head li img{
+	width: 7px;
+	height: 12px;
 }
 
 .challenge-user, .warmup-user{
@@ -214,16 +228,14 @@ hr{
 	overflow: auto;
 }
 
-.challenge-page textarea, .warmup-page textarea{
+.challenge-page input, .warmup-page input{
 	width: 300px;
-    height: 63px;
+    height: 40px;
     box-sizing: border-box;
-    outline: none;
     font-size: 14px;
-    padding: 12px 5px 0 15px;
+    padding: 0 5px 0 15px;
     outline: 0;
     border: 0;
-    resize: none;
     box-shadow: inset 0px 1px 0px 0px rgba(227,230,234,0.50);
     position: absolute;
     bottom: 0;
@@ -346,11 +358,11 @@ a.home-btn{
     transform: translateX(-50%);
 }
 
-.home-btn i{
-	font-size: 26px;
-    text-align: center;
-    padding: 7px;
-    color: #fff;
+.home-btn img{
+	width: 23px;
+	height: 18px;
+	display: inline-block;
+	margin: 10px 0 0 8px;
 }
 
 .home-btn:hover{

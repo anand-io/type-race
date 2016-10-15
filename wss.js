@@ -46,7 +46,7 @@ WebSocketServer.prototype.init = function init(server){
             }
           });
           console.log(spark.room(raceId).clients());
-          const participant = { id: spark.query.id, name: spark.query.name };
+          const participant = { id: spark.query.myId, name: spark.query.name };
           spark.room(raceId).except(spark.id).send('participantJoined', participant);
         });
       });
@@ -76,7 +76,7 @@ WebSocketServer.prototype.init = function init(server){
           if (s.noOfCharacters > noOfCharacters || (s.isFinished && ! s.disqualified)) position++;
         });
         const data = { id: spark.query.myId, wpm, noOfCharacters, isFinished, position,
-          disqualified };
+          disqualified, name: spark.query.name };
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {

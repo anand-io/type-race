@@ -4,6 +4,7 @@ import Paragraph from './Paragraph.jsx';
 import TypingArea from './TypingArea.jsx';
 import Participants from './Participants.jsx';
 import RaceTimer from './RaceTimer.jsx';
+import RaceResult from './RaceResult.jsx';
 
 let Challenge = (props) => {
   const { dispatch, show } = props;
@@ -20,12 +21,13 @@ let Challenge = (props) => {
       <Participants />
       <Paragraph />
       <TypingArea />
+      <RaceResult />
     </section>
   );
 }
 
 const mapStateToProps = (state) => ({
-  show: state.joinedRace,
+  show: (state.joinedRace || state.showRaceResult),
   showRaceResult: state.showRaceResult,
   isPractice: state.isPractice,
 });

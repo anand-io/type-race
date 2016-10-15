@@ -58,7 +58,7 @@ const onStartCounter = () => {
     if (!--seconds) {
       store.dispatch(raceStarted());
       clearInterval(startTimerInterval);
-      document.getElementsByTagName('textarea')[0].focus();
+      document.getElementsByTagName('input')[0].focus();
       startRaceTimer();
       wss.raceStarted();
       sendCharaterInInterval();

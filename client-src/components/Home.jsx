@@ -29,8 +29,7 @@ let Home = ({ dispatch, show, myId }) => (
 );
 
 const mapStateToProps = (state) => ({
-  show: !state.joinedRace,
-  showRaceResult: state.showRaceResult,
+  show: (!state.joinedRace && !state.showRaceResult),
   isPractice: state.isPractice,
   myId: state.myInfo.id,
 });
