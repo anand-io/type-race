@@ -52,7 +52,7 @@ class TypingArea extends Component {
     return (
       <textarea
         className='input_default input_big'
-        placeholder="type here"
+        placeholder="Type here"
         style={textAreaStyle(wrongWord, show)}
         ref={node => { this.node = node; }}
         {...textProps}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { joinRace } from '../actions';
+import { joinRace, showLeaderBoard } from '../actions';
 
 let Home = ({ dispatch, show, myId }) => (
   <section
@@ -19,7 +19,12 @@ let Home = ({ dispatch, show, myId }) => (
     >
       Challenge
     </button>
-    <a href="" className="stage-btn"><img src="/images/stage-btn.png" alt="stage-btn"/></a>
+    <a
+      className="stage-btn"
+      onClick={() => dispatch(showLeaderBoard())}
+    >
+      <img src="/images/stage-btn.png" alt="stage-btn"/>
+    </a>
   </section>
 );
 

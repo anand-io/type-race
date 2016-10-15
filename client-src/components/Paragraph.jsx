@@ -26,7 +26,7 @@ let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord }) => (
 
 const mapStateToProps = (state) => ({
   paragraph: state.paragraph,
-  show: (state.startTimerOn || state.raceStarted) && !state.finishedRace,
+  show: state.joinedRace && !state.finishedRace,
   typingWordIndex: state.typingWordIndex,
   wrongWord: state.wrongWord
 })

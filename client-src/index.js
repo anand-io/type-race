@@ -9,7 +9,8 @@ import wss from './services/WebSocketService';
 import { addParticipant, setStartTimer, raceStarted, startTimer,
   participantUpdate, raceOver, setGameTimer, setMyInfo, finishRace} from './actions';
 
-const myId = document.getElementById('data').getAttribute('myid');
+const data = document.getElementById('data');
+const myId = data.getAttribute('myid');
 
 const middleware = [ thunk ]
 

@@ -10,8 +10,8 @@ let Participants = ({ participants, paragraph, finishedRace, myId,  isPractice})
     <ul className="challenge-user">
       {rParticipants.map(participant => {
         let percentageCompleted = (participant.noOfCharacters / paragraph.raw.length) * 100;
-        const participantId = participant.id === myId ?
-        'You' : participant.id.split('-')[0];
+        const participantName = participant.id === myId ?
+        'You' : participant.name || participant.id;
         let WPM = `: ${Math.ceil(participant.wpm)} WPM`;
         if (participant.waiting) {
           WPM = '';
@@ -27,7 +27,7 @@ let Participants = ({ participants, paragraph, finishedRace, myId,  isPractice})
               className="overlay"
               style={{ width: `${percentageCompleted}%`}}
             />
-          <span>{`${participantId}${WPM}`}</span>
+          <span>{`${participantName}${WPM}`}</span>
           </li>
         );
       })}

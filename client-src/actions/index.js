@@ -30,6 +30,10 @@ export const participantUpdate = participant => dispatch => {
   }
 }
 
+export const showLeaderBoard = participant => dispatch => {
+  wss.getLeaders(leaders => console.log(leaders));
+}
+
 export const setMyInfo = myInfo => ({
   type: 'MY_INFO',
   myInfo,
@@ -53,9 +57,10 @@ export const raceData = paragraph => ({
   paragraph
 });
 
-export const addParticipant = id => ({
+export const addParticipant = participant => ({
   type: 'ADD_PARTICIPANT',
-  id
+  id: participant.id,
+  name: participant.name,
 });
 
 export const startTimer = id => ({
