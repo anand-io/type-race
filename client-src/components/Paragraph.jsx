@@ -9,18 +9,29 @@ const getStyle = (typingWordIndex, index, wrongWord) => {
   }
 }
 
-let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord }) => (
+let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord, placeholder }) => (
   <div
     className='paragraph'
     style={{ display: show ? 'block' : 'none' }}
   >
-    {Array.isArray(paragraph.words) ?
+    {
+      !placeholder && paragraph.words ?
       paragraph.words.map((word, index) =>
         <span
         key={index}
         style={getStyle(typingWordIndex, index, wrongWord)} >
           {index == paragraph.length - 1 ? word : `${word} `}
-        </span>) : ''}
+        </span>)
+        :
+      <div className="temp_item">
+          <div className="temp_line" />
+          <div className="temp_line" />
+          <div className="temp_line" />
+          <div className="temp_line" />
+          <div className="temp_line" />
+          <div className="temp_line" />
+      </div>
+    }
   </div>
 )
 
@@ -28,7 +39,8 @@ const mapStateToProps = (state) => ({
   paragraph: state.paragraph,
   show: state.joinedRace && !state.finishedRace,
   typingWordIndex: state.typingWordIndex,
-  wrongWord: state.wrongWord
+  wrongWord: state.wrongWord,
+  placeholder: state.participants.length === 1 && !state.isPractice,
 })
 
 Paragraph = connect(

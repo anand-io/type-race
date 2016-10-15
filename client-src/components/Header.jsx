@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 let Header = ({ dispatch, show }) => (
   <header className="header">
     <a className="logo"><img src="/images/logo.png" alt="logo" /></a>
-    <a className="profile-pic"><img src="/images/profile_pic1.png" alt="pic1" /></a>
+    <a className="profile-pic"><img src="/images/default-user.png" alt="pic1" /></a>
   </header>
 );
 
