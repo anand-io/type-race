@@ -158,10 +158,8 @@ export const wrongWord = (state = false, action) => {
 
 export const raceAlreadyStarted = (state = false, action) => {
   switch (action.type) {
-    case 'RACE_ALREADY_STARTED':
-      return true;
-    case 'RACE_OVER':
-      return false;
+    case 'SET_RACE_ALREADY_STARTED':
+      return action.value;
     default:
       return state
   }
@@ -221,9 +219,18 @@ export const activeChallenge = (state = {}, action) => {
   }
 };
 
+export const challengeRejected = (state = false, action) => {
+  switch (action.type) {
+    case 'SET_CHALLENGE_REJECTED':
+      return action.value
+    default:
+      return state;
+  }
+};
+
 const typeRacerApp = combineReducers({
   participants, wrongWord, gameTimerSeconds, myInfo, leaders, participantsHeight,
-  paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted, isAW,
+  paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted, isAW, challengeRejected,
   joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped, awUser, activeChallenge,
   raceResults, showRaceResult, isPractice, showLeaderBoard, awContext, awAppActivated,
 });

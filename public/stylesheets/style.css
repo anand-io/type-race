@@ -142,7 +142,16 @@ hr{
 .challenge-from {
 	position: absolute;
   top: 50px;
-  left: 58px;
+	text-align: center;
+	width: 100%;
+}
+
+.challenge-rejected {
+	position: absolute;
+  top: 50px;
+	text-align: center;
+	width: 100%;
+	color: red;
 }
 
 .home-page .stage-btn{

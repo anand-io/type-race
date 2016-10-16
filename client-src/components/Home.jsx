@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { joinRace, leaderBoard, challenge, clearChallenge } from '../actions';
 
-let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge }) => {
+let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge, challengeRejected,
+raceAlreadyStarted }) => {
   let raceToJoin = location.pathname.replace('/', '');
   let challengeAction = joinRace;
   if (isAW) {
@@ -23,6 +24,14 @@ let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge }) => {
         className='challenge-from'
         style={{ display: activeChallenge.from ? 'block' : 'none' }}
       >Challenge from {activeChallenge.name}</div>
+      <div
+        className='challenge-rejected'
+        style={{ display: challengeRejected ? 'block' : 'none' }}
+      >Challenge Reject</div>
+      <div
+        className='challenge-rejected'
+        style={{ display: raceAlreadyStarted ? 'block' : 'none' }}
+      >Race already started. Try again later.</div>
       <button
         className="warmup"
         onClick={() => {
@@ -78,6 +87,8 @@ const mapStateToProps = (state) => ({
   awContext: state.awContext,
   isAW: state.isAW,
   activeChallenge: state.activeChallenge,
+  challengeRejected: state.challengeRejected,
+  raceAlreadyStarted: state.raceAlreadyStarted,
 });
 
 Home = connect(mapStateToProps)(Home);

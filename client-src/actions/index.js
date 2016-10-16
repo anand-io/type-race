@@ -6,8 +6,9 @@ export const joinRace = (room, isPractice) => dispatch => {
   dispatch(setIsPractice(isPractice));
   wss.joinRace(room, isPractice, (paragraph, participants) => {
     if (!paragraph && !participants) {
-      dispatch(raceAlreadyStarted(paragraph));
-      setTimeout(() => raceOver(), 2000);
+      dispatch(raceOver());
+      dispatch(raceAlreadyStarted(true));
+      setTimeout(() =>   dispatch(raceAlreadyStarted(false)), 2000);
       return;
     }
     dispatch(raceData(paragraph));
@@ -21,8 +22,9 @@ export const challenge = (room, isPractice, to, streamId) => dispatch => {
   dispatch(joinedRace());
   wss.joinRace(room, isPractice, (paragraph, participants) => {
     if (!paragraph && !participants) {
-      dispatch(raceAlreadyStarted(paragraph));
-      setTimeout(() => raceOver(), 2000);
+      dispatch(raceOver());
+      dispatch(raceAlreadyStarted(true));
+      setTimeout(() =>   dispatch(raceAlreadyStarted(false)), 2000);
       return;
     }
     dispatch(raceData(paragraph));
@@ -33,6 +35,8 @@ export const challenge = (room, isPractice, to, streamId) => dispatch => {
   wss.challenge(to, streamId, decline => {
     wss.leaveRace();
     dispatch(raceOver());
+    dispatch(setChallengeRejected(true));
+    setTimeout(() => dispatch(setChallengeRejected(false)), 2000);
   });
 }
 
@@ -69,6 +73,7 @@ export const registered = user => dispatch => {
 export const activeChallenge = (challengeData, callback) => ({
   type: 'ACTIVE_CHALLENGE',
   challengeData,
+  callback,
 });
 
 export const clearChallenge = value => ({
@@ -171,8 +176,9 @@ export const participantWPM = ({id, wpm, noOfCharacters, place, isFinished}) => 
   isFinished,
 });
 
-export const raceAlreadyStarted = time => ({
-  type: 'RACE_ALREADY_STARTED',
+export const raceAlreadyStarted = value => ({
+  type: 'SET_RACE_ALREADY_STARTED',
+  value,
 });
 
 export const storeAWUser = user => ({
@@ -216,4 +222,9 @@ participantsHeight
 export const participantsHeight = height => ({
   type: 'PARTICIPANTS_HEIGHT',
   height,
+});
+
+export const setChallengeRejected = value => ({
+  type: 'SET_CHALLENGE_REJECTED',
+  value
 });
