@@ -127,6 +127,7 @@ const onRaceOver = () => store.dispatch(raceOver());
 const onParticipantUpdate = participant => store.dispatch(participantUpdate(participant));
 
 const onChallenge = (challengeData, callback) => {
+  if (challengeData.from === store.getState().awUser.id) return;
   const challengeStream = challengeData.streamId || challengeData.from;
   awServices.showIndicator(challengeStream);
   awServices.showNotification(challengeStream);
