@@ -15,7 +15,7 @@ WebSocketServer.prototype.init = function init(server){
   this.primus.plugin('rooms', Rooms);
   this.primus.save(__dirname +'/public/javascripts/builds/primus.js');
   this.primus.on('connection', spark => {
-    // client.set(spark.query.myId, spark.id);
+    client.set(spark.query.myId, spark.id);
 
     spark.on('joinRace', (raceId, isPractice, callback) => {
       if (spark.joinedRace) return;
@@ -49,7 +49,20 @@ WebSocketServer.prototype.init = function init(server){
           spark.room(raceId).except(spark.id).send('participantJoined', participant);
         });
       });
+    });
 
+    spark.on('challenge', (from, to, callback) => {
+      if (!to || !from) return;
+      const toList = [].concat(to);
+      toList.forEach(toId => {
+        client.get(toId, (err, sparkId) => {
+          console.log(sparkId);
+          const peerSpark = this.primus.spark(sparkId);
+          if(!peerSpark) return;
+          console.log(peerSpark);
+          peerSpark.send('challenge', spark.query.myId, callback);
+        });
+      });
     });
 
     spark.on('updateWMP', (noOfCharacters, isFinished, disqualified) => {
@@ -97,6 +110,7 @@ WebSocketServer.prototype.init = function init(server){
 
 
     spark.on('end', () => {
+      if(!spark.joinedRace) return;
       const raceId = spark.joinedRace;
       client.sremAsync(`${raceId}_racers`, spark.query.myId)
       .then(() => {
@@ -109,6 +123,19 @@ WebSocketServer.prototype.init = function init(server){
       });
     });
 
+    spark.on('leaveRace', () => {
+      if(!spark.joinedRace) return;
+      const raceId = spark.joinedRace;
+      this.removeFromRace(spark, raceId);
+      spark.joinedRace = null;
+      spark.isFinished = false;
+      spark.disqualified = false;
+      spark.noOfCharacters = 0;
+      spark.leave(raceId, () => {
+        spark.send('raceOver', raceId);
+      });
+    });
+
     spark.on('getLeaders', callback => {
       leaderBoadServices.getLeaders(callback);
     });
@@ -116,6 +143,7 @@ WebSocketServer.prototype.init = function init(server){
 }
 
 WebSocketServer.prototype.removeFromRace = function (spark, raceId) {
+  console.log(spark.query.myId + 'leaving' + raceId);
   client.sremAsync(`${raceId}_racers`, spark.query.myId)
   .then(() => {
     client.smembersAsync(`${raceId}_racers`)
@@ -126,6 +154,7 @@ WebSocketServer.prototype.removeFromRace = function (spark, raceId) {
         client.del(`${raceId}_statedAt`);
         client.del(`${raceId}_racers`);
         const sparks = spark.room(raceId).clients();
+        console.log(sparks);
         sparks.forEach(id => {
           const s = this.primus.spark(id);
           s.joinedRace = null;

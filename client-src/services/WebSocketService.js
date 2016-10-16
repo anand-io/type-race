@@ -6,11 +6,12 @@ function WebSocketService() {}
 
 // Add some event emmiter.
 WebSocketService.prototype.init = function init(isAW, onParticipantJoined, onStartCounter,
-onParticipantCount, onRaceOver) {
+onParticipantCount, onRaceOver, onChallenge) {
   this.onParticipantJoined = onParticipantJoined;
   this.onStartCounter = onStartCounter;
   this.onParticipantCount = onParticipantCount;
   this.onRaceOver = onRaceOver;
+  this.onChallenge = onChallenge;
   if(!isAW) {
     this.primus = Primus.connect(`${location.protocol}//${location.host}/?myId=${myId}&name=${name}`);
     this.addListeners();
@@ -22,7 +23,7 @@ WebSocketService.prototype.connect = function connect(id, name) {
   this.addListeners();
 }
 
-WebSocketService.prototype.addListeners = function addListeners(pri) {
+WebSocketService.prototype.addListeners = function addListeners() {
   this.primus.on('open', () => {
 
     this.primus.on('participantJoined', participant => {
@@ -45,6 +46,9 @@ WebSocketService.prototype.addListeners = function addListeners(pri) {
       this.onRaceOver(data);
     });
 
+    this.primus.on('challenge', (from, callback) => {
+      this.onChallenge(from, callback);
+    });
   });
 };
 
@@ -70,6 +74,14 @@ WebSocketService.prototype.finishedRace = function finishedRace(noOfCharacters) 
 
 WebSocketService.prototype.getLeaders = function getLeaders(callback) {
   this.primus.send('getLeaders', callback);
+}
+
+WebSocketService.prototype.challenge = function challenge(from, to, callback) {
+  this.primus.send('challenge', from, to, callback);
+}
+
+WebSocketService.prototype.leaveRace = function leaveRace() {
+  this.primus.send('leaveRace');
 }
 
 const instance = new WebSocketService();

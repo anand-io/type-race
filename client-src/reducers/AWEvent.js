@@ -35,3 +35,14 @@ export const awAppActivated = (state = false, action) => {
       return state
   }
 }
+
+export const activeChallenge = (state = false, action) => {
+  switch (action.type) {
+    case 'ACTIVE_CHALLENGE':
+      return true;
+    case 'CHALLENGE_CANCEL':
+      return false;
+    default:
+      return state
+  }
+}

@@ -126,7 +126,12 @@ const onRaceOver = () => store.dispatch(raceOver());
 
 const onParticipantUpdate = participant => store.dispatch(participantUpdate(participant));
 
-wss.init(isAW, onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver);
+const onChallenge = (from, callback) => {
+  console.log(from);
+  callback(true);
+}
+
+wss.init(isAW, onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver, onChallenge);
 
 awServices.init(store);
 

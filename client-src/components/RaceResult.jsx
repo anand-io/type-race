@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { hideRaceResult } from '../actions';
+import { hideRaceResult, leaveRace } from '../actions';
 
 let RaceResult = (props) => {
-  const { dispatch, show, raceResults, myId } = props;
+  const { dispatch, show, raceResults, myId, joinedRace } = props;
   return (
     <span style={{ display: show ? 'block' : 'none' }}>
 			<ul className="completed-user">
@@ -26,7 +26,15 @@ let RaceResult = (props) => {
 			</ul>
 			<a
         className="home-btn"
-        onClick={() => dispatch(hideRaceResult())}
+        onClick={() => {
+          if (!joinedRace){
+            dispatch(hideRaceResult());
+          } else {
+            dispatch(leaveRace());
+            dispatch(hideRaceResult());
+          }
+
+        }}
       >
         <img src="/images/home-btn.png" />
       </a>
@@ -38,6 +46,7 @@ const mapStateToProps = (state) => ({
   raceResults: state.raceResults,
   show: state.showRaceResult,
   myId: state.myInfo.id,
+  joinedRace: state.joinedRace,
 });
 
 RaceResult = connect(mapStateToProps)(RaceResult);

@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { joinRace, leaderBoard } from '../actions';
+import { joinRace, leaderBoard, challenge } from '../actions';
 
 let Home = ({ dispatch, show, myId, awContext, isAW }) => {
   let raceToJoin = location.pathname.replace('/', '');
+  let challengeAction = joinRace;
   if (isAW) {
     if (myId > awContext.id) raceToJoin = myId + awContext.id;
     else raceToJoin = awContext.id + myId;
+    challengeAction = challenge;
   }
   return (
     <section
@@ -21,7 +23,7 @@ let Home = ({ dispatch, show, myId, awContext, isAW }) => {
       <span>OR</span>
       <button
         className="challenge"
-        onClick={() => dispatch(joinRace(raceToJoin))}
+        onClick={() => dispatch(challengeAction(raceToJoin, false, myId, awContext.id))}
       >
         {`Challenge ${awContext && awContext.firstName ? awContext.firstName : ''}`}
       </button>

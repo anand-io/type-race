@@ -17,10 +17,33 @@ export const joinRace = (room, isPractice) => dispatch => {
   });
 }
 
+export const challenge = (room, isPractice, from, to) => dispatch => {
+  dispatch(joinedRace());
+  wss.joinRace(room, isPractice, (paragraph, participants) => {
+    if (!paragraph && !participants) {
+      dispatch(raceAlreadyStarted(paragraph));
+      setTimeout(() => raceOver(), 2000);
+      return;
+    }
+    dispatch(raceData(paragraph));
+    participants.forEach(p => {
+      dispatch(addParticipant(p));
+    });
+  });
+  wss.challenge(from, to, decline => {
+    console.log(decline);
+  });
+}
+
 export const finishRace = (noOfCharactersTyped, disqualified) => dispatch => {
   wss.updateWMP(noOfCharactersTyped, true, disqualified);
   dispatch(finishedRace(noOfCharactersTyped));
   dispatch(showRaceResult());
+}
+
+export const leaveRace = () => dispatch => {
+  wss.leaveRace();
+  dispatch(raceOver());
 }
 
 export const participantUpdate = participant => dispatch => {
@@ -41,6 +64,14 @@ export const registered = user => dispatch => {
   wss.connect(user.id, `${user.firstName} ${user.lastName}`);
   dispatch(storeAWUser(user));
 };
+
+export const activeChallenge = value => ({
+  type: 'ACTIVE_CHALLENGE',
+});
+
+export const challengeCancel = value => ({
+  type: 'CHALLENGE_CANCEL',
+});
 
 export const setAW = value => ({
   type: 'IS_AW',

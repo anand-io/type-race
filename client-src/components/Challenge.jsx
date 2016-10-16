@@ -7,10 +7,11 @@ import RaceTimer from './RaceTimer.jsx';
 import RaceResult from './RaceResult.jsx';
 import StartTimer from './StartTimer.jsx';
 
-import { finishRace } from '../actions';
+import { finishRace, leaveRace } from '../actions';
 
 let Challenge = (props) => {
-  const { dispatch, show, noOfCharactersTyped, showRaceResult } = props;
+  const { dispatch, show, noOfCharactersTyped, showRaceResult, finishedRace, startTimerOn,
+  raceStarted } = props;
   return (
     <section
       className="challenge-page completed-page"
@@ -20,7 +21,14 @@ let Challenge = (props) => {
         <i
           className="arrow-left"
           style={{ display: !showRaceResult ? 'block' : 'none' }}
-          onClick={() => dispatch(finishRace(noOfCharactersTyped, true))}
+          onClick={() => {
+            if(startTimerOn || raceStarted) {
+              dispatch(finishRace(noOfCharactersTyped, true));
+            } else {
+              dispatch(leaveRace());
+            }
+
+          }}
         />
         <h5>{showRaceResult ? 'Completed' : 'Challenge'}</h5>
         <RaceTimer />
@@ -39,6 +47,9 @@ const mapStateToProps = (state) => ({
   showRaceResult: state.showRaceResult,
   isPractice: state.isPractice,
   noOfCharactersTyped: state.noOfCharactersTyped,
+  finishedRace: state.finishedRace,
+  startTimerOn: state.startTimerOn,
+  raceStarted: state.raceStarted,
 });
 
 Challenge = connect(mapStateToProps)(Challenge);
