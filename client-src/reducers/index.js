@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import participants from './participants';
 import paragraph from './paragraph';
-import { awUser, awContext, awAppActivated } from './awEvent';
+import { awUser, awContext, awAppActivated, isAW } from './awEvent';
 
 export const joinedRace = (state = false, action) => {
   switch (action.type) {
@@ -207,7 +207,7 @@ export const participantsHeight = (state = 0, action) => {
 
 const typeRacerApp = combineReducers({
   participants, wrongWord, gameTimerSeconds, myInfo, leaders, participantsHeight,
-  paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted,
+  paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted, isAW,
   joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped, awUser,
   raceResults, showRaceResult, isPractice, showLeaderBoard, awContext, awAppActivated,
 });

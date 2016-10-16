@@ -42,6 +42,11 @@ export const registered = user => dispatch => {
   dispatch(storeAWUser(user));
 };
 
+export const setAW = value => ({
+  type: 'IS_AW',
+  value
+});
+
 export const setMyInfo = myInfo => ({
   type: 'MY_INFO',
   myInfo,

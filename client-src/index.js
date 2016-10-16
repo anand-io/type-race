@@ -10,7 +10,7 @@ import awServices from './services/AwServices';
 import {
   addParticipant, setStartTimer, raceStarted, startTimer, participantUpdate,
   raceOver, setGameTimer, setMyInfo, finishRace, storeAWUser, storeAWContext,
-  appActivated, appDeactivated,
+  appActivated, appDeactivated, setAW
 } from './actions';
 
 function addPrefixToLogs() {
@@ -63,6 +63,8 @@ render(
 )
 
 store.dispatch(setMyInfo({ id: myId }));
+
+store.dispatch(setAW(isAW));
 
 const sendCharaterInInterval = () => {
   setTimeout(() => {

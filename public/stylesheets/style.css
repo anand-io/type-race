@@ -309,13 +309,19 @@ hr{
 }
 
 .completed-user{
-	padding: 25px 56px 0 56px;
-}
-
-.completed-user li{
-	float: left;
-	margin-bottom: 33px;
+	padding: 25px 40px 0;
+	font-size: 0;
 	text-align: center;
+}
+.completed-user:after{
+	clear: both;
+	display: block;
+	content: "";
+}
+.completed-user li{
+	display: inline-block;
+  margin-bottom: 33px;
+  width: 50%;
 }
 
 .completed-user li:nth-child(3) .award, .completed-user li:nth-child(4) .award{
@@ -349,10 +355,6 @@ hr{
 .completed-user li span.speed{
 	font-size: 14px;
 	font-weight: 500;
-}
-
-.completed-user li:nth-child(odd){
-	margin-right: 60px;
 }
 
 a.home-btn{

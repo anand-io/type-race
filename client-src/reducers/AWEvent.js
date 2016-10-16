@@ -1,11 +1,11 @@
-// export const isAW = (state = false, action) => {
-//   switch (action.type) {
-//     case 'IS_AW':
-//       return  true;
-//     default:
-//       return state
-//   }
-// }
+export const isAW = (state = false, action) => {
+  switch (action.type) {
+    case 'IS_AW':
+      return  action.value;
+    default:
+      return state
+  }
+}
 
 export const awContext = (state = {}, action) => {
   switch (action.type) {
