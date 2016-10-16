@@ -205,10 +205,24 @@ export const participantsHeight = (state = 0, action) => {
   }
 };
 
+export const activeChallenge = (state = {}, action) => {
+  switch (action.type) {
+    case 'ACTIVE_CHALLENGE':
+      return {
+        from: action.from,
+        callback: action.callback,
+      };
+    case 'CHALLENGE_CLEAR':
+      return {};
+    default:
+      return state;
+  }
+};
+
 const typeRacerApp = combineReducers({
   participants, wrongWord, gameTimerSeconds, myInfo, leaders, participantsHeight,
   paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted, isAW,
-  joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped, awUser,
+  joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped, awUser, activeChallenge,
   raceResults, showRaceResult, isPractice, showLeaderBoard, awContext, awAppActivated,
 });
 

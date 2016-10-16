@@ -10,7 +10,7 @@ import awServices from './services/AwServices';
 import {
   addParticipant, setStartTimer, raceStarted, startTimer, participantUpdate,
   raceOver, setGameTimer, setMyInfo, finishRace, storeAWUser, storeAWContext,
-  appActivated, appDeactivated, setAW
+  appActivated, appDeactivated, setAW, activeChallenge
 } from './actions';
 
 function addPrefixToLogs() {
@@ -127,8 +127,7 @@ const onRaceOver = () => store.dispatch(raceOver());
 const onParticipantUpdate = participant => store.dispatch(participantUpdate(participant));
 
 const onChallenge = (from, callback) => {
-  console.log(from);
-  callback(true);
+  store.dispatch(activeChallenge(from, callback));
 }
 
 wss.init(isAW, onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver, onChallenge);

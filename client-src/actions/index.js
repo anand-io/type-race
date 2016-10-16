@@ -31,7 +31,8 @@ export const challenge = (room, isPractice, from, to) => dispatch => {
     });
   });
   wss.challenge(from, to, decline => {
-    console.log(decline);
+    wss.leaveRace();
+    dispatch(raceOver());
   });
 }
 
@@ -65,12 +66,14 @@ export const registered = user => dispatch => {
   dispatch(storeAWUser(user));
 };
 
-export const activeChallenge = value => ({
+export const activeChallenge = (from, callback) => ({
   type: 'ACTIVE_CHALLENGE',
+  from,
+  callback,
 });
 
-export const challengeCancel = value => ({
-  type: 'CHALLENGE_CANCEL',
+export const clearChallenge = value => ({
+  type: 'CHALLENGE_CLEAR',
 });
 
 export const setAW = value => ({

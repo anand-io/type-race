@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { joinRace, leaderBoard, challenge } from '../actions';
+import { joinRace, leaderBoard, challenge, clearChallenge } from '../actions';
 
-let Home = ({ dispatch, show, myId, awContext, isAW }) => {
+let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge }) => {
   let raceToJoin = location.pathname.replace('/', '');
   let challengeAction = joinRace;
   if (isAW) {
@@ -17,15 +17,35 @@ let Home = ({ dispatch, show, myId, awContext, isAW }) => {
     >
       <button
         className="warmup"
-        onClick={() => dispatch(joinRace(myId, true))}
-      >Warm Up</button>
+        onClick={() => {
+          if (!activeChallenge.from) {
+            dispatch(joinRace(myId, true));
+          } else {
+            let raceToJoin;
+            if (myId > activeChallenge.from) raceToJoin = myId + activeChallenge.from;
+            else raceToJoin = activeChallenge.from + myId;
+            dispatch(joinRace(raceToJoin));
+            dispatch(clearChallenge());
+          }
+        }}
+      >{activeChallenge.from ? 'Accept' : 'Warm Up'}</button>
       <hr/>
       <span>OR</span>
       <button
         className="challenge"
-        onClick={() => dispatch(challengeAction(raceToJoin, false, myId, awContext.id))}
+        onClick={() => {
+          if (!activeChallenge.from) {
+            dispatch(challengeAction(raceToJoin, false, myId, awContext.id));
+          } else {
+            dispatch(clearChallenge());
+            activeChallenge.callback(true);
+          }
+        }}
       >
-        {`Challenge ${awContext && awContext.firstName ? awContext.firstName : ''}`}
+        {
+          activeChallenge.from ? 'Reject' :
+            `Challenge ${awContext && awContext.firstName ? awContext.firstName : ''}`
+        }
       </button>
       <a
         className="stage-btn"
@@ -41,6 +61,7 @@ const mapStateToProps = (state) => ({
   myId: state.myInfo.id || state.awUser.id,
   awContext: state.awContext,
   isAW: state.isAW,
+  activeChallenge: state.activeChallenge,
 });
 
 Home = connect(mapStateToProps)(Home);
