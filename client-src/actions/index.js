@@ -17,7 +17,7 @@ export const joinRace = (room, isPractice) => dispatch => {
   });
 }
 
-export const challenge = (room, isPractice, from, to) => dispatch => {
+export const challenge = (room, isPractice, to, streamId) => dispatch => {
   dispatch(joinedRace());
   wss.joinRace(room, isPractice, (paragraph, participants) => {
     if (!paragraph && !participants) {
@@ -30,7 +30,7 @@ export const challenge = (room, isPractice, from, to) => dispatch => {
       dispatch(addParticipant(p));
     });
   });
-  wss.challenge(from, to, decline => {
+  wss.challenge(to, streamId, decline => {
     wss.leaveRace();
     dispatch(raceOver());
   });
@@ -66,9 +66,10 @@ export const registered = user => dispatch => {
   dispatch(storeAWUser(user));
 };
 
-export const activeChallenge = (from, callback) => ({
+export const activeChallenge = (from, streamId, callback) => ({
   type: 'ACTIVE_CHALLENGE',
   from,
+  streamId,
   callback,
 });
 

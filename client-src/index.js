@@ -126,10 +126,11 @@ const onRaceOver = () => store.dispatch(raceOver());
 
 const onParticipantUpdate = participant => store.dispatch(participantUpdate(participant));
 
-const onChallenge = (from, callback) => {
-  awServices.showIndicator(from);
-  awServices.showNotification(from);
-  store.dispatch(activeChallenge(from, callback));
+const onChallenge = (challengeData, callback) => {
+  const challengeStream = challengeData.streamId || challengeData.from;
+  awServices.showIndicator(challengeStream);
+  awServices.showNotification(challengeStream);
+  store.dispatch(activeChallenge(challengeData.from, challengeData.streamId, callback));
 }
 
 wss.init(isAW, onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver, onChallenge);

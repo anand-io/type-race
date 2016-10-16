@@ -209,6 +209,7 @@ export const activeChallenge = (state = {}, action) => {
   switch (action.type) {
     case 'ACTIVE_CHALLENGE':
       return {
+        streamId: action.streamId,
         from: action.from,
         callback: action.callback,
       };

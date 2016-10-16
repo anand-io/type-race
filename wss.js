@@ -51,8 +51,8 @@ WebSocketServer.prototype.init = function init(server){
       });
     });
 
-    spark.on('challenge', (from, to, callback) => {
-      if (!to || !from) return;
+    spark.on('challenge', (to, streamId, callback) => {
+      if (!to) return;
       const toList = [].concat(to);
       toList.forEach(toId => {
         client.get(toId, (err, sparkId) => {
@@ -60,7 +60,8 @@ WebSocketServer.prototype.init = function init(server){
           const peerSpark = this.primus.spark(sparkId);
           if(!peerSpark) return;
           console.log(peerSpark);
-          peerSpark.send('challenge', spark.query.myId, callback);
+          const data =  { from: spark.query.myId, streamId }
+          peerSpark.send('challenge', data, callback);
         });
       });
     });

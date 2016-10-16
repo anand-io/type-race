@@ -6,8 +6,12 @@ let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge }) => {
   let raceToJoin = location.pathname.replace('/', '');
   let challengeAction = joinRace;
   if (isAW) {
-    if (myId > awContext.id) raceToJoin = myId + awContext.id;
-    else raceToJoin = awContext.id + myId;
+    if (awContext.members) {
+      raceToJoin = awContext.id;
+    } else {
+      if (myId > awContext.id) raceToJoin = myId + awContext.id;
+      else raceToJoin = awContext.id + myId;
+    }
     challengeAction = challenge;
   }
   return (
@@ -22,8 +26,12 @@ let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge }) => {
             dispatch(joinRace(myId, true));
           } else {
             let raceToJoin;
-            if (myId > activeChallenge.from) raceToJoin = myId + activeChallenge.from;
-            else raceToJoin = activeChallenge.from + myId;
+            if (activeChallenge.streamId) {
+              raceToJoin = activeChallenge.streamId;
+            } else {
+              if (myId > activeChallenge.from) raceToJoin = myId + activeChallenge.from;
+              else raceToJoin = activeChallenge.from + myId;
+            }
             dispatch(joinRace(raceToJoin));
             dispatch(clearChallenge());
           }
@@ -35,10 +43,14 @@ let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge }) => {
         className="challenge"
         onClick={() => {
           if (!activeChallenge.from) {
-            dispatch(challengeAction(raceToJoin, false, myId, awContext.id));
+            const challengingIds = awContext.members ? awContext.members : awContext.id;
+            const streamId = awContext.members ? awContext.id : null;
+            dispatch(challengeAction(raceToJoin, false, challengingIds, streamId));
           } else {
             dispatch(clearChallenge());
-            activeChallenge.callback(true);
+            if (!activeChallenge.streamId) {
+              activeChallenge.callback(true);
+            }
           }
         }}
       >
