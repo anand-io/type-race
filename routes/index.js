@@ -46,10 +46,7 @@ router.get('/fullAuthCallback', function(req, res, next) {
       }
     });
   }
-  res.json({
-    response: req.query,
-    body: req.body,
-  })
+  res.send('Thank you, you close this window and continue using the app');
 });
 
 router.get('/getTokens', function(req, res, next) {
