@@ -3,7 +3,7 @@ const mongoose = require('./MongooseServices.js');
 
 var LeaderBoardModel = mongoose.model('LeaderBoad',
  {
-   userId: String,
+   _id: String,
    name: String,
    wpm: { type: String, index: true },
  });
@@ -11,7 +11,7 @@ var LeaderBoardModel = mongoose.model('LeaderBoad',
 function LeaderBoard() {}
 
 LeaderBoard.prototype.addWPM = function addWPM(userId, wpm, name) {
-  var leaderBoardEntry = new LeaderBoardModel({ userId, wpm, name });
+  var leaderBoardEntry = new LeaderBoardModel({ _id: userId, wpm, name });
   leaderBoardEntry.save(function (err) {
     if (err) {
       console.log(err);

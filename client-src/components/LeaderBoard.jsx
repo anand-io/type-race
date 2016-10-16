@@ -18,7 +18,7 @@ let Leaderboard = (props) => {
 			</div>
 			<ul className="leadersboard-user">
         {leaders.map((leader, rank) => (
-          <li>
+          <li key={leader._id}>
   					<span className="number">{ rank + 1 }</span>
   					<figure>
   						<img src="/images/default-user.png" alt="user-pic"/>
