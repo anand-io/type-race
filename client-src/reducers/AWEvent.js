@@ -1,24 +1,42 @@
-export const awAppState = (state = {}, action) => {
+// export const awAppState = (state = {}, action) => {
+//   switch (action.type) {
+//     case 'APP_REGISTERED':
+//       return  {
+//         user: action.user,
+//       }
+//     case 'APP_CONTEXT_CHANGE':
+//       return {
+//          user: action.user,
+//          context: action.context,
+//       }
+//     case 'APP_ACTIVATED':
+//       return {
+//         user: action.user,
+//         context: action.context,
+//       }
+//     case 'APP_DEACTIVATED':
+//       return {
+//         user: action.user,
+//         context: action.context,
+//       }
+//     default:
+//       return state
+//   }
+// }
+
+export const awContext = (state = {}, action) => {
   switch (action.type) {
-    case 'APP_REGISTERED':
-      return  {
-        user: action.user,
-      }
-    case 'APP_CONTEXT_CHANGE':
-      return {
-         user: action.user,
-         context: action.context,
-      }
-    case 'APP_ACTIVATED':
-      return {
-        user: action.user,
-        context: action.context,
-      }
-    case 'APP_DEACTIVATED':
-      return {
-        user: action.user,
-        context: action.context,
-      }
+    case 'AW_CONTEXT':
+      return  action.context;
+    default:
+      return state
+  }
+}
+
+export const awUser = (state = {}, action) => {
+  switch (action.type) {
+    case 'AW_USER':
+      return  action.user;
     default:
       return state
   }

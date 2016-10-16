@@ -132,14 +132,13 @@ export const raceAlreadyStarted = time => ({
   type: 'RACE_ALREADY_STARTED',
 });
 
-export const appRegistered = user => ({
-  type: 'APP_REGISTERED',
+export const storeAWUser = user => ({
+  type: 'AW_USER',
   user,
 });
 
-export const appContextChange = (user, context) => ({
-  type: 'APP_REGISTERED',
-  user,
+export const storeAWContext = context => ({
+  type: 'AW_CONTEXT',
   context,
 });
 

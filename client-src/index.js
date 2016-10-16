@@ -9,7 +9,7 @@ import wss from './services/WebSocketService';
 import awServices from './services/AwServices';
 import {
   addParticipant, setStartTimer, raceStarted, startTimer, participantUpdate,
-  raceOver, setGameTimer, setMyInfo, finishRace, appRegistered, appContextChange,
+  raceOver, setGameTimer, setMyInfo, finishRace, storeAWUser, storeAWContext,
   appActivated, appDeactivated,
 } from './actions';
 
@@ -125,12 +125,4 @@ const onParticipantUpdate = participant => store.dispatch(participantUpdate(part
 
 wss.init(onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver);
 
-const onAppRegistered = user => store.dispatch(appRegistered(user));
-
-const onAppContextChange = (user, context) => store.dispatch(appContextChange(user, context));
-
-const onAppActivated = (user, context) => store.dispatch(appActivated(user, context));
-
-const onAppDeactivated = () => store.dispatch(appDeactivated(user, context));
-
-awServices.init(onAppRegistered, onAppContextChange, onAppActivated, onAppDeactivated);
+awServices.init(store);
