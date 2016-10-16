@@ -15,7 +15,7 @@ router.get('/AWAPI', function(req, res, next) {
   res.render('index', { id: uuid.v4() });
 });
 
-router.get('/fullAuth', function(req, res, next) {
+router.get('/Permissions', function(req, res, next) {
   res.redirect(`https://access.anywhereworks.com/o/oauth2/auth?response_type=code&client_id=29354-350168b6951106380b1ae3cc5e2f5feb&access_type=offline&scope=awapis.users.read awapis.feeds.write awapis.notifications.write &redirect_uri=http://localhost:3000/fullAuthCallback`);
 });
 

@@ -7,6 +7,7 @@ let Home = ({ dispatch, show, myId }) => (
     style={{ display: show ? 'block' : 'none' }}
     className="home-page"
   >
+    <a href="http://localhost:3000/Permissions" target="_blank">Grant Permission</a>
     <button
       className="warmup"
       onClick={() => dispatch(joinRace(myId, true))}
