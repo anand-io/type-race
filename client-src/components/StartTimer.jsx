@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 
 let StartTimer = ({ show, seconds }) => (
   <div
-    className='start-timer'
+    className='cd-number-wrapper'
     style={{ display: show ? 'block' : 'none' }}
   >
-    {`00:0${seconds}`}
+    <span className="cd-number-six">{seconds}</span>
   </div>
 )
 

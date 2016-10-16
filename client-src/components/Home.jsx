@@ -22,9 +22,7 @@ let Home = ({ dispatch, show, myId }) => (
     <a
       className="stage-btn"
       onClick={() => dispatch(leaderBoard())}
-    >
-      <img src="/images/stage-btn.png" alt="stage-btn"/>
-    </a>
+    />
   </section>
 );
 
