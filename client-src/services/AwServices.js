@@ -6,7 +6,7 @@ AwServices.prototype.init =
   function init(store) {
 
   const AwApp = AAFClient.init();
-
+  this.app = AwApp;
   AwApp.on('registered', ({user}) => {
     console.error(`registered : ${JSON.stringify(user)}`);
     store.dispatch(registered(user));
@@ -30,6 +30,22 @@ AwServices.prototype.init =
     store.dispatch(appDeactivated());
   });
 }
+
+AwServices.prototype.showIndicator = function showIndicator(id) {
+  this.app.postMessage( 'showIndicator', { id });
+}
+
+AwServices.prototype.showNotification = function showNotification(id) {
+  this.app.postMessage( 'showNotification', { id,
+      title :  'Type Race',
+      message: "Challenged for Type Race",
+  });
+};
+
+// app.postMessage( 'showCount', {
+//     'count': 10,
+//     'id' : "ac2324ff-747b-4921-8ff8-d0f256bb5aea"
+// });
 
 const instance = new AwServices();
 

@@ -127,6 +127,8 @@ const onRaceOver = () => store.dispatch(raceOver());
 const onParticipantUpdate = participant => store.dispatch(participantUpdate(participant));
 
 const onChallenge = (from, callback) => {
+  awServices.showIndicator(from);
+  awServices.showNotification(from);
   store.dispatch(activeChallenge(from, callback));
 }
 
