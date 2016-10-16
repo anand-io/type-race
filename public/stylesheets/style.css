@@ -139,6 +139,12 @@ hr{
     font-weight: bold;
 }
 
+.challenge-from {
+	position: absolute;
+  top: 50px;
+  left: 58px;
+}
+
 .home-page .stage-btn{
 	cursor: pointer;
 	position: absolute;

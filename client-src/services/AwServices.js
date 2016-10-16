@@ -35,10 +35,10 @@ AwServices.prototype.showIndicator = function showIndicator(id) {
   this.app.postMessage( 'showIndicator', { id });
 }
 
-AwServices.prototype.showNotification = function showNotification(id) {
+AwServices.prototype.showNotification = function showNotification(id, name) {
   this.app.postMessage( 'showNotification', { id,
-      title :  'Type Race',
-      message: "Challenged for Type Race",
+      title :  `Typerace Challenge from ${name}`,
+      message: "Click the typerace widget to react",
   });
 };
 

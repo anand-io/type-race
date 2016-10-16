@@ -209,8 +209,9 @@ export const activeChallenge = (state = {}, action) => {
   switch (action.type) {
     case 'ACTIVE_CHALLENGE':
       return {
-        streamId: action.streamId,
-        from: action.from,
+        streamId: action.challengeData.streamId,
+        from: action.challengeData.from,
+        name: action.challengeData.name,
         callback: action.callback,
       };
     case 'CHALLENGE_CLEAR':

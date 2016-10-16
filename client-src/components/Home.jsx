@@ -19,6 +19,10 @@ let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge }) => {
       style={{ display: show ? 'block' : 'none' }}
       className="home-page"
     >
+      <div
+        className='challenge-from'
+        style={{ display: activeChallenge.from ? 'block' : 'none' }}
+      >Challenge from {activeChallenge.name}</div>
       <button
         className="warmup"
         onClick={() => {

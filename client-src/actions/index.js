@@ -66,11 +66,9 @@ export const registered = user => dispatch => {
   dispatch(storeAWUser(user));
 };
 
-export const activeChallenge = (from, streamId, callback) => ({
+export const activeChallenge = (challengeData, callback) => ({
   type: 'ACTIVE_CHALLENGE',
-  from,
-  streamId,
-  callback,
+  challengeData,
 });
 
 export const clearChallenge = value => ({

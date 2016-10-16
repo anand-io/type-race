@@ -130,8 +130,8 @@ const onChallenge = (challengeData, callback) => {
   if (challengeData.from === store.getState().awUser.id) return;
   const challengeStream = challengeData.streamId || challengeData.from;
   awServices.showIndicator(challengeStream);
-  awServices.showNotification(challengeStream);
-  store.dispatch(activeChallenge(challengeData.from, challengeData.streamId, callback));
+  awServices.showNotification(challengeStream, challengeData.name);
+  store.dispatch(activeChallenge(challengeData, callback));
 }
 
 wss.init(isAW, onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver, onChallenge);

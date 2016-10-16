@@ -60,7 +60,7 @@ WebSocketServer.prototype.init = function init(server){
           const peerSpark = this.primus.spark(sparkId);
           if(!peerSpark) return;
           console.log(peerSpark);
-          const data =  { from: spark.query.myId, streamId }
+          const data =  { from: spark.query.myId, streamId, name: spark.query.name };
           peerSpark.send('challenge', data, callback);
         });
       });
