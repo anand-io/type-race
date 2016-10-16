@@ -26,6 +26,10 @@ AwServices.prototype.init =
   });
 }
 
+AwServices.prototype.postFeeds = function postFeeds() {
+  console.log('posting feed');
+}
+
 const instance = new AwServices();
 
 export default instance;

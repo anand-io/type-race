@@ -1,7 +1,7 @@
 var express = require('express');
 var uuid = require('node-uuid');
 var shortid = require('shortid');
-var requst = require('request');
+var request = require('request');
 var userService = require('../services/UserServices');
 var credentials = require('../credentials.json');
 var router = express.Router();
@@ -23,7 +23,7 @@ router.get('/fullAuthCallback', function(req, res, next) {
   console.log('response : ', req.body, req.query);
   var params = req.query
   if (params.code) {
-    requst.post({
+    request.post({
       url: 'https://access.anywhereworks.com/o/oauth2/v1/token',
       form: { code: params.code, client_id: credentials.client_id,
               client_secret: credentials.client_secret,
@@ -61,6 +61,33 @@ router.get('/getTokens', function(req, res, next) {
       })
     })
 });
+
+router.post('/feed', function(req, res, next) {
+  console.log('inside feed')
+  var user_id = req.body.user_id;
+  var content = req.body.content;
+  if (user_id) {
+    userService.getTokens(user_id, function(model) {
+      console.log(`posting feed : ${user_id} ${content}`);
+      if (model.access_token && model.refresh_token) {
+        var options = {
+          url: 'https://api.anywhereworks.com/api/v1/feed',
+          body: JSON.stringify({
+	           "content": content,
+             "type" : "update"
+          }),
+          headers: {
+            'Content-Type' : 'application/json',
+            'Authorization': `Bearer ${model.access_token}`
+          }
+        }
+        request.post(options, function(e, r, body) {
+          console.log(body);
+        });
+      }
+    });
+  }
+ });
 
 router.get('/:roomId', function(req, res, next) {
   res.render('index', {  name: req.query.name, id: uuid.v4() });
