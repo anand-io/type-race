@@ -37,6 +37,11 @@ export const leaderBoard = participant => dispatch => {
   });
 };
 
+export const registered = user => dispatch => {
+  wss.connect(user.id, `${user.firstName} ${user.lastName}`);
+  dispatch(storeAWUser(user));
+};
+
 export const setMyInfo = myInfo => ({
   type: 'MY_INFO',
   myInfo,

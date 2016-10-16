@@ -45,7 +45,6 @@ WebSocketServer.prototype.init = function init(server){
               client.set(`${raceId}_statedAt`, new Date().getTime());
             }
           });
-          console.log(spark.room(raceId).clients());
           const participant = { id: spark.query.myId, name: spark.query.name };
           spark.room(raceId).except(spark.id).send('participantJoined', participant);
         });

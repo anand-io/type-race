@@ -1,4 +1,4 @@
-import { storeAWUser, appContextChange, appActivated, appDeactivated } from '../actions';
+import { storeAWUser, storeAWContext, appActivated, appDeactivated, registered } from '../actions';
 
 function AwServices() {}
 
@@ -8,21 +8,21 @@ AwServices.prototype.init =
   const AwApp = AAFClient.init();
 
   AwApp.on('registered', ({user}) => {
-    console.error(`registered : ${JSON.stringify(data)}`);
-    store.dispatch(storeAWUser(user));
+    console.error(`registered : ${JSON.stringify(user)}`);
+    store.dispatch(registered(user));
   });
 
   AwApp.on('activated', ({user, context}) => {
-    console.error(`activated : ${JSON.stringify(data)}`);
+    console.error(`activated : ${JSON.stringify(context)}`);
     // store.dispatch(storeAWUser(user));
-    store.dispatch(appContextChange(context));
+    store.dispatch(storeAWContext(context));
     store.dispatch(appActivated());
   })
 
   AwApp.on('context-change', ({user, context}) => {
-    console.error(`context-change : ${JSON.stringify(data)}`);
+    console.error(`context-change : ${JSON.stringify(context)}`);
     // store.dispatch(storeAWUser(user));
-    store.dispatch(appContextChange(context));
+    store.dispatch(storeAWContext(context));
   });
 
   AwApp.on('deactivated', data => {

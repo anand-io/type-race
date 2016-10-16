@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { joinRace, leaderBoard } from '../actions';
 
-let Home = ({ dispatch, show, myId }) => (
+let Home = ({ dispatch, show, myId, awContext }) => (
   <section
     style={{ display: show ? 'block' : 'none' }}
     className="home-page"
@@ -17,7 +17,7 @@ let Home = ({ dispatch, show, myId }) => (
       className="challenge"
       onClick={() => dispatch(joinRace(location.pathname.replace('/', '')))}
     >
-      Challenge
+      {`Challenge ${awContext && awContext.firstName ? awContext.firstName : ''}`}
     </button>
     <a
       className="stage-btn"
@@ -29,7 +29,8 @@ let Home = ({ dispatch, show, myId }) => (
 const mapStateToProps = (state) => ({
   show: (!state.joinedRace && !state.showRaceResult && !state.showLeaderBoard),
   isPractice: state.isPractice,
-  myId: state.myInfo.id,
+  myId: state.myInfo.id || state.awUser.id,
+  awContext: state.awContext,
 });
 
 Home = connect(mapStateToProps)(Home);

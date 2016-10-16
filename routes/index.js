@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/AWAPI', function(req, res, next) {
-  res.render('index', { id: uuid.v4() });
+  res.render('index', { isAW: 'true' });
 });
 
 router.get('/:roomId', function(req, res, next) {

@@ -28,6 +28,7 @@ addPrefixToLogs();
 
 const data = document.getElementById('data');
 const myId = data.getAttribute('myid');
+const isAW = data.getAttribute('isaw') === "true";
 
 // var AwApp = AAFClient.init();
 //
@@ -123,6 +124,8 @@ const onRaceOver = () => store.dispatch(raceOver());
 
 const onParticipantUpdate = participant => store.dispatch(participantUpdate(participant));
 
-wss.init(onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver);
+wss.init(isAW, onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver);
 
 awServices.init(store);
+
+window.store = store;

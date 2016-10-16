@@ -8,9 +8,10 @@ class Participants extends Component {
     dispatch(participantsHeight(this.node.offsetHeight));
   }
   render() {
-    const { participants, paragraph, finishedRace, myId,  isPractice, show} = this.props;
+    const { participants, paragraph, finishedRace, myId,  isPractice, show, awContext} = this.props;
     const rParticipants = [...participants];
     if (rParticipants.length === 1 && !isPractice) {
+      const waitingMessage = `Waiting for ${awContext && awContext.firstName ? awContext.firstName : 'others'} to join...`;
       rParticipants.push({ waiting: true, id: 'Waiting for others to join...'});
     }
     return (
@@ -53,6 +54,7 @@ const mapStateToProps = (state) => ({
   finishedRace: state.finishedRace,
   myId: state.myInfo.id,
   isPractice: state.isPractice,
+  awContext: state.awContext,
 })
 
 Participants = connect(

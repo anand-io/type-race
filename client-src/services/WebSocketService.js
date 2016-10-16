@@ -5,15 +5,22 @@ const name = data.getAttribute('name');
 function WebSocketService() {}
 
 // Add some event emmiter.
-WebSocketService.prototype.init = function init(onParticipantJoined, onStartCounter,
-  onParticipantCount, onRaceOver) {
-  this.primus = Primus.connect(`${location.protocol}//${location.host}/?myId=${myId}&name=${name}`);
+WebSocketService.prototype.init = function init(isAW, onParticipantJoined, onStartCounter,
+onParticipantCount, onRaceOver) {
   this.onParticipantJoined = onParticipantJoined;
   this.onStartCounter = onStartCounter;
   this.onParticipantCount = onParticipantCount;
   this.onRaceOver = onRaceOver;
-  this.addListeners();
+  if(!isAW) {
+    this.primus = Primus.connect(`${location.protocol}//${location.host}/?myId=${myId}&name=${name}`);
+    this.addListeners();
+  }
 };
+
+WebSocketService.prototype.connect = function connect(id, name) {
+  this.primus = Primus.connect(`${location.protocol}//${location.host}/?myId=${id}&name=${name}`);
+  this.addListeners();
+}
 
 WebSocketService.prototype.addListeners = function addListeners(pri) {
   this.primus.on('open', () => {
