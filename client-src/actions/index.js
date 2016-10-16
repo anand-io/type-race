@@ -160,7 +160,18 @@ export const showLeaderBoard = leaders => ({
   leaders,
 });
 
+export const hideLeaderBoard = leaders => ({
+  type: 'HIDE_LEADER_BOARD',
+  leaders,
+});
+
 export const storeLeaders = leaders => ({
   type: 'LEADERS',
   leaders,
+});
+participantsHeight
+
+export const participantsHeight = height => ({
+  type: 'PARTICIPANTS_HEIGHT',
+  height,
 });

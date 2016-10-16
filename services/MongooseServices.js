@@ -1,4 +1,14 @@
+'use strict';
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+
+let mongodbUrl;
+if (process.env.NODE_ENV === 'production') {
+  var credentials = require('../credentials.json');
+  mongodbUrl = credentials.mongodb;
+} else {
+  mongodbUrl = 'mongodb://localhost/test';
+}
+
+mongoose.connect(mongodbUrl);
 
 module.exports = mongoose;

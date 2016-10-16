@@ -7,15 +7,17 @@ let RaceTimer = ({ show, seconds }) => {
   }
   const min = parseInt(seconds / 60, 10) % 60;
   return (
-    <span>
+    <span
+      style={{ display: !show ? 'block' : 'none' }}
+    >
       {`${pad(min)}:${pad(seconds % 60)}`}
     </span>
   );
 }
 
 const mapStateToProps = (state) => ({
-  show: state.joinedRace && !state.finishRace && !state.showRaceResult,
   seconds: state.gameTimerSeconds,
+  show: state.showRaceResult,
 })
 
 RaceTimer = connect(

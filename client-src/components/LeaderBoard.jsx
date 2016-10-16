@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { hideLeaderBoard } from '../actions';
 
 let Leaderboard = (props) => {
   const { dispatch, show, leaders } = props;
@@ -9,12 +10,15 @@ let Leaderboard = (props) => {
       style={{ display: show ? 'block' : 'none'}}
     >
 			<div className="leadersboard-head">
-				<i className="arrow-left"></i>
+				<i
+          className="arrow-left"
+          onClick={() => dispatch(hideLeaderBoard())}
+        />
 				<h5>Leadersboard</h5>
 			</div>
 			<ul className="leadersboard-user">
         {leaders.map((leader, rank) => (
-          <li>
+          <li key={leader._id}>
   					<span className="number">{ rank + 1 }</span>
   					<figure>
   						<img src="/images/default-user.png" alt="user-pic"/>

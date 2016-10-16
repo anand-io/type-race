@@ -50,7 +50,7 @@ body{
 	border: 1px solid #D8D8D8;
 }
 .header{
-	background-color: #2BACEF;
+	background-color: rgb(41, 53, 65);
 	width: 300px;
 	height: 50px;
 	box-sizing: border-box;
@@ -58,16 +58,19 @@ body{
 }
 
 .header .logo img{
-	width: 91px;
-	height: 14px;
-	padding: 19px;
+	width: 105px;
+  height: 45px;
+  padding: 3px 3px 3px 8px;
 }
 
 .header .profile-pic img{
 	width: 35px;
 	height: 35px;
 	float: right;
-	padding: 7px 15px 7px 0;
+	right: 11px;
+  top: 8px;
+  border-radius: 30px;
+  position: absolute;
 }
 
 /* home page */
@@ -166,6 +169,10 @@ hr{
     left: 15px;
 }
 
+.arrow-left {
+	cursor: pointer;
+}
+
 .challenge-head h5, .warmup-head h5, .leadersboard-page h5{
 	font-size: 15px;
 	font-weight: normal;
@@ -214,8 +221,8 @@ hr{
 	font-size: 17px;
 	color: #7F8796;
 	text-align: justify;
-	padding: 0 15px 32px;
-	height: 100px;
+	padding: 0 15px 0px;
+	height: 115px;
 	overflow: auto;
 }
 
@@ -223,7 +230,7 @@ hr{
 	width: 300px;
     height: 40px;
     box-sizing: border-box;
-    font-size: 14px;
+		font-size: 23px;
     padding: 0 5px 0 15px;
     outline: 0;
     border: 0;
@@ -233,6 +240,11 @@ hr{
 }
 
 /* Leadersboard page */
+
+.leadersboard-user{
+	overflow: auto;
+	height: 350px;
+}
 
 .leadersboard-user li{
 	background-color: #F9FAFC;
@@ -339,7 +351,8 @@ a.home-btn{
 	background-color: #83C447;
 	border-radius: 3px;
 	left: 50%;
-    transform: translateX(-50%);
+  transform: translateX(-50%);
+	cursor: pointer;
 }
 
 .home-btn img{
@@ -351,4 +364,52 @@ a.home-btn{
 
 .home-btn:hover{
 	background-color: #6AA335;
+}
+
+.temp_item {
+    width: 252px;
+    background-color: rgb(255, 255, 255);
+    padding: 18px 6px 0px;
+}
+
+.temp_item > div {
+    background-color: rgba(34, 40, 48, 0.1);
+		height: 11px;
+    border-radius: 25px;
+}
+
+.temp_item .temp_time {
+    width: 48px;
+    margin-bottom: 14px;
+}
+
+.temp_item .temp_line {
+    margin-bottom: 6px;
+}
+
+.temp_item .temp_line:last-child {
+    margin-bottom: 0px;
+    width: 60%;
+}
+
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}
+
+.animated-background {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 800px 104px;
+    height: 96px;
+    position: relative;
 }

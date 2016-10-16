@@ -5,30 +5,46 @@ const getStyle = (typingWordIndex, index, wrongWord) => {
   if (index !== typingWordIndex) return {}
   return {
     color: wrongWord ? 'RED' : 'cornflowerblue',
-    fontSize: '20px',
+    fontSize: '19px',
   }
 }
 
-let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord }) => (
-  <div
-    className='paragraph'
-    style={{ display: show ? 'block' : 'none' }}
-  >
-    {Array.isArray(paragraph.words) ?
-      paragraph.words.map((word, index) =>
-        <span
-        key={index}
-        style={getStyle(typingWordIndex, index, wrongWord)} >
-          {index == paragraph.length - 1 ? word : `${word} `}
-        </span>) : ''}
-  </div>
-)
+let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord, placeholder, participantsHeight }) => {
+  const height = 430 - 120 - participantsHeight;
+  return (
+    <div
+      className='paragraph'
+      style={{ display: show ? 'block' : 'none', height }}
+    >
+      {
+        !placeholder && paragraph.words ?
+        paragraph.words.map((word, index) =>
+          <span
+          key={index}
+          style={getStyle(typingWordIndex, index, wrongWord)} >
+            {index == paragraph.length - 1 ? word : `${word} `}
+          </span>)
+          :
+        <div className="temp_item">
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
+        </div>
+      }
+    </div>
+  );
+}
 
 const mapStateToProps = (state) => ({
   paragraph: state.paragraph,
   show: state.joinedRace && !state.finishedRace,
   typingWordIndex: state.typingWordIndex,
-  wrongWord: state.wrongWord
+  wrongWord: state.wrongWord,
+  placeholder: state.participants.length === 1 && !state.isPractice,
+  participantsHeight: state.participantsHeight,
 })
 
 Paragraph = connect(

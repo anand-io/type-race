@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "NODE_ENV=production node ./bin/www",
     "dev": "webpack --colors --watch --progress & node ./bin/www",
     "build": "NODE_ENV=production webpack --progress",
     "deploy": "NODE_ENV=production webpack --progress && eb deploy"
