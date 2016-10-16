@@ -26,12 +26,12 @@ let Paragraph = ({ paragraph, show, typingWordIndex, wrongWord, placeholder, par
           </span>)
           :
         <div className="temp_item">
-            <div className="temp_line" />
-            <div className="temp_line" />
-            <div className="temp_line" />
-            <div className="temp_line" />
-            <div className="temp_line" />
-            <div className="temp_line" />
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
+            <div className="temp_line animated-background" />
         </div>
       }
     </div>
