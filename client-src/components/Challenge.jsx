@@ -5,6 +5,7 @@ import TypingArea from './TypingArea.jsx';
 import Participants from './Participants.jsx';
 import RaceTimer from './RaceTimer.jsx';
 import RaceResult from './RaceResult.jsx';
+import StartTimer from './StartTimer.jsx';
 
 import { finishRace } from '../actions';
 
@@ -28,6 +29,7 @@ let Challenge = (props) => {
       <Paragraph />
       <TypingArea />
       <RaceResult />
+      <StartTimer />
     </section>
   );
 }
