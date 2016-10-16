@@ -3,6 +3,7 @@ var uuid = require('node-uuid');
 var shortid = require('shortid');
 var requst = require('request');
 var userService = require('../services/UserServices');
+var credentials = require('../credentials.json');
 var router = express.Router();
 
 /* GET home page. */
@@ -24,8 +25,8 @@ router.get('/fullAuthCallback', function(req, res, next) {
   if (params.code) {
     requst.post({
       url: 'https://access.anywhereworks.com/o/oauth2/v1/token',
-      form: { code: params.code, client_id:'29354-350168b6951106380b1ae3cc5e2f5feb',
-              client_secret: 'yROIE6frtWTS9VkPeBVBpX7zw8o5ZbzHnxLgWgYK',
+      form: { code: params.code, client_id: credentials.client_id,
+              client_secret: credentials.client_secret,
               redirect_uri: 'http://localhost:3000/fullAuthCallback',
               grant_type: 'authorization_code'
             },
