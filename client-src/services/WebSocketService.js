@@ -95,6 +95,10 @@ WebSocketService.prototype.leaveRace = function leaveRace() {
   this.primus.send('leaveRace');
 }
 
+WebSocketService.prototype.isInstalled = function leaveRace(peerId, callback) {
+  this.primus.send('isInstalled', peerId, callback);
+}
+
 const instance = new WebSocketService();
 
 export default instance;

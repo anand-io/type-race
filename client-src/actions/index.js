@@ -70,6 +70,15 @@ export const registered = user => dispatch => {
   dispatch(storeAWUser(user));
 };
 
+export const contextChanged = (context) => dispatch => {
+  dispatch(storeAWContext(context));
+  if (!context.members) {
+    wss.isInstalled(context.id, (isInstalled) => {
+      dispatch(setContextInstalled(isInstalled));
+    })
+  }
+};
+
 export const activeChallenge = (challengeData, callback) => ({
   type: 'ACTIVE_CHALLENGE',
   challengeData,
@@ -232,5 +241,10 @@ export const setChallengeRejected = value => ({
 
 export const setNeedAuthorization = value => ({
   type: 'SET_NEED_AUTHORIZATION',
+  value
+});
+
+export const setContextInstalled = value => ({
+  type: 'SET_CONTEXT_INSTALLED',
   value
 });

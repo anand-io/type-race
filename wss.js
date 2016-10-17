@@ -21,20 +21,20 @@ WebSocketServer.prototype.init = function init(server){
     client.get(id, (err, sparkId) => {
       const spark = this.primus.spark(sparkId);
       spark.send('gotAuthorization');
-    })
-
+    });
+    client.set(`${id}_authorized`, 'true');
   });
 
   this.primus.on('connection', spark => {
 
     client.set(spark.query.myId, spark.id);
 
-    userServices.getTokens(spark.query.myId, function functionName(usermodel) {
-      if (!usermodel)  {
+    client.get(`${spark.query.myId}_authorized`, (err, isInstalled) => {
+      console.log(isInstalled);
+      if (!isInstalled)  {
         spark.send('needAuthorization');
       }
     });
-
 
     spark.on('joinRace', (raceId, isPractice, callback) => {
       if (spark.joinedRace) return;
@@ -128,6 +128,12 @@ WebSocketServer.prototype.init = function init(server){
       client.set(`${raceId}_isStated`, true);
     });
 
+    spark.on('isInstalled', (peerId, callback) => {
+      client.get(`${peerId}_authorized`, (err, isInstalled) => {
+        console.log(`${isInstalled} isInstalled`);
+        callback(!!isInstalled);
+      });
+    });
 
     spark.on('end', () => {
       if(!spark.joinedRace) return;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { joinRace, leaderBoard, challenge, clearChallenge } from '../actions';
 
 let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge, challengeRejected,
-raceAlreadyStarted, needAuthorization }) => {
+raceAlreadyStarted, needAuthorization, contextHasInstalledApp }) => {
   let raceToJoin = location.pathname.replace('/', '');
   let challengeAction = joinRace;
   if (isAW) {
@@ -83,7 +83,8 @@ raceAlreadyStarted, needAuthorization }) => {
       >
         {
           activeChallenge.from ? 'Reject' :
-            `Challenge ${awContext && awContext.firstName ? awContext.firstName : ''}`
+            `${contextHasInstalledApp ? 'Challenge' : 'Invite'}
+            ${awContext && awContext.firstName ? awContext.firstName : '' }`
         }
       </button>
       <a
@@ -104,6 +105,7 @@ const mapStateToProps = (state) => ({
   challengeRejected: state.challengeRejected,
   raceAlreadyStarted: state.raceAlreadyStarted,
   needAuthorization: state.needAuthorization,
+  contextHasInstalledApp: state.contextHasInstalledApp,
 });
 
 Home = connect(mapStateToProps)(Home);
