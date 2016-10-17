@@ -53,7 +53,7 @@ WebSocketServer.prototype.init = function init(server){
           .then(para => {
             const paraNo = Math.floor(Math.random() * Object.keys(paragraphs).length);
             if(!para) client.set(`${raceId}_para`, paragraphs[paraNo]);
-            const paragraph = para || paragraphs['0'];
+            const paragraph = para || paragraphs[paraNo];
 
             const sparks = spark.room(raceId).clients();
             const participants = sparks.map(id => {
