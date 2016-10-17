@@ -51,7 +51,8 @@ WebSocketServer.prototype.init = function init(server){
           console.log(spark.query.myId);
           client.getAsync(`${raceId}_para`)
           .then(para => {
-            if(!para) client.set(`${raceId}_para`, paragraphs['0']);
+            const paraNo = Math.floor(Math.random() * Object.keys(paragraphs).length) + 1
+            if(!para) client.set(`${raceId}_para`, paragraphs[paraNo]);
             const paragraph = para || paragraphs['0'];
 
             const sparks = spark.room(raceId).clients();
