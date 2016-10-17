@@ -86,6 +86,19 @@ WebSocketServer.prototype.init = function init(server){
       });
     });
 
+    function racePlaceMaping(place) {
+        switch (place) {
+          case 1:
+            return '1st'
+          case 2:
+            return '2nd'
+          case 3:
+            return '3rd'
+          default:
+            return `${place}th`
+        }
+    }
+
     spark.on('updateWMP', (noOfCharacters, isFinished, disqualified) => {
       const raceId = spark.joinedRace;
       const countTime = new Date().getTime();
@@ -115,9 +128,11 @@ WebSocketServer.prototype.init = function init(server){
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {
-          const content = `Played Typerace, position : ${position}, speed : ${wpm}`
-          console.log(content);
-          AwServices.postFeed(spark.query.myId, content);
+          if (position < 3) {
+            const content = `I took up a Typerace and won the ${racePlaceMaping(position)} place with ${wpm} WPM`
+            console.log(content);
+            AwServices.postFeed(spark.query.myId, content);
+          }
           leaderBoadServices.addWPM(spark.query.myId, wpm, spark.query.name, spark.query.imageUrl);
         }
       });
