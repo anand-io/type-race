@@ -23,6 +23,7 @@ router.get('/fullAuthCallback', function(req, res, next) {
   console.log('response : ', req.body, req.query);
   var params = req.query
   if (params.code) {
+    console.log('params.code : ', params.code);
     request.post({
       url: 'https://access.anywhereworks.com/o/oauth2/v1/token',
       form: { code: params.code, client_id: credentials.client_id,
@@ -46,7 +47,7 @@ router.get('/fullAuthCallback', function(req, res, next) {
       }
     });
   }
-  res.send('Thank you, you close this window and continue using the app');
+  res.send('Thanks, you can now close this window and continue using the app');
 });
 
 router.get('/getTokens', function(req, res, next) {

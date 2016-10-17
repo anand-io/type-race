@@ -17,14 +17,14 @@ var UserModel = mongoose.model('User',
        update = { access_token, refresh_token },
        options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-   LeaderBoardModel.findOneAndUpdate(query, update, options, function(error, result) {
+   UserModel.findOneAndUpdate(query, update, options, function(error, result) {
        if (error) {
          console.log(error);
        } else {
          console.log(`stored WPM`);
        }
    });
-   
+
    if (this.authorizeCallback) this.authorizeCallback(userId);
  }
 
