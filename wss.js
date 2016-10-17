@@ -17,9 +17,13 @@ WebSocketServer.prototype.init = function init(server){
   this.primus.plugin('rooms', Rooms);
   this.primus.save(__dirname +'/public/javascripts/builds/primus.js');
 
-  userServices.onAuthorized(function (id) {
-    const spark = this.primus.spark(id);
-    spark.send('gotAuthorization');
+  userServices.onAuthorized((id) => {
+    console.log(id);
+    client.get(id, (err, sparkId) => {
+      const spark = this.primus.spark(sparkId);
+      spark.send('gotAuthorization');
+    })
+
   });
 
   this.primus.on('connection', spark => {
