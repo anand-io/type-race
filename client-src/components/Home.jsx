@@ -15,6 +15,8 @@ raceAlreadyStarted }) => {
     }
     challengeAction = challenge;
   }
+  const secondButtonStyle = {};
+  if (activeChallenge.from) secondButtonStyle['background-color'] = '#DE2626';
   return (
     <section
       style={{ display: show ? 'block' : 'none' }}
@@ -54,6 +56,7 @@ raceAlreadyStarted }) => {
       <span>OR</span>
       <button
         className="challenge"
+        style={secondButtonStyle}
         onClick={() => {
           if (!activeChallenge.from) {
             const challengingIds = awContext.members ? awContext.members : awContext.id;
