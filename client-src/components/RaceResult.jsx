@@ -10,13 +10,22 @@ let RaceResult = (props) => {
         {raceResults.map(result => {
           const participant = result.participant.id === myId ?
           'You' : result.participant.id.split('-')[0];
+          let position;
+          switch (result.position) {
+            case 0: position = 'Disqualified'; break;
+            case 1: position = 'Winner'; break;
+            case 2: position = 'Runner'; break;
+            case 3: position = '3rd place'; break;
+            case 4: position = '4th place'; break;
+            default: position = result.position;
+          }
           return (
             <li key={result.participant.id}>
     					<figure>
     						<img src={result.participant.imageUrl} alt="user-pic"/>
     						<figcaption>
     							<span className="name">{result.participant.name}</span>
-    							<span className="award">{`${result.position ? `${result.position} place` : 'Disqualified'}`}</span>
+    							<span className="award">{position}</span>
     							<span className="speed">{Math.ceil(result.participant.wpm)}</span>
     						</figcaption>
     					</figure>
