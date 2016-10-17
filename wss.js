@@ -129,7 +129,7 @@ WebSocketServer.prototype.init = function init(server){
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {
-          if (position < 3 && !isPractice) {
+          if ((position === 1 || position === 2) && !isPractice) {
             const content = `I competed in a Typerace and won the ${racePlaceMaping(position)} place with ${Math.ceil(wpm)} WPM.`
             console.log(content);
             AwServices.postFeed(spark.query.myId, content);

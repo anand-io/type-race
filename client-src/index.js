@@ -117,7 +117,7 @@ const startRaceTimer = () => {
     store.dispatch(setGameTimer(--seconds));
     if (seconds === 0) {
       clearInterval(timeInterval);
-      store.dispatch(finishRace(store.getState().noOfCharactersTyped, true));
+      store.dispatch(finishRace(store.getState().noOfCharactersTyped, true, store.getState().isPractice));
     }
   }, 1000);
 };

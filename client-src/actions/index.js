@@ -40,8 +40,8 @@ export const challenge = (room, isPractice, to, streamId) => dispatch => {
   });
 }
 
-export const finishRace = (noOfCharactersTyped, disqualified) => dispatch => {
-  wss.updateWMP(noOfCharactersTyped, true, disqualified, false);
+export const finishRace = (noOfCharactersTyped, disqualified, isPractice) => dispatch => {
+  wss.updateWMP(noOfCharactersTyped, true, disqualified, isPractice);
   dispatch(finishedRace(noOfCharactersTyped));
   dispatch(showRaceResult());
 }
