@@ -71,6 +71,7 @@ export const registered = user => dispatch => {
 };
 
 export const contextChanged = (context) => dispatch => {
+  dispatch(setContextInstalled(true));
   dispatch(storeAWContext(context));
   if (!context.members) {
     wss.isInstalled(context.id, (isInstalled) => {
