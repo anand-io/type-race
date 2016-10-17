@@ -22,7 +22,7 @@ let RaceResult = (props) => {
           return (
             <li key={result.participant.id}>
     					<figure>
-    						<img src={result.participant.imageUrl} alt="user-pic"/>
+    						<img src={result.participant.imageUrl} alt="user-pic" />
     						<figcaption>
     							<span className="name">{result.participant.name}</span>
     							<span className="award">{position}</span>
