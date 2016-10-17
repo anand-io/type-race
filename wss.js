@@ -154,6 +154,10 @@ WebSocketServer.prototype.init = function init(server){
       });
     });
 
+    spark.on('inviteBychat', (accountId, userId, streamId) => {
+
+    });
+
     spark.on('end', () => {
       if(!spark.joinedRace) return;
       const raceId = spark.joinedRace;

@@ -99,6 +99,10 @@ WebSocketService.prototype.isInstalled = function leaveRace(peerId, callback) {
   this.primus.send('isInstalled', peerId, callback);
 }
 
+WebSocketService.prototype.inviteBychat = function inviteBychat(accountId, userId, streamId) {
+  this.primus.send('inviteBychat', accountId, userId, streamId);
+}
+
 const instance = new WebSocketService();
 
 export default instance;

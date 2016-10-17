@@ -79,6 +79,13 @@ export const contextChanged = (context) => dispatch => {
   }
 };
 
+export const inviteBychat = (user, context) => dispatch => {
+  const accountId = user.accountId;
+  const userId = !context.members ? context.id : null;
+  const streamId = context.members ? context.id : null;
+  wss.inviteBychat(accountId, userId, streamId);
+};
+
 export const activeChallenge = (challengeData, callback) => ({
   type: 'ACTIVE_CHALLENGE',
   challengeData,
