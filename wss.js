@@ -30,12 +30,14 @@ WebSocketServer.prototype.init = function init(server){
 
     client.set(spark.query.myId, spark.id);
 
-    client.get(`${spark.query.myId}_authorized`, (err, isInstalled) => {
-      console.log(isInstalled);
-      if (!isInstalled)  {
-        spark.send('needAuthorization');
-      }
-    });
+    if (spark.query.isAW === 'true') {
+      client.get(`${spark.query.myId}_authorized`, (err, isInstalled) => {
+        console.log(isInstalled);
+        if (!isInstalled)  {
+          spark.send('needAuthorization');
+        }
+      });
+    }
 
     spark.on('joinRace', (raceId, isPractice, callback) => {
       if (spark.joinedRace) return;
