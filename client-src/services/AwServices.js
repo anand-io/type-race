@@ -47,6 +47,10 @@ AwServices.prototype.showNotification = function showNotification(id, name) {
 //     'id' : "ac2324ff-747b-4921-8ff8-d0f256bb5aea"
 // });
 
+AwServices.prototype.postFeeds = function postFeeds() {
+  console.log('posting feed');
+}
+
 const instance = new AwServices();
 
 export default instance;

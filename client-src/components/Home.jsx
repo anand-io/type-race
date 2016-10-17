@@ -22,6 +22,7 @@ raceAlreadyStarted }) => {
       style={{ display: show ? 'block' : 'none' }}
       className="home-page"
     >
+      <a href="http://localhost:3000/Permissions" target="_blank">Grant Permission</a>
       <div
         className='challenge-from'
         style={{ display: activeChallenge.from ? 'block' : 'none' }}
