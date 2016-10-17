@@ -10,7 +10,7 @@ import awServices from './services/AwServices';
 import {
   addParticipant, setStartTimer, raceStarted, startTimer, participantUpdate,
   raceOver, setGameTimer, setMyInfo, finishRace, storeAWUser, storeAWContext,
-  appActivated, appDeactivated, setAW, activeChallenge
+  appActivated, appDeactivated, setAW, activeChallenge, setNeedAuthorization,
 } from './actions';
 
 function addPrefixToLogs() {
@@ -134,7 +134,12 @@ const onChallenge = (challengeData, callback) => {
   store.dispatch(activeChallenge(challengeData, callback));
 }
 
-wss.init(isAW, onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver, onChallenge);
+const onNeedAuthorization = () => store.dispatch(setNeedAuthorization(true));
+
+const onGotAuthorization = () => store.dispatch(setNeedAuthorization(false));
+
+wss.init(isAW, onParticpantJoined, onStartCounter, onParticipantUpdate, onRaceOver, onChallenge,
+onNeedAuthorization, onGotAuthorization);
 
 awServices.init(store);
 

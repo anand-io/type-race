@@ -228,11 +228,21 @@ export const challengeRejected = (state = false, action) => {
   }
 };
 
+export const needAuthorization = (state = false, action) => {
+  switch (action.type) {
+    case 'SET_NEED_AUTHORIZATION':
+      return action.value
+    default:
+      return state;
+  }
+};
+
 const typeRacerApp = combineReducers({
   participants, wrongWord, gameTimerSeconds, myInfo, leaders, participantsHeight,
   paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted, isAW, challengeRejected,
   joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped, awUser, activeChallenge,
   raceResults, showRaceResult, isPractice, showLeaderBoard, awContext, awAppActivated,
+  needAuthorization,
 });
 
 export default typeRacerApp;

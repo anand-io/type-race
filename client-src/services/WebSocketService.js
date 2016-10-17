@@ -6,12 +6,14 @@ function WebSocketService() {}
 
 // Add some event emmiter.
 WebSocketService.prototype.init = function init(isAW, onParticipantJoined, onStartCounter,
-onParticipantCount, onRaceOver, onChallenge) {
+onParticipantCount, onRaceOver, onChallenge, onNeedAuthorization, onGotAuthorization) {
   this.onParticipantJoined = onParticipantJoined;
   this.onStartCounter = onStartCounter;
   this.onParticipantCount = onParticipantCount;
   this.onRaceOver = onRaceOver;
   this.onChallenge = onChallenge;
+  this.onNeedAuthorization = onNeedAuthorization;
+  this.onGotAuthorization = onGotAuthorization;
   if(!isAW) {
     this.primus = Primus.connect(`${location.protocol}//${location.host}/?myId=${myId}&name=${name}`);
     this.addListeners();
@@ -48,6 +50,14 @@ WebSocketService.prototype.addListeners = function addListeners() {
 
     this.primus.on('challenge', (from, callback) => {
       this.onChallenge(from, callback);
+    });
+
+    this.primus.on('needAuthorization', () => {
+      this.onNeedAuthorization();
+    });
+
+    this.primus.on('gotAuthorization', () => {
+      this.onGotAuthorization();
     });
   });
 };

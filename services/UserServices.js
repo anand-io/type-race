@@ -11,27 +11,21 @@ var UserModel = mongoose.model('User',
 
  function UserService() {}
 
- UserService.prototype.addTokens = function addTokens(userId, accessToken, refreshToken) {
-   UserModel.findById(userId, function(err, usermodel) {
-      if(usermodel !== null) {
-        console.log(usermodel);
-        console.log('updating the usermodel');
-        usermodel.access_token = accessToken;
-        usermodel.refresh_token = refreshToken;
-        usermodel.save();
-      }
-      else {
-        console.log('creating new usermodel');
-        var userModelEntry = new UserModel({ _id: userId, access_token:accessToken, refresh_token:refreshToken });
-        userModelEntry.save(function (err) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(`stored UserModel`);
-          }
-        });
-      }
+ UserService.prototype.addTokens = function addTokens(userId, access_token, refresh_token) {
+
+   var query = {_id: userId},
+       update = { access_token, refresh_token },
+       options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+   LeaderBoardModel.findOneAndUpdate(query, update, options, function(error, result) {
+       if (error) {
+         console.log(error);
+       } else {
+         console.log(`stored WPM`);
+       }
    });
+   
+   if (this.authorizeCallback) this.authorizeCallback(userId);
  }
 
  UserService.prototype.getTokens = function getTokens(id, callback) {
@@ -40,6 +34,10 @@ var UserModel = mongoose.model('User',
      console.log(usermodel)
      callback(usermodel);
    });
+ }
+
+ UserService.prototype.onAuthorized = function onAuthorized(callback) {
+   this.authorizeCallback = callback;
  }
 
  module.exports = new UserService();

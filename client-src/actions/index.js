@@ -228,3 +228,8 @@ export const setChallengeRejected = value => ({
   type: 'SET_CHALLENGE_REJECTED',
   value
 });
+
+export const setNeedAuthorization = value => ({
+  type: 'SET_NEED_AUTHORIZATION',
+  value
+});

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { joinRace, leaderBoard, challenge, clearChallenge } from '../actions';
 
 let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge, challengeRejected,
-raceAlreadyStarted }) => {
+raceAlreadyStarted, needAuthorization }) => {
   let raceToJoin = location.pathname.replace('/', '');
   let challengeAction = joinRace;
   if (isAW) {
@@ -17,12 +17,12 @@ raceAlreadyStarted }) => {
   }
   const secondButtonStyle = {};
   if (activeChallenge.from) secondButtonStyle['background-color'] = '#DE2626';
+  if (needAuthorization) secondButtonStyle.display = 'none';
   return (
     <section
       style={{ display: show ? 'block' : 'none' }}
       className="home-page"
     >
-      <a href="http://localhost:3000/Permissions" target="_blank">Grant Permission</a>
       <div
         className='challenge-from'
         style={{ display: activeChallenge.from ? 'block' : 'none' }}
@@ -37,6 +37,16 @@ raceAlreadyStarted }) => {
       >Race already started. Try again later.</div>
       <button
         className="warmup"
+
+        target="_blank"
+        style={{ display: needAuthorization ? 'block' : 'none' }}
+        onClick={() => window.open('/Permissions')}
+      >
+        Authorize
+      </button>
+      <button
+        className="warmup"
+        style={{ display: !needAuthorization ? 'block' : 'none' }}
         onClick={() => {
           if (!activeChallenge.from) {
             dispatch(joinRace(myId, true));
@@ -53,8 +63,8 @@ raceAlreadyStarted }) => {
           }
         }}
       >{activeChallenge.from ? 'Accept' : 'Warm Up'}</button>
-      <hr/>
-      <span>OR</span>
+      <hr style={{ display: !needAuthorization ? 'block' : 'none' }}/>
+      <span style={{ display: !needAuthorization ? 'block' : 'none' }}>OR</span>
       <button
         className="challenge"
         style={secondButtonStyle}
@@ -93,6 +103,7 @@ const mapStateToProps = (state) => ({
   activeChallenge: state.activeChallenge,
   challengeRejected: state.challengeRejected,
   raceAlreadyStarted: state.raceAlreadyStarted,
+  needAuthorization: state.needAuthorization,
 });
 
 Home = connect(mapStateToProps)(Home);

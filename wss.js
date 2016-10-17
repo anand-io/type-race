@@ -6,16 +6,32 @@ require('bluebird').promisifyAll(require("redis"));
 const client = require('./services/RedisServices.js');
 const paragraphs = require('./paragraphs.json');
 const leaderBoadServices = require('./services/LeaderBoadServices');
+const userServices = require('./services/UserServices');
 
 function WebSocketServer() {}
 
 WebSocketServer.prototype.init = function init(server){
+
   this.primus = new Primus(server, { transformer: 'websockets' });
   this.primus.plugin('emitter', Emitter);
   this.primus.plugin('rooms', Rooms);
   this.primus.save(__dirname +'/public/javascripts/builds/primus.js');
+
+  userServices.onAuthorized(function (id) {
+    const spark = this.primus.spark(id);
+    spark.send('gotAuthorization');
+  });
+
   this.primus.on('connection', spark => {
+
     client.set(spark.query.myId, spark.id);
+
+    userServices.getTokens(spark.query.myId, function functionName(usermodel) {
+      if (!usermodel)  {
+        spark.send('needAuthorization');
+      }
+    });
+
 
     spark.on('joinRace', (raceId, isPractice, callback) => {
       if (spark.joinedRace) return;
