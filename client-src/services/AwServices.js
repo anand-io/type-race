@@ -18,6 +18,10 @@ AwServices.prototype.init =
     // store.dispatch(storeAWUser(user));
     store.dispatch(contextChanged(context));
     store.dispatch(appActivated());
+    this.app.postMessage( 'showCount', {
+        count : 0,
+        id: context.id,
+    });
   })
 
   AwApp.on('context-change', ({user, context}) => {
