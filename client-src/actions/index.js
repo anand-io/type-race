@@ -66,8 +66,17 @@ export const leaderBoard = participant => dispatch => {
 };
 
 export const registered = user => dispatch => {
-  wss.connect(user.id, `${user.firstName} ${user.lastName}`);
+  wss.connect(user.id, `${user.firstName} ${user.lastName}`, user.photoId);
   dispatch(storeAWUser(user));
+};
+
+export const contextChanged = (context) => dispatch => {
+  dispatch(storeAWContext(context));
+  if (!context.members) {
+    wss.isInstalled(context.id, (isInstalled) => {
+      dispatch(setContextInstalled(isInstalled));
+    })
+  }
 };
 
 export const activeChallenge = (challengeData, callback) => ({
@@ -112,6 +121,7 @@ export const addParticipant = participant => ({
   type: 'ADD_PARTICIPANT',
   id: participant.id,
   name: participant.name,
+  imageUrl: participant.imageUrl,
 });
 
 export const startTimer = id => ({
@@ -231,5 +241,10 @@ export const setChallengeRejected = value => ({
 
 export const setNeedAuthorization = value => ({
   type: 'SET_NEED_AUTHORIZATION',
+  value
+});
+
+export const setContextInstalled = value => ({
+  type: 'SET_CONTEXT_INSTALLED',
   value
 });

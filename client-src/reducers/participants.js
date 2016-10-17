@@ -4,6 +4,7 @@ const participant = (state = {}, action) => {
       return {
         id: action.id,
         name: action.name,
+        imageUrl: action.imageUrl,
         wpm: 0,
         noOfCharacters: 0,
         finishRace: false,

@@ -237,12 +237,21 @@ export const needAuthorization = (state = false, action) => {
   }
 };
 
+export const contextHasInstalledApp = (state = true, action) => {
+  switch (action.type) {
+    case 'SET_CONTEXT_INSTALLED':
+      return action.value
+    default:
+      return state;
+  }
+};
+
 const typeRacerApp = combineReducers({
   participants, wrongWord, gameTimerSeconds, myInfo, leaders, participantsHeight,
   paragraph, raceStarted, finishedRace, startTimerOn, raceAlreadyStarted, isAW, challengeRejected,
   joinedRace, startTimerSeconds, typingWordIndex, noOfCharactersTyped, awUser, activeChallenge,
   raceResults, showRaceResult, isPractice, showLeaderBoard, awContext, awAppActivated,
-  needAuthorization,
+  needAuthorization, contextHasInstalledApp,
 });
 
 export default typeRacerApp;

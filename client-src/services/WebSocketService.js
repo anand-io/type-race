@@ -20,8 +20,9 @@ onParticipantCount, onRaceOver, onChallenge, onNeedAuthorization, onGotAuthoriza
   }
 };
 
-WebSocketService.prototype.connect = function connect(id, name) {
-  this.primus = Primus.connect(`${location.protocol}//${location.host}/?myId=${id}&name=${name}`);
+WebSocketService.prototype.connect = function connect(id, name, imageUrl) {
+  this.primus = Primus.connect(`${location.protocol}//${location.host}/?myId=${id}&name=${name}
+    &imageUrl=${imageUrl}`);
   this.addListeners();
 }
 
@@ -92,6 +93,10 @@ WebSocketService.prototype.challenge = function challenge(to, streamId, callback
 
 WebSocketService.prototype.leaveRace = function leaveRace() {
   this.primus.send('leaveRace');
+}
+
+WebSocketService.prototype.isInstalled = function leaveRace(peerId, callback) {
+  this.primus.send('isInstalled', peerId, callback);
 }
 
 const instance = new WebSocketService();

@@ -18,21 +18,24 @@ WebSocketServer.prototype.init = function init(server){
   this.primus.plugin('rooms', Rooms);
   this.primus.save(__dirname +'/public/javascripts/builds/primus.js');
 
-  userServices.onAuthorized(function (id) {
-    const spark = this.primus.spark(id);
-    spark.send('gotAuthorization');
+  userServices.onAuthorized((id) => {
+    client.get(id, (err, sparkId) => {
+      const spark = this.primus.spark(sparkId);
+      spark.send('gotAuthorization');
+    });
+    client.set(`${id}_authorized`, 'true');
   });
 
   this.primus.on('connection', spark => {
 
     client.set(spark.query.myId, spark.id);
 
-    userServices.getTokens(spark.query.myId, function functionName(usermodel) {
-      if (!usermodel)  {
+    client.get(`${spark.query.myId}_authorized`, (err, isInstalled) => {
+      console.log(isInstalled);
+      if (!isInstalled)  {
         spark.send('needAuthorization');
       }
     });
-
 
     spark.on('joinRace', (raceId, isPractice, callback) => {
       if (spark.joinedRace) return;
@@ -108,14 +111,14 @@ WebSocketServer.prototype.init = function init(server){
           if (s.noOfCharacters > noOfCharacters || (s.isFinished && ! s.disqualified)) position++;
         });
         const data = { id: spark.query.myId, wpm, noOfCharacters, isFinished, position,
-          disqualified, name: spark.query.name };
+          disqualified, name: spark.query.name, imageUrl: spark.query.imageUrl };
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {
           const content = `Played Typerace, position : ${position}, speed : ${wpm}`
           console.log(content);
           AwServices.postFeed(spark.query.myId, content);
-          leaderBoadServices.addWPM(spark.query.myId, wpm, spark.query.name);
+          leaderBoadServices.addWPM(spark.query.myId, wpm, spark.query.name, spark.query.imageUrl);
         }
       });
 
@@ -129,6 +132,12 @@ WebSocketServer.prototype.init = function init(server){
       client.set(`${raceId}_isStated`, true);
     });
 
+    spark.on('isInstalled', (peerId, callback) => {
+      client.get(`${peerId}_authorized`, (err, isInstalled) => {
+        console.log(`${isInstalled} isInstalled`);
+        callback(!!isInstalled);
+      });
+    });
 
     spark.on('end', () => {
       if(!spark.joinedRace) return;

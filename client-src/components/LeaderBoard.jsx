@@ -21,7 +21,7 @@ let Leaderboard = (props) => {
           <li key={leader._id}>
   					<span className="number">{ rank + 1 }</span>
   					<figure>
-  						<img src="/images/default-user.png" alt="user-pic"/>
+  						<img src={leader.imageUrl} alt="user-pic"/>
   					</figure>
   					<span className="name">{leader.name}</span>
   					<span className="speed">{`${Math.ceil(leader.wpm)}WPM`}</span>
