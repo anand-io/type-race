@@ -47,6 +47,7 @@ WebSocketServer.prototype.init = function init(server){
         }
         spark.join(raceId, () => {
           spark.joinedRace = raceId;
+          spark.isPractice = isPractice;
           client.saddAsync(`${raceId}_racers`, spark.query.myId);
           console.log(spark.query.myId);
           client.getAsync(`${raceId}_para`)
@@ -129,7 +130,7 @@ WebSocketServer.prototype.init = function init(server){
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {
-          if ((position === 1 || position === 2) && !isPractice) {
+          if ((position === 1 || position === 2) && !spark.isPractice) {
             const content = `I competed in a Typerace and won the ${racePlaceMaping(position)} place with ${Math.ceil(wpm)} WPM.`
             console.log(content);
             AwServices.postFeed(spark.query.myId, content);
@@ -180,6 +181,7 @@ WebSocketServer.prototype.init = function init(server){
       const raceId = spark.joinedRace;
       this.removeFromRace(spark, raceId);
       spark.joinedRace = null;
+      spark.isPractice = null;
       spark.isFinished = false;
       spark.disqualified = false;
       spark.noOfCharacters = 0;
@@ -210,6 +212,7 @@ WebSocketServer.prototype.removeFromRace = function (spark, raceId) {
         sparks.forEach(id => {
           const s = this.primus.spark(id);
           s.joinedRace = null;
+          s.isPractice = null;
           s.isFinished = false;
           s.disqualified = false;
           s.noOfCharacters = 0;
