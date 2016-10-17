@@ -26,7 +26,7 @@ let RaceResult = (props) => {
     						<figcaption>
     							<span className="name">{result.participant.name}</span>
     							<span className="award">{position}</span>
-    							<span className="speed">{`Math.ceil(result.participant.wpm) WPM`}</span>
+    							<span className="speed">{`${Math.ceil(result.participant.wpm)} WPM`}</span>
     						</figcaption>
     					</figure>
     				</li>
