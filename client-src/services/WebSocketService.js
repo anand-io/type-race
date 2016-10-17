@@ -20,8 +20,9 @@ onParticipantCount, onRaceOver, onChallenge, onNeedAuthorization, onGotAuthoriza
   }
 };
 
-WebSocketService.prototype.connect = function connect(id, name) {
-  this.primus = Primus.connect(`${location.protocol}//${location.host}/?myId=${id}&name=${name}`);
+WebSocketService.prototype.connect = function connect(id, name, imageUrl) {
+  this.primus = Primus.connect(`${location.protocol}//${location.host}/?myId=${id}&name=${name}
+    &imageUrl=${imageUrl}`);
   this.addListeners();
 }
 

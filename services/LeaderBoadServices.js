@@ -6,13 +6,14 @@ var LeaderBoardModel = mongoose.model('LeaderBoad',
    _id: String,
    name: String,
    wpm: { type: String, index: true },
+   imageUrl: String,
  });
 
 function LeaderBoard() {}
 
-LeaderBoard.prototype.addWPM = function addWPM(userId, wpm, name) {
+LeaderBoard.prototype.addWPM = function addWPM(userId, wpm, name, imageUrl) {
   var query = {_id: userId},
-      update = { wpm, name },
+      update = { wpm, name, imageUrl },
       options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
   LeaderBoardModel.findOneAndUpdate(query, update, options, function(error, result) {

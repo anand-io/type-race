@@ -18,7 +18,6 @@ WebSocketServer.prototype.init = function init(server){
   this.primus.save(__dirname +'/public/javascripts/builds/primus.js');
 
   userServices.onAuthorized((id) => {
-    console.log(id);
     client.get(id, (err, sparkId) => {
       const spark = this.primus.spark(sparkId);
       spark.send('gotAuthorization');
@@ -111,11 +110,11 @@ WebSocketServer.prototype.init = function init(server){
           if (s.noOfCharacters > noOfCharacters || (s.isFinished && ! s.disqualified)) position++;
         });
         const data = { id: spark.query.myId, wpm, noOfCharacters, isFinished, position,
-          disqualified, name: spark.query.name };
+          disqualified, name: spark.query.name, imageUrl: spark.query.imageUrl };
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {
-          leaderBoadServices.addWPM(spark.query.myId, wpm, spark.query.name);
+          leaderBoadServices.addWPM(spark.query.myId, wpm, spark.query.name, spark.query.imageUrl);
         }
       });
 

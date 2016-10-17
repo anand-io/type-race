@@ -66,7 +66,7 @@ export const leaderBoard = participant => dispatch => {
 };
 
 export const registered = user => dispatch => {
-  wss.connect(user.id, `${user.firstName} ${user.lastName}`);
+  wss.connect(user.id, `${user.firstName} ${user.lastName}`, user.photoId);
   dispatch(storeAWUser(user));
 };
 
@@ -112,6 +112,7 @@ export const addParticipant = participant => ({
   type: 'ADD_PARTICIPANT',
   id: participant.id,
   name: participant.name,
+  imageUrl: participant.imageUrl,
 });
 
 export const startTimer = id => ({

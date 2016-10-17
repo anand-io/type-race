@@ -13,7 +13,7 @@ let RaceResult = (props) => {
           return (
             <li key={result.participant.id}>
     					<figure>
-    						<img src="/images/user-icon.jpeg" alt="user-pic"/>
+    						<img src={result.participant.imageUrl} alt="user-pic"/>
     						<figcaption>
     							<span className="name">{result.participant.name}</span>
     							<span className="award">{`${result.position ? `${result.position} place` : 'Disqualified'}`}</span>
