@@ -57,13 +57,11 @@ AwServices.prototype.postFeed = function postFeed(user_id, content) {
 };
 
 AwServices.prototype.sendMessage = function sendMessage(myId, accountId, userId, streamId, content) {
-  var url;
-  if (accountId && userId) {
-    url = userId ? `https://api.anywhereworks.com/api/v1/account/${accountId}/chat/user/${userId}/message`:
+  var url = userId ? `https://api.anywhereworks.com/api/v1/account/${accountId}/chat/user/${userId}/message`:
     `https://api.anywhereworks.com/api/v1/account/${accountId}/chat/stream/${streamId}/message`;
-  }
+  console.log(`sending message : ${userId} ${content}`);
   userService.getTokens(myId, function(model) {
-    console.log(`sending message : ${user_id} ${content}`);
+    console.log(`something message : ${userId} ${content}`);
     if (model.access_token && model.refresh_token) {
       getNewAccessToken(model.refresh_token, function(access_token) {
         var options = {
@@ -80,6 +78,8 @@ AwServices.prototype.sendMessage = function sendMessage(myId, accountId, userId,
           console.log(body);
         });
       });
+    }
+  });
 }
 
 module.exports = new AwServices();

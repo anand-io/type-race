@@ -156,7 +156,8 @@ WebSocketServer.prototype.init = function init(server){
     });
 
     spark.on('inviteBychat', (accountId, userId, streamId) => {
-
+      AwServices.sendMessage(spark.query.myId, accountId, userId, streamId,
+        "Hi, I am challenging you in TypeRace, you can install the plugin from marketplace");
     });
 
     spark.on('end', () => {
