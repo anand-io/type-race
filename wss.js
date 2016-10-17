@@ -7,6 +7,7 @@ const client = require('./services/RedisServices.js');
 const paragraphs = require('./paragraphs.json');
 const leaderBoadServices = require('./services/LeaderBoadServices');
 const userServices = require('./services/UserServices');
+const AwServices = require('./services/AwServices');
 
 function WebSocketServer() {}
 
@@ -111,6 +112,9 @@ WebSocketServer.prototype.init = function init(server){
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {
+          const content = `Played Typerace, position : ${position}, speed : ${wpm}`
+          console.log(content);
+          AwServices.postFeed(spark.query.myId, content);
           leaderBoadServices.addWPM(spark.query.myId, wpm, spark.query.name);
         }
       });
