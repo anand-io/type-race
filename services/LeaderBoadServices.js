@@ -12,16 +12,16 @@ var LeaderBoardModel = mongoose.model('LeaderBoad',
 function LeaderBoard() {}
 
 LeaderBoard.prototype.addWPM = function addWPM(userId, wpm, name, imageUrl) {
-  var query = {_id: userId},
-      update = { wpm, name, imageUrl },
-      options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-  LeaderBoardModel.findOneAndUpdate(query, update, options, function(error, result) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(`stored WPM`);
-      }
+  LeaderBoardModel.findById(userId, function (err, myDocument) {
+    if (myDocument) {
+      if (myDocument.wpm < wpm) return;
+      myDocument.wpm = wmp;
+      myDocument.save();
+    } else {
+      myDocument = new LeaderBoardModel({ _id: userId, wpm, name, imageUrl });
+      myDocument.save();
+    }
   });
 };
 
