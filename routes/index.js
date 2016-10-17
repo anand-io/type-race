@@ -17,7 +17,7 @@ router.get('/AWAPI', function(req, res, next) {
 });
 
 router.get('/Permissions', function(req, res, next) {
-  res.redirect(`https://access.anywhereworks.com/o/oauth2/auth?response_type=code&client_id=29354-350168b6951106380b1ae3cc5e2f5feb&access_type=offline&scope=awapis.users.read awapis.feeds.write awapis.notifications.write awapis.chat.streams.push awapis.chat.users.push &redirect_uri=http://localhost:3000/fullAuthCallback`);
+  res.redirect(`https://access.anywhereworks.com/o/oauth2/auth?response_type=code&client_id=29354-350168b6951106380b1ae3cc5e2f5feb&access_type=offline&scope=awapis.users.read awapis.feeds.write awapis.notifications.write awapis.chat.streams.push awapis.chat.users.push &redirect_uri=https://anandhub.com/fullAuthCallback`);
 });
 
 router.get('/fullAuthCallback', function(req, res, next) {
@@ -29,7 +29,7 @@ router.get('/fullAuthCallback', function(req, res, next) {
       url: 'https://access.anywhereworks.com/o/oauth2/v1/token',
       form: { code: params.code, client_id: credentials.client_id,
               client_secret: credentials.client_secret,
-              redirect_uri: 'http://localhost:3000/fullAuthCallback',
+              redirect_uri: 'https://anandhub.com/fullAuthCallback',
               grant_type: 'authorization_code'
             },
       headers: {
