@@ -129,7 +129,7 @@ WebSocketServer.prototype.init = function init(server){
 
         if (isFinished && wpm > 30) {
           if (position < 3) {
-            const content = `I took up a Typerace and won the ${racePlaceMaping(position)} place with ${wpm} WPM`
+            const content = `I competed in a Typerace and won the ${racePlaceMaping(position)} place with ${Math.ceil(wpm)} WPM.`
             console.log(content);
             AwServices.postFeed(spark.query.myId, content);
           }
