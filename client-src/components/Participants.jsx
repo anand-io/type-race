@@ -12,7 +12,7 @@ class Participants extends Component {
     const rParticipants = [...participants];
     if (rParticipants.length === 1 && !isPractice) {
       const waitingMessage = `Waiting for ${awContext && awContext.firstName ? awContext.firstName : 'others'} to join...`;
-      rParticipants.push({ waiting: true, id: 'Waiting for others to join...'});
+      rParticipants.push({ waiting: true, id: waitingMessage});
     }
     return (
       <ul
