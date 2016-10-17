@@ -73,6 +73,7 @@ export const registered = user => dispatch => {
 export const contextChanged = (context) => dispatch => {
   dispatch(setContextInstalled(true));
   dispatch(storeAWContext(context));
+  dispatch(hideRaceResult());
   if (!context.members) {
     wss.isInstalled(context.id, (isInstalled) => {
       dispatch(setContextInstalled(isInstalled));
