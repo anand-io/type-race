@@ -56,4 +56,30 @@ AwServices.prototype.postFeed = function postFeed(user_id, content) {
   }
 };
 
+AwServices.prototype.sendMessage = function sendMessage(myId, accountId, userId, streamId, content) {
+  var url;
+  if (accountId && userId) {
+    url = userId ? `https://api.anywhereworks.com/api/v1/account/${accountId}/chat/user/${userId}/message`:
+    `https://api.anywhereworks.com/api/v1/account/${accountId}/chat/stream/${streamId}/message`;
+  }
+  userService.getTokens(myId, function(model) {
+    console.log(`sending message : ${user_id} ${content}`);
+    if (model.access_token && model.refresh_token) {
+      getNewAccessToken(model.refresh_token, function(access_token) {
+        var options = {
+          url: url,
+          body: JSON.stringify({
+             "msg": content,
+          }),
+          headers: {
+            'Content-Type' : 'application/json',
+            'Authorization': `Bearer ${access_token}`
+          }
+        }
+        request.post(options, function(e, r, body) {
+          console.log(body);
+        });
+      });
+}
+
 module.exports = new AwServices();
