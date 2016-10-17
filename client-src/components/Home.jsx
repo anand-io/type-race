@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { joinRace, leaderBoard, challenge, clearChallenge } from '../actions';
+import { joinRace, leaderBoard, challenge, clearChallenge, inviteBychat } from '../actions';
 
 let Home = ({ dispatch, show, myId, awContext, isAW, activeChallenge, challengeRejected,
-raceAlreadyStarted, needAuthorization, contextHasInstalledApp, inviteBychat, awUser }) => {
+raceAlreadyStarted, needAuthorization, contextHasInstalledApp, awUser }) => {
   let raceToJoin = location.pathname.replace('/', '');
   let challengeAction = joinRace;
   if (isAW) {
@@ -69,7 +69,7 @@ raceAlreadyStarted, needAuthorization, contextHasInstalledApp, inviteBychat, awU
         className="challenge"
         style={secondButtonStyle}
         onClick={() => {
-          if (!activeChallenge.from) {
+          if (!activeChallenge.from && contextHasInstalledApp) {
             const challengingIds = awContext.members ? awContext.members : awContext.id;
             const streamId = awContext.members ? awContext.id : null;
             dispatch(challengeAction(raceToJoin, false, challengingIds, streamId));
