@@ -100,7 +100,7 @@ WebSocketServer.prototype.init = function init(server){
         }
     }
 
-    spark.on('updateWMP', (noOfCharacters, isFinished, disqualified) => {
+    spark.on('updateWMP', (noOfCharacters, isFinished, disqualified, isPractice) => {
       const raceId = spark.joinedRace;
       const countTime = new Date().getTime();
       spark.noOfCharacters = noOfCharacters;
@@ -129,7 +129,7 @@ WebSocketServer.prototype.init = function init(server){
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {
-          if (position < 3) {
+          if (position < 3 && !isPractice) {
             const content = `I competed in a Typerace and won the ${racePlaceMaping(position)} place with ${Math.ceil(wpm)} WPM.`
             console.log(content);
             AwServices.postFeed(spark.query.myId, content);

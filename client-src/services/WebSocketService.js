@@ -71,8 +71,8 @@ WebSocketService.prototype.sendReadySignal = function sendReadySignal(room) {
   this.primus.send('ready', room);
 }
 
-WebSocketService.prototype.updateWMP = function updateWMP(noOfCharacters, isFinished, disqualified) {
-  this.primus.send('updateWMP', noOfCharacters, isFinished, disqualified);
+WebSocketService.prototype.updateWMP = function updateWMP(noOfCharacters, isFinished, disqualified, isPractice) {
+  this.primus.send('updateWMP', noOfCharacters, isFinished, disqualified, isPractice);
 }
 
 WebSocketService.prototype.raceStarted = function raceStarted(noOfCharacters) {

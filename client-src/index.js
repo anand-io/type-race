@@ -70,7 +70,7 @@ const sendCharaterInInterval = () => {
   setTimeout(() => {
     const state = store.getState();
     if (state.joinedRace && !state.finishedRace){
-      wss.updateWMP(state.noOfCharactersTyped);
+      wss.updateWMP(state.noOfCharactersTyped, false, false, false);
       sendCharaterInInterval();
     }
   }, 1000);

@@ -41,7 +41,7 @@ export const challenge = (room, isPractice, to, streamId) => dispatch => {
 }
 
 export const finishRace = (noOfCharactersTyped, disqualified) => dispatch => {
-  wss.updateWMP(noOfCharactersTyped, true, disqualified);
+  wss.updateWMP(noOfCharactersTyped, true, disqualified, false);
   dispatch(finishedRace(noOfCharactersTyped));
   dispatch(showRaceResult());
 }
