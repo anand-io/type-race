@@ -15,7 +15,7 @@ LeaderBoard.prototype.addWPM = function addWPM(userId, wpm, name, imageUrl) {
 
   LeaderBoardModel.findById(userId, function (err, myDocument) {
     if (myDocument) {
-      if (myDocument.wpm < wpm) return;
+      if (myDocument.wpm > wpm) return;
       myDocument.wpm = wpm;
       myDocument.save();
     } else {
