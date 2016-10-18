@@ -17,16 +17,24 @@ let Leaderboard = (props) => {
 				<h5>Leaderboard</h5>
 			</div>
 			<ul className="leadersboard-user">
-        {leaders.map((leader, rank) => (
-          <li key={leader._id}>
-  					<span className="number">{ rank + 1 }</span>
-  					<figure>
-  						<img src={leader.imageUrl} alt="user-pic"/>
-  					</figure>
-  					<span className="name">{leader.name}</span>
-  					<span className="speed">{`${Math.ceil(leader.wpm)} WPM`}</span>
-  				</li>
-        ))}
+        {leaders.map((leader, rank) => {
+          let imageUrl = leader.imageUrl;
+          let name = leader.name;
+          if (!imageUrl) {
+            imageUrl = "/images/default-user.png";
+            name = `${leader.name} (Outside AW)`;
+          }
+          return (
+            <li key={leader._id}>
+    					<span className="number">{ rank + 1 }</span>
+    					<figure>
+    						<img src={imageUrl} alt="user-pic"/>
+    					</figure>
+    					<span className="name">{name}</span>
+    					<span className="speed">{`${Math.ceil(leader.wpm)} WPM`}</span>
+    				</li>
+          );
+        })}
 			</ul>
 		</section>
   );
