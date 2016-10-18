@@ -26,7 +26,7 @@ LeaderBoard.prototype.addWPM = function addWPM(userId, wpm, name, imageUrl) {
 };
 
 LeaderBoard.prototype.getLeaders = function getLeaders(callback) {
-  LeaderBoardModel.find().sort('-wpm').limit(10).exec((err, leaders) => {
+  LeaderBoardModel.find().sort('-wpm').limit(20).exec((err, leaders) => {
     callback(leaders);
   });
 };
