@@ -5,6 +5,7 @@ var request = require('request');
 var userService = require('../services/UserServices');
 var credentials = require('../credentials.json');
 var AwServices = require('../services/AwServices');
+var leaderBoardServices = require('../services/LeaderBoardServices');
 var router = express.Router();
 
 /* GET home page. */
@@ -59,6 +60,11 @@ router.get('/getTokens', function(req, res, next) {
         response: model
       })
     })
+});
+
+router.get('/migrationFromOld', function(req, res, next) {
+  leaderBoardServices.migrationFromOld();
+  res.send('started');
 });
 
 router.post('/feed', function(req, res, next) {
