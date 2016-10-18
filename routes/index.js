@@ -62,11 +62,6 @@ router.get('/getTokens', function(req, res, next) {
     })
 });
 
-router.get('/migrationFromOld', function(req, res, next) {
-  leaderBoardServices.migrationFromOld();
-  res.send('started');
-});
-
 router.post('/feed', function(req, res, next) {
   console.log('inside feed')
   var user_id = req.body.user_id;
