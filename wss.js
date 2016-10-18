@@ -149,6 +149,7 @@ WebSocketServer.prototype.init = function init(server){
     spark.on('raceStarted', () => {
       const raceId = spark.joinedRace;
       client.set(`${raceId}_isStated`, true);
+      client.expire(`${raceId}_isStated`, 140);
     });
 
     spark.on('isInstalled', (peerId, callback) => {
