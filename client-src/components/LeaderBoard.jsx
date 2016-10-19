@@ -30,12 +30,7 @@ let Leaderboard = (props) => {
     					<figure>
     						<img src={imageUrl} alt="user-pic"/>
     					</figure>
-    					<span className="name" style={{
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
-                width: '150px',
-                whiteSpace: 'nowrap',
-              }}>{name}</span>
+    					<span className="name">{name}</span>
     					<span className="speed">{`${Math.ceil(leader.wpm)} WPM`}</span>
     				</li>
           );

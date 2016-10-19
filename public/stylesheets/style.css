@@ -307,6 +307,10 @@ hr{
 	font-weight: 500;
 	margin-top: 8px;
 	display: inline-block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 115px;
+	white-space: nowrap;
 }
 
 .leadersboard-user li .speed{
