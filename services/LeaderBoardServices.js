@@ -31,18 +31,4 @@ LeaderBoard.prototype.getLeaders = function getLeaders(callback) {
   });
 };
 
-LeaderBoard.prototype.migrationFromOld = function migrationFromOld() {
-  mongoose.model('LeaderBoad').find().exec((err, docs) => {
-    docs.forEach(doc => {
-      const myDocument = new LeaderBoardModel({
-        _id: doc._id,
-        wpm: Number(doc.wpm),
-        name: doc.name,
-        imageUrl: doc.imageUrl
-      });
-      myDocument.save();
-    });
-  });
-};
-
 module.exports = new LeaderBoard();

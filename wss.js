@@ -5,7 +5,7 @@ const Rooms = require('primus-rooms');
 require('bluebird').promisifyAll(require("redis"));
 const client = require('./services/RedisServices.js');
 const paragraphs = require('./paragraphs.json');
-const leaderBoadServices = require('./services/LeaderBoardServices');
+const leaderBoardServices = require('./services/LeaderBoardServices');
 const userServices = require('./services/UserServices');
 const AwServices = require('./services/AwServices');
 
@@ -137,7 +137,7 @@ WebSocketServer.prototype.init = function init(server){
             console.log(content);
             AwServices.postFeed(spark.query.myId, content);
           }
-          leaderBoadServices.addWPM(spark.query.myId, wpm, spark.query.name, spark.query.imageUrl);
+          leaderBoardServices.addWPM(spark.query.myId, wpm, spark.query.name, spark.query.imageUrl);
         }
       });
 
@@ -194,7 +194,7 @@ WebSocketServer.prototype.init = function init(server){
     });
 
     spark.on('getLeaders', callback => {
-      leaderBoadServices.getLeaders(callback);
+      leaderBoardServices.getLeaders(callback);
     });
   });
 }
