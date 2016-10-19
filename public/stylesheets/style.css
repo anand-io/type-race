@@ -311,7 +311,7 @@ hr{
 	display: inline-block;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	width: 115px;
+	width: 135px;
 	white-space: nowrap;
 }
 
