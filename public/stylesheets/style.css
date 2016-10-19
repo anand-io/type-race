@@ -218,6 +218,8 @@ hr{
 
 .challenge-user, .warmup-user{
 	padding: 15px 15px 20px 15px;
+	overflow: overlay;
+  height: 105px;
 }
 
 .challenge-user li, .warmup-user li{
