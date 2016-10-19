@@ -18,6 +18,10 @@ AwServices.prototype.init =
     // store.dispatch(storeAWUser(user));
     store.dispatch(contextChanged(context));
     store.dispatch(appActivated());
+    this.app.postMessage( 'showCount', {
+        count : 0,
+        id: context.id,
+    });
   })
 
   AwApp.on('context-change', ({user, context}) => {
@@ -34,6 +38,10 @@ AwServices.prototype.init =
 
 AwServices.prototype.showIndicator = function showIndicator(id) {
   this.app.postMessage( 'showIndicator', { id });
+  this.app.postMessage( 'showCount', {
+      count : 1,
+      id,
+  });
 }
 
 AwServices.prototype.showNotification = function showNotification(id, name) {
@@ -42,11 +50,6 @@ AwServices.prototype.showNotification = function showNotification(id, name) {
       message: "Click the typerace widget to react",
   });
 };
-
-// app.postMessage( 'showCount', {
-//     'count': 10,
-//     'id' : "ac2324ff-747b-4921-8ff8-d0f256bb5aea"
-// });
 
 AwServices.prototype.postFeeds = function postFeeds() {
   console.log('posting feed');

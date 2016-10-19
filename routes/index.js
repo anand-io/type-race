@@ -5,6 +5,7 @@ var request = require('request');
 var userService = require('../services/UserServices');
 var credentials = require('../credentials.json');
 var AwServices = require('../services/AwServices');
+var leaderBoardServices = require('../services/LeaderBoardServices');
 var router = express.Router();
 
 /* GET home page. */
@@ -48,7 +49,7 @@ router.get('/fullAuthCallback', function(req, res, next) {
       }
     });
   }
-  res.send('Thanks, you can now close this window and continue using the app');
+  res.send('<h1>Thanks, you can now close this window and continue using the app</h1>');
 });
 
 router.get('/getTokens', function(req, res, next) {

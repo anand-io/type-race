@@ -40,8 +40,8 @@ export const challenge = (room, isPractice, to, streamId) => dispatch => {
   });
 }
 
-export const finishRace = (noOfCharactersTyped, disqualified) => dispatch => {
-  wss.updateWMP(noOfCharactersTyped, true, disqualified);
+export const finishRace = (noOfCharactersTyped, disqualified, isPractice) => dispatch => {
+  wss.updateWMP(noOfCharactersTyped, true, disqualified, isPractice);
   dispatch(finishedRace(noOfCharactersTyped));
   dispatch(showRaceResult());
 }
@@ -71,7 +71,9 @@ export const registered = user => dispatch => {
 };
 
 export const contextChanged = (context) => dispatch => {
+  dispatch(setContextInstalled(true));
   dispatch(storeAWContext(context));
+  dispatch(hideRaceResult());
   if (!context.members) {
     wss.isInstalled(context.id, (isInstalled) => {
       dispatch(setContextInstalled(isInstalled));

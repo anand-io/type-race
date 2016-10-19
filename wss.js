@@ -5,7 +5,7 @@ const Rooms = require('primus-rooms');
 require('bluebird').promisifyAll(require("redis"));
 const client = require('./services/RedisServices.js');
 const paragraphs = require('./paragraphs.json');
-const leaderBoadServices = require('./services/LeaderBoadServices');
+const leaderBoadServices = require('./services/LeaderBoardServices');
 const userServices = require('./services/UserServices');
 const AwServices = require('./services/AwServices');
 
@@ -30,12 +30,14 @@ WebSocketServer.prototype.init = function init(server){
 
     client.set(spark.query.myId, spark.id);
 
-    client.get(`${spark.query.myId}_authorized`, (err, isInstalled) => {
-      console.log(isInstalled);
-      if (!isInstalled)  {
-        spark.send('needAuthorization');
-      }
-    });
+    if (spark.query.isAW === 'true') {
+      client.get(`${spark.query.myId}_authorized`, (err, isInstalled) => {
+        console.log(isInstalled);
+        if (!isInstalled)  {
+          spark.send('needAuthorization');
+        }
+      });
+    }
 
     spark.on('joinRace', (raceId, isPractice, callback) => {
       if (spark.joinedRace) return;
@@ -47,13 +49,14 @@ WebSocketServer.prototype.init = function init(server){
         }
         spark.join(raceId, () => {
           spark.joinedRace = raceId;
+          spark.isPractice = isPractice;
           client.saddAsync(`${raceId}_racers`, spark.query.myId);
           console.log(spark.query.myId);
           client.getAsync(`${raceId}_para`)
           .then(para => {
-            const paraNo = Math.floor(Math.random() * Object.keys(paragraphs).length) + 1
+            const paraNo = Math.floor(Math.random() * Object.keys(paragraphs).length);
             if(!para) client.set(`${raceId}_para`, paragraphs[paraNo]);
-            const paragraph = para || paragraphs['0'];
+            const paragraph = para || paragraphs[paraNo];
 
             const sparks = spark.room(raceId).clients();
             const participants = sparks.map(id => {
@@ -100,7 +103,7 @@ WebSocketServer.prototype.init = function init(server){
         }
     }
 
-    spark.on('updateWMP', (noOfCharacters, isFinished, disqualified) => {
+    spark.on('updateWMP', (noOfCharacters, isFinished, disqualified, isPractice) => {
       const raceId = spark.joinedRace;
       const countTime = new Date().getTime();
       spark.noOfCharacters = noOfCharacters;
@@ -129,7 +132,7 @@ WebSocketServer.prototype.init = function init(server){
         spark.room(raceId).send('participantWordCount', data);
 
         if (isFinished && wpm > 30) {
-          if (position < 3) {
+          if ((position === 1 || position === 2) && !spark.isPractice) {
             const content = `I competed in a Typerace and won the ${racePlaceMaping(position)} place with ${Math.ceil(wpm)} WPM.`
             console.log(content);
             AwServices.postFeed(spark.query.myId, content);
@@ -146,6 +149,7 @@ WebSocketServer.prototype.init = function init(server){
     spark.on('raceStarted', () => {
       const raceId = spark.joinedRace;
       client.set(`${raceId}_isStated`, true);
+      client.expire(`${raceId}_isStated`, 140);
     });
 
     spark.on('isInstalled', (peerId, callback) => {
@@ -157,7 +161,8 @@ WebSocketServer.prototype.init = function init(server){
 
     spark.on('inviteBychat', (accountId, userId, streamId) => {
       AwServices.sendMessage(spark.query.myId, accountId, userId, streamId,
-        "Hi, I am challenging you in TypeRace, you can install the plugin from marketplace");
+        "Hi, I am challenging you in TypeRace, you can install the plugin from marketplace \
+        or install using link and reload. https://developer.anywhereworks.com/marketplace/apps/install/5750790484393984-e33828e8ad533e8");
     });
 
     spark.on('end', () => {
@@ -179,6 +184,7 @@ WebSocketServer.prototype.init = function init(server){
       const raceId = spark.joinedRace;
       this.removeFromRace(spark, raceId);
       spark.joinedRace = null;
+      spark.isPractice = null;
       spark.isFinished = false;
       spark.disqualified = false;
       spark.noOfCharacters = 0;
@@ -209,6 +215,7 @@ WebSocketServer.prototype.removeFromRace = function (spark, raceId) {
         sparks.forEach(id => {
           const s = this.primus.spark(id);
           s.joinedRace = null;
+          s.isPractice = null;
           s.isFinished = false;
           s.disqualified = false;
           s.noOfCharacters = 0;

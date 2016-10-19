@@ -24,6 +24,7 @@ let Challenge = (props) => {
           onClick={() => {
             if(startTimerOn || raceStarted) {
               dispatch(finishRace(noOfCharactersTyped, true));
+              document.getElementsByTagName('input')[0].value = '';
             } else {
               dispatch(leaveRace());
             }

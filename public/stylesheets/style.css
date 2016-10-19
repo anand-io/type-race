@@ -189,11 +189,12 @@ hr{
 
 .warmup-head i, .challenge-head i, .leadersboard-head i{
 	background: url(/images/arrow-left.png) no-repeat;
-	width: 7px;
-    height: 11px;
-    position: absolute;
-    top: 10px;
-    left: 15px;
+	width: 10px;
+  height: 16px;
+  position: absolute;
+  top: 8px;
+  left: 15px;
+  background-size: cover;
 }
 
 .arrow-left {
