@@ -5,7 +5,7 @@ import { correctWord, nextWord, wrongWord, finishRace } from '../actions/index.j
 const textAreaStyle = (wrongWord, show) => {
   if (!wrongWord) return { display: show ? 'block' : 'none' };
   return {
-    color: 'RED',
+    backgroundColor: '#ff3434',
     display: show ? 'block' : 'none',
   }
 }

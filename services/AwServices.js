@@ -34,7 +34,7 @@ AwServices.prototype.postFeed = function postFeed(user_id, content) {
   if (user_id) {
     userService.getTokens(user_id, function(model) {
       console.log(`posting feed : ${user_id} ${content}`);
-      if (model.access_token && model.refresh_token) {
+      if (model && model.access_token && model.refresh_token) {
         getNewAccessToken(model.refresh_token, function(access_token) {
           var options = {
             url: 'https://api.anywhereworks.com/api/v1/feed',
@@ -62,7 +62,7 @@ AwServices.prototype.sendMessage = function sendMessage(myId, accountId, userId,
   console.log(`sending message : ${userId} ${content}`);
   userService.getTokens(myId, function(model) {
     console.log(`something message : ${userId} ${content}`);
-    if (model.access_token && model.refresh_token) {
+    if (model && model.access_token && model.refresh_token) {
       getNewAccessToken(model.refresh_token, function(access_token) {
         var options = {
           url: url,
