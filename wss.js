@@ -137,7 +137,9 @@ WebSocketServer.prototype.init = function init(server){
             console.log(content);
             AwServices.postFeed(spark.query.myId, content);
           }
-          leaderBoardServices.addWPM(spark.query.myId, wpm, spark.query.name, spark.query.imageUrl);
+          if (spark.query.name) {
+            leaderBoardServices.addWPM(spark.query.myId, wpm, spark.query.name, spark.query.imageUrl);
+          }
         }
       });
 
@@ -162,7 +164,7 @@ WebSocketServer.prototype.init = function init(server){
     spark.on('inviteBychat', (accountId, userId, streamId) => {
       AwServices.sendMessage(spark.query.myId, accountId, userId, streamId,
         "Hi, I am challenging you in TypeRace, you can install the plugin from marketplace \
-        or install using link and reload. https://developer.anywhereworks.com/marketplace/apps/install/5750790484393984-e33828e8ad533e8");
+        or install using link and reload the app. https://developer.anywhereworks.com/marketplace/apps/install/5750790484393984-e33828e8ad533e8");
     });
 
     spark.on('end', () => {
