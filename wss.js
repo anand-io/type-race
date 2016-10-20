@@ -8,6 +8,7 @@ const paragraphs = require('./paragraphs.json');
 const leaderBoardServices = require('./services/LeaderBoardServices');
 const userServices = require('./services/UserServices');
 const AwServices = require('./services/AwServices');
+const userStatsServices = require('./services/UserStatsServices');
 
 function WebSocketServer() {}
 
@@ -118,6 +119,7 @@ WebSocketServer.prototype.init = function init(server){
         }
         const sparks = spark.room(raceId).clients();
         let position = 1;
+        const names = [];
         sparks.forEach(id => {
           const s = this.primus.spark(id);
           if (spark.disqualified) {
@@ -125,20 +127,25 @@ WebSocketServer.prototype.init = function init(server){
             return;
           }
           if (s.id === spark.id) return;
+          names.push(s.query.name);
           if (s.noOfCharacters > noOfCharacters || (s.isFinished && ! s.disqualified)) position++;
         });
         const data = { id: spark.query.myId, wpm, noOfCharacters, isFinished, position,
           disqualified, name: spark.query.name, imageUrl: spark.query.imageUrl };
         spark.room(raceId).send('participantWordCount', data);
 
-        if (isFinished && wpm > 30) {
-          if ((position === 1 || position === 2) && !spark.isPractice) {
-            const content = `I competed in a Typerace and won the ${racePlaceMaping(position)} place with ${Math.ceil(wpm)} WPM.`
+        if (isFinished) {
+          if (position === 1 && !spark.isPractice) {
+            const content = `I competed in a Typerace against ${names.join(' ')} and won the first place with ${Math.ceil(wpm)} WPM.`
             console.log(content);
             AwServices.postFeed(spark.query.myId, content);
           }
-          if (spark.query.name) {
+          if (spark.query.name && !spark.isPractice && !spark.disqualified) {
             leaderBoardServices.addWPM(spark.query.myId, wpm, spark.query.name, spark.query.imageUrl);
+          }
+          if (!spark.disqualified) {
+            userStatsServices.addWPM(spark.query.myId, wpm, spark.query.name, spark.query.imageUrl,
+            spark.isPractice, position === 1);
           }
         }
       });
