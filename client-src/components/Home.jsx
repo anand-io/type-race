@@ -72,7 +72,7 @@ raceAlreadyStarted, needAuthorization, contextHasInstalledApp, awUser }) => {
           if (!activeChallenge.from && contextHasInstalledApp) {
             const challengingIds = awContext.members ? awContext.members : awContext.id;
             const streamId = awContext.members ? awContext.id : null;
-            dispatch(challengeAction(raceToJoin, false, challengingIds, streamId));
+            dispatch(challengeAction(raceToJoin, false, challengingIds, streamId, awUser.accountId));
           } else if (!contextHasInstalledApp && awContext) {
             dispatch(inviteBychat(awUser, awContext));
           } else {

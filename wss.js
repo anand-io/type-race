@@ -76,7 +76,7 @@ WebSocketServer.prototype.init = function init(server){
       });
     });
 
-    spark.on('challenge', (to, streamId, callback) => {
+    spark.on('challenge', (to, streamId, accountId, callback) => {
       if (!to) return;
       const toList = [].concat(to);
       toList.forEach(toId => {
@@ -89,6 +89,11 @@ WebSocketServer.prototype.init = function init(server){
           peerSpark.send('challenge', data, callback);
         });
       });
+      if(streamId) {
+        AwServices.sendMessage(spark.query.myId, accountId, null, streamId,
+          "I am challenging you all for a TypeRace. If you haven't installed it, you can install the plugin from marketplace \
+          or using the link below and reload AW. https://developer.anywhereworks.com/marketplace/apps/install/5750790484393984-e33828e8ad533e8");
+      }
     });
 
     function racePlaceMaping(place) {
