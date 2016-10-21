@@ -30,7 +30,7 @@ function getNewAccessToken(refresh_token, callback) {
   });
 };
 
-AwServices.prototype.postFeed = function postFeed(user_id, content) {
+AwServices.prototype.postFeed = function postFeed(user_id, content, mentions) {
   if (user_id) {
     userService.getTokens(user_id, function(model) {
       console.log(`posting feed : ${user_id} ${content}`);
@@ -40,7 +40,8 @@ AwServices.prototype.postFeed = function postFeed(user_id, content) {
             url: 'https://api.anywhereworks.com/api/v1/feed',
             body: JSON.stringify({
   	           "content": content,
-               "type" : "update"
+               "type" : "update",
+               "mentionedUsers" : mentions || []
             }),
             headers: {
               'Content-Type' : 'application/json',
