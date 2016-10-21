@@ -72,12 +72,13 @@ router.post('/feed', function(req, res, next) {
   }
  });
 
+ router.get('/raceWonMigration', function(req, res, next) {
+   userStatsServices.fixRacesWon();
+   res.send();
+ });
+
 router.get('/:roomId', function(req, res, next) {
   res.render('index', {  name: req.query.name, id: uuid.v4() });
-});
-
-router.get('/raceWonMigration', function(req, res, next) {
-  userStatsServices.fixRacesWon();
 });
 
 module.exports = router;
