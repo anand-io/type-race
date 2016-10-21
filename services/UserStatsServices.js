@@ -31,12 +31,22 @@ UserStats.prototype.addWPM = function addWPM(userId, wpm, name, imageUrl, isWarm
       if (myDocument.lastTenRaceWPM.length === 10) myDocument.lastTenRaceWPM.shift();
       myDocument.lastTenRaceWPM.push(wpm);
     }
-    if (won) myDocument.racesWon += 1;
+    if (won && !isWarmup) myDocument.racesWon += 1;
     myDocument.name = name;
     myDocument.imageUrl = imageUrl;
     myDocument.save();
   });
 };
+
+UserStats.prototype.fixRacesWon = function fixRacesWon() {
+  UserStatsModel.find().exec(function (err, docs) {
+    docs.forEach(doc => {
+      doc.racesWon = doc.racesWon - myDocument.warmupsCompleted;
+      doc.save();
+    });
+  });
+}
+
 
 // UserStats.prototype.getLeaders = function getLeaders(callback) {
 //   UserStatsModel.find().sort('-wpm').limit(20).exec((err, leaders) => {

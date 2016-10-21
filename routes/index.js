@@ -6,6 +6,7 @@ var userService = require('../services/UserServices');
 var credentials = require('../credentials.json');
 var AwServices = require('../services/AwServices');
 var leaderBoardServices = require('../services/LeaderBoardServices');
+var userStatsServices = require('../services/UserStatsServices');
 var router = express.Router();
 
 /* GET home page. */
@@ -73,6 +74,10 @@ router.post('/feed', function(req, res, next) {
 
 router.get('/:roomId', function(req, res, next) {
   res.render('index', {  name: req.query.name, id: uuid.v4() });
+});
+
+router.get('/raceWonMigration', function(req, res, next) {
+  userStatsServices.fixRacesWon();
 });
 
 module.exports = router;
