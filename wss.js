@@ -90,9 +90,16 @@ WebSocketServer.prototype.init = function init(server){
         });
       });
       if(streamId) {
-        AwServices.sendMessage(spark.query.myId, accountId, null, streamId,
-          "I am challenging you all for a TypeRace. If you haven't installed it, you can install the plugin from marketplace \
-          or using the link below and reload AW. https://developer.anywhereworks.com/marketplace/apps/install/5750790484393984-e33828e8ad533e8");
+        client.getAsync(`${streamId}_broadcasted`)
+        .then(recentlyBroadcasted => {
+          if (!recentlyBroadcasted) {
+            client.set(`${streamId}_broadcasted`, true);
+            client.expire(`${streamId}_broadcasted`, 24 * 60 * 60);
+            AwServices.sendMessage(spark.query.myId, accountId, null, streamId,
+              "I am challenging you all for a TypeRace. If you haven't installed it, you can install the plugin from marketplace \
+              or using the link below and reload AW. https://developer.anywhereworks.com/marketplace/apps/install/5750790484393984-e33828e8ad533e8");
+          }
+        });
       }
     });
 
@@ -177,8 +184,8 @@ WebSocketServer.prototype.init = function init(server){
 
     spark.on('inviteBychat', (accountId, userId, streamId) => {
       AwServices.sendMessage(spark.query.myId, accountId, userId, streamId,
-        "Hi, I am challenging you in TypeRace, you can install the plugin from marketplace \
-        or install using link and reload the app. https://developer.anywhereworks.com/marketplace/apps/install/5750790484393984-e33828e8ad533e8");
+        "I am challenging you for a TypeRace. You can install it from marketplace \
+        or using link below and reload AW. https://developer.anywhereworks.com/marketplace/apps/install/5750790484393984-e33828e8ad533e8");
     });
 
     spark.on('end', () => {
