@@ -76,7 +76,7 @@ WebSocketServer.prototype.init = function init(server){
       });
     });
 
-    spark.on('challenge', (to, streamId, accountId, callback) => {
+    spark.on('challenge', (to, streamId, callback, accountId) => {
       if (!to) return;
       const toList = [].concat(to);
       toList.forEach(toId => {
@@ -89,7 +89,7 @@ WebSocketServer.prototype.init = function init(server){
           peerSpark.send('challenge', data, callback);
         });
       });
-      if(streamId) {
+      if(streamId && accountId) {
         client.getAsync(`${streamId}_broadcasted`)
         .then(recentlyBroadcasted => {
           if (!recentlyBroadcasted) {

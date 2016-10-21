@@ -88,7 +88,7 @@ WebSocketService.prototype.getLeaders = function getLeaders(callback) {
 }
 
 WebSocketService.prototype.challenge = function challenge(to, streamId, accountId, callback) {
-  this.primus.send('challenge', to, streamId, accountId, callback);
+  this.primus.send('challenge', to, streamId, callback, accountId);
 }
 
 WebSocketService.prototype.leaveRace = function leaveRace() {
