@@ -128,7 +128,7 @@ WebSocketServer.prototype.init = function init(server){
             return;
           }
           if (s.id === spark.id) return;
-          names.push(`@${s.query.name}`);
+          names.push(`@${s.query.name}`.trim());
           mentions.push(s.query.myId)
           if (s.noOfCharacters > noOfCharacters || (s.isFinished && ! s.disqualified)) position++;
         });
