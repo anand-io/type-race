@@ -41,7 +41,7 @@ UserStats.prototype.addWPM = function addWPM(userId, wpm, name, imageUrl, isWarm
 UserStats.prototype.fixRacesWon = function fixRacesWon() {
   UserStatsModel.find().exec(function (err, docs) {
     docs.forEach(doc => {
-      doc.racesWon = doc.racesWon - myDocument.warmupsCompleted;
+      doc.racesWon = doc.racesWon - doc.warmupsCompleted;
       doc.save();
     });
   });
