@@ -31,4 +31,13 @@ LeaderBoard.prototype.getLeaders = function getLeaders(callback) {
   });
 };
 
+LeaderBoard.prototype.getUserPosition = function getUserPosition(userId) {
+  LeaderBoardModel.findById(userId, (err, user) => {
+    if(!user) return;
+    LeaderBoardModel.find().gt('wpm', user.wpm).count((err, count) => {
+      console.log(count + 1);
+    })
+  })
+};
+
 module.exports = new LeaderBoard();
