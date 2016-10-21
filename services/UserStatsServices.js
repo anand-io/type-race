@@ -38,16 +38,6 @@ UserStats.prototype.addWPM = function addWPM(userId, wpm, name, imageUrl, isWarm
   });
 };
 
-UserStats.prototype.fixRacesWon = function fixRacesWon() {
-  UserStatsModel.find().exec(function (err, docs) {
-    docs.forEach(doc => {
-      doc.racesWon = doc.racesWon - doc.warmupsCompleted;
-      doc.save();
-    });
-  });
-}
-
-
 // UserStats.prototype.getLeaders = function getLeaders(callback) {
 //   UserStatsModel.find().sort('-wpm').limit(20).exec((err, leaders) => {
 //     callback(leaders);
